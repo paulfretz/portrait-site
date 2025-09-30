@@ -140,8 +140,8 @@
   - [x] 1.6 Create `.env.local` and `.env.example` files with required environment variables
   - [x] 1.7 Configure Next.js for image optimization (next.config.js)
   - [x] 1.8 Set up ESLint and Prettier with project-specific rules
-  - [ ] 1.9 Initialize Git repository and create `.gitignore` (exclude .env.local, node_modules, .next)
-  - [ ] 1.10 Create initial README.md with project overview and setup instructions
+  - [x] 1.9 Initialize Git repository and create `.gitignore` (exclude .env.local, node_modules, .next)
+  - [x] 1.10 Create initial README.md with project overview and setup instructions
 
 - [ ] 2.0 Authentication & Authorization System
   - [ ] 2.1 Create Supabase project and obtain API keys
