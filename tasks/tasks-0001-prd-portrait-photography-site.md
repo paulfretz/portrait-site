@@ -131,7 +131,7 @@
 
 ## Tasks
 
-- [ ] 1.0 Project Setup & Infrastructure Configuration
+- [x] 1.0 Project Setup & Infrastructure Configuration
   - [x] 1.1 Initialize Next.js 14+ project with TypeScript and App Router (`npx create-next-app@latest`)
   - [x] 1.2 Install core dependencies: Tailwind CSS, Supabase client, React Hook Form, Zod, date-fns
   - [x] 1.3 Install dev dependencies: Jest, React Testing Library, Playwright, TypeScript types
