@@ -230,7 +230,7 @@
   - [x] 6.22 Add loading states for image galleries and data fetching
   - [x] 6.23 Ensure WCAG 2.1 AA accessibility: keyboard navigation, focus indicators, contrast ratios
 
-- [ ] 7.0 Admin Dashboard & Inline Editing
+- [x] 7.0 Admin Dashboard & Inline Editing
   - [x] 7.1 Create admin dashboard layout (`app/admin/page.tsx`) with navigation sidebar
   - [x] 7.2 Build admin toolbar component (`components/admin/AdminToolbar.tsx`) visible only when logged in
   - [x] 7.3 Add admin toolbar to main layout with "Edit Mode" toggle
