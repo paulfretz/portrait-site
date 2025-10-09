@@ -143,7 +143,7 @@
   - [x] 1.9 Initialize Git repository and create `.gitignore` (exclude .env.local, node_modules, .next)
   - [x] 1.10 Create initial README.md with project overview and setup instructions
 
-- [ ] 2.0 Authentication & Authorization System
+- [x] 2.0 Authentication & Authorization System
   - [x] 2.1 Create Supabase project and obtain API keys
   - [x] 2.2 Configure Google OAuth provider in Supabase dashboard
   - [x] 2.3 Create `lib/supabase/client.ts` for browser-side Supabase client
