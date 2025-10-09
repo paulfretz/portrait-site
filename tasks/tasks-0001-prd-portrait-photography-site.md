@@ -231,21 +231,21 @@
   - [x] 6.23 Ensure WCAG 2.1 AA accessibility: keyboard navigation, focus indicators, contrast ratios
 
 - [ ] 7.0 Admin Dashboard & Inline Editing
-  - [ ] 7.1 Create admin dashboard layout (`app/admin/page.tsx`) with navigation sidebar
-  - [ ] 7.2 Build admin toolbar component (`components/admin/AdminToolbar.tsx`) visible only when logged in
-  - [ ] 7.3 Add admin toolbar to main layout with "Edit Mode" toggle
-  - [ ] 7.4 Create inline editor component (`components/admin/InlineEditor.tsx`) for text content
-  - [ ] 7.5 Implement inline editing for homepage hero (headline, subheadline, CTA text)
-  - [ ] 7.6 Create rich text editor component (`components/admin/RichTextEditor.tsx`) with formatting toolbar
-  - [ ] 7.7 Implement inline editing for About page sections (bio, experience, approach)
-  - [ ] 7.8 Add profile photo upload functionality on About page (when logged in)
-  - [ ] 7.9 Implement inline editing for Contact page information (hours, email, phone, service area)
-  - [ ] 7.10 Add social media link editing interface (Instagram, Facebook, Pinterest URLs)
-  - [ ] 7.11 Create save mechanism for inline edits (auto-save or explicit "Save" button)
-  - [ ] 7.12 Add visual feedback for edit mode (borders, edit icons, hover states)
-  - [ ] 7.13 Implement undo/discard changes functionality for inline edits
-  - [ ] 7.14 Create admin dashboard summary: recent inquiries, gallery count, latest updates
-  - [ ] 7.15 Add quick actions to dashboard: "New Gallery", "View Inquiries", "Edit About"
+  - [x] 7.1 Create admin dashboard layout (`app/admin/page.tsx`) with navigation sidebar
+  - [x] 7.2 Build admin toolbar component (`components/admin/AdminToolbar.tsx`) visible only when logged in
+  - [x] 7.3 Add admin toolbar to main layout with "Edit Mode" toggle
+  - [x] 7.4 Create inline editor component (`components/admin/InlineEditor.tsx`) for text content
+  - [x] 7.5 Implement inline editing for homepage hero (headline, subheadline, CTA text)
+  - [x] 7.6 Create rich text editor component (`components/admin/RichTextEditor.tsx`) with formatting toolbar
+  - [x] 7.7 Implement inline editing for About page sections (bio, experience, approach)
+  - [x] 7.8 Add profile photo upload functionality on About page (when logged in)
+  - [x] 7.9 Implement inline editing for Contact page information (hours, email, phone, service area)
+  - [x] 7.10 Add social media link editing interface (Instagram, Facebook, Pinterest URLs)
+  - [x] 7.11 Create save mechanism for inline edits (auto-save or explicit "Save" button)
+  - [x] 7.12 Add visual feedback for edit mode (borders, edit icons, hover states)
+  - [x] 7.13 Implement undo/discard changes functionality for inline edits
+  - [x] 7.14 Create admin dashboard summary: recent inquiries, gallery count, latest updates
+  - [x] 7.15 Add quick actions to dashboard: "New Gallery", "View Inquiries", "Edit About"
 
 - [ ] 8.0 Contact/Inquiry System
   - [ ] 8.1 Create contact form component (`components/contact/ContactForm.tsx`)

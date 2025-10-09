@@ -797,3 +797,76 @@ export async function getImagesByGalleryId(galleryId: string): Promise<Image[]> 
   return data || [];
 }
 
+// ============================================================================
+// DASHBOARD STATS QUERIES
+// ============================================================================
+
+/**
+ * Get total count of galleries
+ */
+export async function getGalleryCount(): Promise<number> {
+  const supabase = await createClient();
+  const { count, error } = await supabase
+    .from('galleries')
+    .select('*', { count: 'exact', head: true });
+
+  if (error) throw error;
+  return count || 0;
+}
+
+/**
+ * Get total count of categories
+ */
+export async function getCategoryCount(): Promise<number> {
+  const supabase = await createClient();
+  const { count, error } = await supabase
+    .from('categories')
+    .select('*', { count: 'exact', head: true });
+
+  if (error) throw error;
+  return count || 0;
+}
+
+/**
+ * Get total count of images
+ */
+export async function getImageCount(): Promise<number> {
+  const supabase = await createClient();
+  const { count, error } = await supabase
+    .from('images')
+    .select('*', { count: 'exact', head: true });
+
+  if (error) throw error;
+  return count || 0;
+}
+
+/**
+ * Get count of new inquiries (status = 'new')
+ */
+export async function getNewInquiryCount(): Promise<number> {
+  const supabase = await createClient();
+  const { count, error } = await supabase
+    .from('inquiries')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'new');
+
+  if (error) throw error;
+  return count || 0;
+}
+
+/**
+ * Get recently updated galleries (last 5)
+ */
+export async function getRecentGalleries(): Promise<Gallery[]> {
+  const supabase = await createClient();
+  // @ts-ignore
+  const { data, error } = await supabase
+    .from('galleries')
+    .select('*')
+    .order('updated_at', { ascending: false })
+    .limit(5);
+
+  if (error) throw error;
+  return data || [];
+}
+

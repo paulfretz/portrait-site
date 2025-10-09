@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/lib/auth/auth-context';
+import { useEditMode } from '@/lib/admin/edit-mode-context';
 import Link from 'next/link';
 
 /**
@@ -10,6 +11,7 @@ import Link from 'next/link';
  * Features:
  * - Displays admin status and user email
  * - Link to admin dashboard
+ * - Edit Mode toggle for inline editing
  * - Logout button
  * - Minimal design matching site aesthetic
  * - Only visible when authenticated
@@ -27,6 +29,7 @@ import Link from 'next/link';
  */
 export function AdminToolbar() {
   const { user, isAdmin, signOut } = useAuth();
+  const { editMode, toggleEditMode } = useEditMode();
 
   // Don't render if not logged in
   if (!user) {
@@ -59,6 +62,30 @@ export function AdminToolbar() {
 
           {/* Right side - Actions */}
           <div className="flex items-center space-x-3">
+            {/* Edit Mode Toggle */}
+            <button
+              onClick={toggleEditMode}
+              className={`flex items-center px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                editMode
+                  ? 'bg-white text-sage-700'
+                  : 'bg-sage-500 text-white hover:bg-sage-600'
+              }`}
+              title={editMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}
+            >
+              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
+              {editMode ? 'Editing' : 'Edit Mode'}
+            </button>
+
+            {/* Divider */}
+            <span className="text-sage-300">|</span>
+
             {/* Dashboard link */}
             <Link
               href="/admin"
