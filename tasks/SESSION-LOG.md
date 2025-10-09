@@ -570,18 +570,138 @@ Following `.cursor/rules/process-task-list.md`:
 
 If context window resets, here's how to continue:
 
-1. **Current Location:** Working on Task 2.4 (server-side Supabase client)
-2. **Process:** Follow `.cursor/rules/process-task-list.md`
-3. **Read These Files:**
-   - `tasks/tasks-0001-prd-portrait-photography-site.md` - Current task list
-   - `tasks/SESSION-LOG.md` - This file
-   - `tasks/0001-prd-portrait-photography-site.md` - Original PRD
-4. **Key Context:**
-   - User wants to follow the task list one sub-task at a time
-   - User wants approval before moving to next sub-task
-   - User wants logs and cleanup items tracked
-   - Supabase project URL: `https://nmgptiywaefuvvatlcah.supabase.co`
-   - Google OAuth is configured and ready
+### 1. Read These Files First (in order):
+1. `tasks/SESSION-LOG.md` - This file (current status, completed work, decisions)
+2. `tasks/tasks-0001-prd-portrait-photography-site.md` - Task list with checkboxes
+3. `.cursor/rules/process-task-list.md` - Process rules
+4. `tasks/0001-prd-portrait-photography-site.md` - Original PRD (if needed)
+
+### 2. Current State Summary:
+**Where We Are:**
+- ✅ **Completed:** 3 of 11 parent tasks (27%)
+- 🔄 **Next:** Task 4.0 - Gallery & Category Management System (15 subtasks)
+- 📍 **Working Directory:** `/Users/paulfretz/personal-workspace/portrait-site`
+
+**What's Working:**
+- ✅ Authentication system (Google OAuth, login/logout, middleware)
+- ✅ Database (5 tables with 7 seeded categories + default content)
+- ✅ Complete REST APIs (categories, galleries, content management)
+- ✅ TypeScript types and query functions
+- ✅ Admin toolbar shows when logged in
+- ✅ Dev server runs on http://localhost:3000
+
+**What's NOT Built Yet:**
+- ❌ Admin UI components (category manager, gallery manager)
+- ❌ Image upload functionality
+- ❌ Public site pages (homepage, galleries, about, contact)
+- ❌ Contact form
+- ❌ Inline editing components
+- ❌ Tests (Task 10.0)
+
+### 3. Key Environment Info:
+- **Supabase Project:** https://nmgptiywaefuvvatlcah.supabase.co
+- **Database:** Live with 5 tables, RLS enabled
+- **Google OAuth:** Configured and working
+- **Admin Email:** Set in `.env.local` as `NEXT_PUBLIC_ADMIN_EMAIL`
+- **Dev Server:** `npm run dev` runs on port 3000
+
+### 4. Process Rules:
+- ✅ One sub-task at a time, wait for user approval ("y" or "yes")
+- ✅ Update session log after each completed sub-task
+- ✅ When parent task complete: lint, stage, clean up, commit
+- ✅ For manual actions: clearly mark BLOCKING vs NON-BLOCKING
+- ✅ Check with user before proceeding if manual action required
+
+### 5. Next Task Preview - Task 4.0:
+**Gallery & Category Management System** (15 subtasks):
+- Build admin components for managing categories and galleries
+- Create/edit/delete/reorder functionality
+- Photo reordering with drag-and-drop
+- Cover image selection interface
+- Admin pages at `/admin/galleries` and `/admin/categories`
+- Search/filter functionality
+
+### 6. Technical Debt to Remember:
+- **Supabase Type Inference:** @ts-ignore workarounds in queries.ts (fix in Task 10.22 with CLI)
+- **Migration Automation:** Manual migrations now, CLI + GitHub Actions in Task 10.22-10.23
+- **Tests:** Not written yet (Task 10.0 - high priority)
+
+### 7. Available API Endpoints (Ready to Use):
+**Categories:**
+- `GET /api/categories` - List all (public)
+- `POST /api/categories` - Create (admin)
+- `GET /api/categories/[id]` - Get by ID/slug (public)
+- `PUT /api/categories/[id]` - Update (admin)
+- `DELETE /api/categories/[id]` - Delete (admin)
+
+**Galleries:**
+- `GET /api/galleries` - List all (public)
+- `GET /api/galleries?category=slug` - Filter by category (public)
+- `POST /api/galleries` - Create (admin)
+- `GET /api/galleries/[id]` - Get by ID (public)
+- `PUT /api/galleries/[id]` - Update (admin)
+- `DELETE /api/galleries/[id]` - Delete (admin)
+
+**Content:**
+- `GET /api/content?page=X&section=Y` - Get specific (public)
+- `GET /api/content?page=X` - Get all for page (public)
+- `PUT /api/content` - Update/create (admin)
+
+**Auth:**
+- `/login` - Login page with Google OAuth
+- `/api/auth/callback` - OAuth callback
+- `POST /api/auth/logout` - Logout
+
+### 8. Commit History:
+- **c28be21** - feat: implement complete authentication and authorization system
+- **b1f51e9** - docs: mark Task 2.0 complete
+- **ca19e0c** - feat: implement complete database schema and API layer (3360+ lines)
+- **201db3f** - docs: mark Task 3.0 complete
+
+### 9. Priority for Remaining Tasks:
+1. **Task 4.0** - Gallery & Category Management System (admin UI)
+2. **Task 5.0** - Image Upload & Optimization Pipeline
+3. **Task 6.0** - Frontend User Interface (public site)
+4. **Task 7.0** - Admin Dashboard & Inline Editing
+5. **Task 8.0** - Contact/Inquiry System
+6. **Task 9.0** - SEO Optimization
+7. **Task 10.0** - Testing Suite (CRITICAL - should be done alongside features)
+8. **Task 11.0** - Deployment & Production
+
+### 10. What You Can Test Right Now:
+**Start dev server:** `npm run dev`
+
+**Test Authentication:**
+1. Go to http://localhost:3000/login
+2. Click "Sign in with Google"
+3. Should see admin toolbar after login
+4. Try accessing http://localhost:3000/admin (will 404 but proves auth works)
+
+**Test APIs (use curl, Postman, or browser):**
+```bash
+# Get all categories (should return 7 seeded categories)
+curl http://localhost:3000/api/categories
+
+# Get specific category
+curl http://localhost:3000/api/categories/weddings
+
+# Get all page content for home page
+curl http://localhost:3000/api/content?page=home
+```
+
+**What Still 404s (expected):**
+- `/admin` - Admin dashboard not built yet (Task 7.0)
+- `/galleries` - Public gallery pages not built yet (Task 6.0)
+- `/about` - About page not built yet (Task 6.0)
+- `/contact` - Contact page not built yet (Task 6.0)
+
+### 11. Important Notes:
+- User prefers session log updates (just accept them in batch)
+- User wants clear notifications for manual actions required (BLOCKING vs NON-BLOCKING)
+- Process rules were enhanced during this session (see git history)
+- Database migration had one bug (incorrect comment) that was fixed
+- All API routes protect client_name field (privacy requirement)
+- User asked about automated migrations - deferred to Task 10.22-10.23 (requires CLI tools update)
 
 ---
 
