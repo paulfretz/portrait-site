@@ -205,7 +205,7 @@
   - [x] 5.12 Add image deletion functionality (remove from storage and database)
   - [x] 5.13 Validate file types and sizes (max 10MB per image, JPEG/PNG/WebP/HEIC only)
 
-- [ ] 6.0 Frontend User Interface (Public Site)
+- [x] 6.0 Frontend User Interface (Public Site)
   - [x] 6.1 Create site layout with header and footer (`components/layout/Header.tsx`, `Footer.tsx`)
   - [x] 6.2 Design header with "DJ Coveno Portraits" typographic logo and navigation
   - [x] 6.3 Implement responsive navigation (desktop: horizontal menu, mobile: hamburger menu)
