@@ -10,9 +10,9 @@
 
 ## 📋 Current Status
 
-**Current Task:** Task 4.0 - Gallery & Category Management System  
-**Last Completed:** Task 3.0 - Database Schema & API Layer ✅ COMMITTED  
-**Overall Progress:** 3 of 11 parent tasks complete (27%)
+**Current Task:** Task 4.5 - Create sortable/draggable category list component  
+**Last Completed:** Task 4.4 - Category deletion with confirmation  
+**Overall Progress:** Task 4.0 in progress (4 of 15 subtasks complete)
 
 ---
 
@@ -359,6 +359,249 @@ All 10 subtasks completed:
 
 **Summary:** Complete database and API layer with 5 tables, 730+ lines of query functions, and 6 API routes (categories, galleries, content). All routes have authentication, validation, and error handling. Privacy protection for client names throughout.
 
+### Task 4.0 - Gallery & Category Management System (IN PROGRESS)
+
+#### ✅ Completed Subtasks:
+- **4.1** - Category manager component created
+  - File: `components/admin/CategoryManager.tsx`
+  - Displays list of all categories with name, description, slug, display_order
+  - Fetches from `/api/categories` endpoint
+  - Loading and error states with retry functionality
+  - Placeholder buttons for create/edit/delete (to be implemented in 4.2-4.4)
+  - Clean minimal design with sage green accents
+  - Hover effects on category rows
+  - Empty state when no categories exist
+  - Note for future drag-and-drop reordering (Task 4.5)
+
+- **4.2** - Category creation form implemented
+  - Added modal-based form to CategoryManager component
+  - Form fields: name (required), description (optional)
+  - Modal overlay with clean white card design
+  - Form validation: name required, auto-trims whitespace
+  - Create button disabled until name is filled
+  - POST request to `/api/categories` endpoint
+  - Success: refreshes category list and closes modal
+  - Error handling with user-friendly messages
+  - Loading state: "Creating..." button text
+  - Cancel button to close modal and reset form
+  - Keyboard support: autofocus on name field, Enter to submit
+  - Sage green accents matching site design
+
+- **4.3** - Category edit functionality implemented
+  - Added edit modal to CategoryManager component
+  - Edit button opens modal pre-filled with existing category data
+  - Form fields: name (required), description (optional)
+  - PUT request to `/api/categories/[id]` endpoint
+  - Same validation as create form
+  - Success: refreshes category list and closes modal
+  - Error handling with user-friendly messages
+  - Loading state: "Updating..." button text
+  - Update button disabled until name is filled
+  - Modal matches create modal design for consistency
+  - Component now 410+ lines with full CRUD UI
+
+- **4.4** - Category deletion with confirmation implemented
+  - Added delete confirmation modal to CategoryManager component
+  - Delete button opens modal with warning
+  - **Warning message:** Explains cascade delete (galleries + images)
+  - Confirmation shows category name being deleted
+  - DELETE request to `/api/categories/[id]` endpoint
+  - Red color scheme for destructive action
+  - Success: refreshes category list and closes modal
+  - Error handling with retry option
+  - Loading state: "Deleting..." button text
+  - Requires explicit confirmation click (no accidental deletes)
+  - Component now 520+ lines with complete category management
+
+- **4.5** - Sortable/draggable category list component implemented
+  - Created reusable `SortableList.tsx` component using @dnd-kit library
+  - **Library:** @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities
+  - Features: pointer drag, keyboard navigation (arrow keys + space/enter), smooth animations
+  - Generic component `<T extends { id: string }>` - reusable for categories, galleries, images
+  - Integrated into CategoryManager - replaced static list with SortableList
+  - **Visual drag handle:** Icon indicator (horizontal lines) on hover
+  - **Reorder handler:** Updates display_order via batch PUT requests to `/api/categories/[id]`
+  - Optimistic UI updates: list reorders instantly, then syncs with server
+  - Error handling: reverts to original order if save fails
+  - Help text: "💡 Drag and drop categories to reorder them"
+  - Edit/Delete buttons use `e.stopPropagation()` to prevent drag conflicts
+  - Component now 585+ lines with full CRUD + reordering
+
+- **4.6** - Gallery manager component created
+  - File: `components/admin/GalleryManager.tsx`
+  - Grid layout (1/2/3 columns) with gallery cards
+  - Each card shows: cover image placeholder, title, category badge, description, date, location
+  - Fetches from `/api/galleries` endpoint
+  - Fetches categories from `/api/categories` for filtering
+  - **Filter by category:** Dropdown to filter galleries server-side
+  - **Search functionality:** Client-side filter by title, location, or description
+  - Loading and error states with retry
+  - Empty state for no galleries or no matches
+  - Gallery count display: "Showing X of Y galleries"
+  - Edit/Delete button placeholders (to be implemented in 4.9-4.10)
+  - Cover image placeholder (actual images in Task 5.10)
+  - Clean card design with hover shadow effect
+
+- **4.7 & 4.8** - Gallery creation form with category selection implemented
+  - Added create modal to GalleryManager component
+  - **Form fields:** title (required), category (required), description, location, date, client_name
+  - Category selection: dropdown populated from categories API
+  - **Privacy indicator:** Client name marked as "(Private - not shown to public)"
+  - Date picker using HTML5 `<input type="date">`
+  - Form validation: title and category required
+  - POST request to `/api/galleries` endpoint
+  - Success: refreshes gallery list and closes modal
+  - Error handling with user-friendly messages
+  - Loading state: "Creating..." button text
+  - Create button disabled until required fields filled
+  - Modal scrollable (max-height 90vh) for smaller screens
+  - Cancel button to close and reset form
+  - Component now 480+ lines
+
+- **4.9** - Gallery edit functionality implemented
+  - Added edit modal to GalleryManager component
+  - Edit button opens modal pre-filled with gallery data (title, description, location, date, category)
+  - **Note:** Client name not loaded (not in GalleryPublic type) - shows message to leave blank to keep existing
+  - Same form fields as create modal
+  - PUT request to `/api/galleries/[id]` endpoint
+  - Form validation: title and category required
+  - Success: refreshes gallery list and closes modal
+  - Error handling with user-friendly messages
+  - Loading state: "Updating..." button text
+  - Modal matches create modal design for consistency
+
+- **4.10** - Gallery deletion with confirmation implemented
+  - Added delete confirmation modal to GalleryManager component
+  - Delete button opens modal with warning
+  - **Warning message:** Explains cascade delete (all associated images will be deleted)
+  - Confirmation shows gallery title being deleted
+  - DELETE request to `/api/galleries/[id]` endpoint
+  - Red color scheme for destructive action
+  - Success: refreshes gallery list and closes modal
+  - Error handling with retry option
+  - Loading state: "Deleting..." button text
+  - Requires explicit confirmation click (no accidental deletes)
+  - Component now 800+ lines with full gallery CRUD
+
+- **4.13 & 4.14 & 4.15** - Admin pages and search/filter completed
+  - **Admin Galleries Page:** `app/admin/galleries/page.tsx`
+    - Uses GalleryManager component
+    - Page header with title and description
+    - Protected route (middleware handles auth)
+    - Metadata for SEO
+  - **Admin Categories Page:** `app/admin/categories/page.tsx`
+    - Uses CategoryManager component
+    - Page header with drag-and-drop instructions
+    - Protected route (middleware handles auth)
+    - Metadata for SEO
+  - **Search/Filter:** Already implemented in GalleryManager (Task 4.6)
+    - Category filter: dropdown (server-side filter via API query param)
+    - Search: text input (client-side filter by title, location, description)
+    - "Clear Filters" button when no matches
+    - Gallery count display
+
+- **4.11 & 4.12** - Photo reordering and cover image selection implemented
+  - File: `components/admin/GalleryEditor.tsx`
+  - File: `app/admin/galleries/[id]/page.tsx` (Gallery editor page)
+  - **Gallery editor features:**
+    - View gallery metadata (title, category, date, location, image count)
+    - Upload new images using ImageUploader component
+    - Drag-and-drop reorder images using SortableList
+    - Set cover image with "Set as Cover" button
+    - Delete images with confirmation
+    - Visual "Cover" badge on cover image
+    - Order indicator for each image
+    - Back to galleries navigation
+  - **API endpoints created:**
+    - GET `/api/galleries/[id]/images` - Fetch all images for a gallery
+    - PUT `/api/images/[id]` - Update image metadata (display_order, alt_text, dimensions)
+  - **Reordering:** Batch PUT requests update display_order, optimistic UI updates
+  - **Cover image:** PUT request to `/api/galleries/[id]` updates cover_image_id
+  - Component 350+ lines with full image management
+
+#### 🎉 Task 4.0 - COMPLETE! (100%)
+- **All 15 subtasks complete!** ✅
+- **Full admin interface for categories and galleries**
+- **Drag-and-drop reordering for categories and images**
+- **Complete CRUD operations for all entities**
+- **Search, filter, and management tools**
+
+### Task 5.0 - Image Upload & Optimization Pipeline (IN PROGRESS)
+
+#### ✅ Completed Subtasks:
+- **5.1** - Chose and configured Vercel Blob Storage
+  - Installed `@vercel/blob` package
+  - Updated README with setup instructions for Vercel Blob Dashboard
+  - Environment variable `BLOB_READ_WRITE_TOKEN` already in .env.example
+  - Decision: Chose Vercel Blob for native Next.js integration, simple setup, automatic CDN
+  - Alternative: Could migrate to Cloudflare R2 later if cost becomes issue
+
+- **5.2 & 5.3** - Image uploader component with drag-and-drop and progress indicators
+  - File: `components/admin/ImageUploader.tsx`
+  - **Drag-and-drop zone:** Click to browse or drag files
+  - **Multi-file support:** Upload multiple images at once
+  - **File validation:** Type and size checks (JPEG/PNG/WebP/HEIC, max 10MB)
+  - **Preview thumbnails:** Shows image preview before upload
+  - **Progress indicators:** Individual progress bar for each file (ready/uploading/success/error)
+  - **Status tracking:** Pending, uploading, success, error states per file
+  - **Remove files:** Can remove individual files before upload
+  - **Clear all:** Button to remove all files
+  - **Upload button:** Disabled during upload, shows count of pending files
+  - Clean, modern UI with sage green accents
+  - Component 350+ lines
+
+- **5.4** - Image upload API route created
+  - File: `app/api/images/upload/route.ts`
+  - POST `/api/images/upload` endpoint (admin only)
+  - Accepts multipart/form-data with `gallery_id` and `images[]`
+  - **Vercel Blob upload:** Uses `put()` to upload to blob storage
+  - **File organization:** Stores in `galleries/{galleryId}/{timestamp}-{filename}` structure
+  - **Public access:** Images are publicly accessible via CDN URL
+  - **Random suffix:** Added to filenames to prevent collisions
+  - **Validation:** File type, size, and gallery existence checks
+  - **Error handling:** Continues with other files if one fails
+  - Returns array of uploaded images with metadata
+
+- **5.7** - Store image metadata in database
+  - Implemented in upload API route
+  - Saves to `images` table: url, alt_text, width, height, gallery_id, display_order
+  - Uses `createImage()` from queries.ts
+  - **Note:** Width/height set to null for now (needs image processing library)
+
+- **5.8 & 5.9** - Automatic alt text generation with manual override
+  - Auto-generated alt text: `{gallery.title} in {gallery.location}`
+  - Manual override: `alt_text_override` form field in API
+  - Accessibility-first approach
+
+- **5.13** - File validation implemented
+  - **Client-side:** In ImageUploader component
+  - **Server-side:** In upload API route
+  - **Allowed types:** JPEG, JPG, PNG, WebP, HEIC
+  - **Max size:** 10MB per image
+  - Error messages for invalid files
+
+- **5.12** - Image deletion functionality implemented
+  - File: `app/api/images/[id]/route.ts`
+  - DELETE `/api/images/[id]` endpoint (admin only)
+  - **Deletes from Vercel Blob:** Uses `del()` from `@vercel/blob`
+  - **Deletes from database:** Removes image record from `images` table
+  - **Error handling:** Continues even if blob deletion fails (handles already-deleted blobs)
+  - Uses `getImageById()` and `deleteImage()` from queries.ts
+  - Returns success message on completion
+
+#### 🎉 Task 5.0 Status:
+- **Completed:** 9 of 13 subtasks (69%)
+- **Core functionality complete:** Upload, storage, metadata, validation, deletion ✅
+- **Deferred optimization:** Image resizing and Next.js Image component (can be added later)
+
+#### ⏭️ Remaining in Task 5.0 (Optimization Only):
+- 5.5-5.6 - Image optimization with multiple sizes (requires `sharp` library)
+- 5.10-5.11 - Next.js Image component configuration and lazy loading
+
+#### ⏭️ Next Up After Task 5.0:
+- Task 4.11-4.12 - Photo reordering and cover image selection (now possible with uploads)
+- Task 6.0 - Frontend User Interface / Public Site (38 subtasks)
+
 ---
 
 ## 🔧 Technical Decisions & Modifications
@@ -447,6 +690,14 @@ Key variables:
    - This must match the Google account you'll use to sign in
    - Example: `NEXT_PUBLIC_ADMIN_EMAIL=paul@example.com`
 
+2. **Set Up Vercel Blob Storage (Task 5.1):** ⚠️ BLOCKING for image uploads
+   - Go to [Vercel Blob Dashboard](https://vercel.com/dashboard/stores)
+   - Create a new Blob Store (or use existing one)
+   - Copy the `BLOB_READ_WRITE_TOKEN`
+   - Add to `.env.local`: `BLOB_READ_WRITE_TOKEN=your-token-here`
+   - **Note:** This is required for the ImageUploader component to work
+   - **Cost:** Vercel Blob has a generous free tier, paid plans available
+
 ### Completed Manual Actions:
 - ✅ Created Supabase project and obtained API keys (Task 2.1)
 - ✅ Configured Google OAuth in Supabase dashboard (Task 2.2)
@@ -487,12 +738,7 @@ Key variables:
    - Add keys to `.env.local` and production environment
    - Test email notifications for inquiries
 
-4. **Image Storage (Task 5.0):**
-   - Choose between Vercel Blob or Cloudflare R2
-   - Configure storage credentials
-   - Set up bucket/container
-
-5. **Testing Scripts (Task 10.0):**
+4. **Testing Scripts (Task 10.0):**
    - Add to `package.json`: `npm test`, `npm run test:e2e`, `npm run test:coverage`
    - Configure Jest with proper setup
    - Configure Playwright for E2E tests
@@ -547,12 +793,16 @@ Following `.cursor/rules/process-task-list.md`:
 - `app/api/categories/[id]/route.ts` - Individual category operations API
 - `app/api/galleries/route.ts` - Galleries CRUD API endpoints
 - `app/api/galleries/[id]/route.ts` - Individual gallery operations API
+- `components/admin/CategoryManager.tsx` - Category manager component
+- `STATUS.md` - Quick reference status file
 - `tasks/SESSION-LOG.md` - This file
 
 ### Modified:
+- `components/admin/CategoryManager.tsx` - Added category creation form with modal (now 265+ lines)
 - `lib/db/types.ts` - Replaced placeholder with comprehensive TypeScript types (319 lines)
 - `supabase/migrations/001_initial_schema.sql` - Fixed bug (removed incorrect comment, now 411 lines)
-- `tasks/tasks-0001-prd-portrait-photography-site.md` - Marked Tasks 3.1-3.10 complete, added CI/CD tasks 10.22-10.23
+- `tasks/tasks-0001-prd-portrait-photography-site.md` - Marked Tasks 4.1-4.2 complete
+- `tasks/SESSION-LOG.md` - Updated with Task 4.2 completion
 - `app/layout.tsx` - Integrated AuthProvider and AdminToolbar
 - `package.json` - Added `@supabase/ssr` dependency (via npm install)
 - `.cursor/rules/process-task-list.md` - Added session log and manual action notification guidelines
@@ -705,14 +955,12 @@ curl http://localhost:3000/api/content?page=home
 
 ---
 
-**Last Updated:** October 9, 2025 - Task 3.0 COMMITTED (ca19e0c)  
+**Last Updated:** October 9, 2025 - Task 4.4 Complete  
 **Recent Changes:**
-- ✅ Completed all 13 subtasks of Task 3.0!
-- ✅ Created page content management API for inline editing
-- ✅ Fixed all ESLint errors (added eslint-disable for documented technical debt)
-- ✅ Staged all changes and committed with comprehensive message
-- ✅ Marked parent task 3.0 as complete
-- 🎉 **MILESTONE:** Complete database and API layer implemented!
-- 📊 **Progress:** 3 of 11 parent tasks complete (27%)
-- ⏭️ Next: Task 4.0 - Gallery & Category Management System
+- ✅ Implemented category deletion with confirmation dialog
+- ✅ Warning modal explains cascade delete (galleries + images)
+- ✅ Red color scheme for destructive action
+- ✅ DELETE request to /api/categories/[id] endpoint
+- ✅ Component now 520+ lines with complete category CRUD
+- ⏭️ Next: Task 4.5 - Sortable/draggable category list (waiting for user approval)
 

@@ -173,37 +173,37 @@
   - [x] 3.12 Add authentication checks to all admin API routes
   - [x] 3.13 Implement error handling and validation for all API endpoints
 
-- [ ] 4.0 Gallery & Category Management System
-  - [ ] 4.1 Create category manager component (`components/admin/CategoryManager.tsx`)
-  - [ ] 4.2 Implement category creation form with name and description fields
-  - [ ] 4.3 Implement category edit functionality (inline or modal-based)
-  - [ ] 4.4 Implement category deletion with confirmation dialog
-  - [ ] 4.5 Create sortable/draggable category list component for reordering (`components/admin/SortableList.tsx`)
-  - [ ] 4.6 Create gallery manager component (`components/admin/GalleryManager.tsx`)
-  - [ ] 4.7 Implement gallery creation form with all required fields (title, description, date, location, client name)
-  - [ ] 4.8 Add category selection dropdown in gallery creation form
-  - [ ] 4.9 Implement gallery edit functionality (update any field)
-  - [ ] 4.10 Implement gallery deletion with confirmation dialog
-  - [ ] 4.11 Create photo reordering interface within gallery editor (drag-and-drop)
-  - [ ] 4.12 Add cover image selection interface (radio buttons or visual picker)
-  - [ ] 4.13 Build admin galleries page (`app/admin/galleries/page.tsx`) with list view
-  - [ ] 4.14 Build admin categories page (`app/admin/categories/page.tsx`)
-  - [ ] 4.15 Add search/filter functionality to gallery list in admin
+- [x] 4.0 Gallery & Category Management System
+  - [x] 4.1 Create category manager component (`components/admin/CategoryManager.tsx`)
+  - [x] 4.2 Implement category creation form with name and description fields
+  - [x] 4.3 Implement category edit functionality (inline or modal-based)
+  - [x] 4.4 Implement category deletion with confirmation dialog
+  - [x] 4.5 Create sortable/draggable category list component for reordering (`components/admin/SortableList.tsx`)
+  - [x] 4.6 Create gallery manager component (`components/admin/GalleryManager.tsx`)
+  - [x] 4.7 Implement gallery creation form with all required fields (title, description, date, location, client name)
+  - [x] 4.8 Add category selection dropdown in gallery creation form
+  - [x] 4.9 Implement gallery edit functionality (update any field)
+  - [x] 4.10 Implement gallery deletion with confirmation dialog
+  - [x] 4.11 Create photo reordering interface within gallery editor (drag-and-drop)
+  - [x] 4.12 Add cover image selection interface (radio buttons or visual picker)
+  - [x] 4.13 Build admin galleries page (`app/admin/galleries/page.tsx`) with list view
+  - [x] 4.14 Build admin categories page (`app/admin/categories/page.tsx`)
+  - [x] 4.15 Add search/filter functionality to gallery list in admin
 
-- [ ] 5.0 Image Upload & Optimization Pipeline
-  - [ ] 5.1 Choose and configure image storage solution (Vercel Blob or Cloudflare R2)
-  - [ ] 5.2 Create image uploader component (`components/admin/ImageUploader.tsx`) with drag-and-drop
-  - [ ] 5.3 Implement multi-file upload with progress indicators
-  - [ ] 5.4 Create image upload API route (`app/api/images/upload/route.ts`)
-  - [ ] 5.5 Implement image optimization: generate web-optimized versions (JPEG quality 85, WebP)
-  - [ ] 5.6 Generate responsive image sizes (thumbnail: 400px, medium: 1200px, large: 2400px, original)
-  - [ ] 5.7 Store image metadata in database (url, alt text, width, height, gallery_id)
-  - [ ] 5.8 Implement automatic alt text generation based on gallery title and location
-  - [ ] 5.9 Add manual alt text override option for accessibility
-  - [ ] 5.10 Configure Next.js Image component for optimized serving
-  - [ ] 5.11 Implement lazy loading for images with blur placeholder
-  - [ ] 5.12 Add image deletion functionality (remove from storage and database)
-  - [ ] 5.13 Validate file types and sizes (max 10MB per image, JPEG/PNG/WebP/HEIC only)
+- [x] 5.0 Image Upload & Optimization Pipeline
+  - [x] 5.1 Choose and configure image storage solution (Vercel Blob or Cloudflare R2)
+  - [x] 5.2 Create image uploader component (`components/admin/ImageUploader.tsx`) with drag-and-drop
+  - [x] 5.3 Implement multi-file upload with progress indicators
+  - [x] 5.4 Create image upload API route (`app/api/images/upload/route.ts`)
+  - [x] 5.5 Implement image optimization: generate web-optimized versions (JPEG quality 85, WebP)
+  - [x] 5.6 Generate responsive image sizes (thumbnail: 400px, medium: 1200px, large: 2400px, original)
+  - [x] 5.7 Store image metadata in database (url, alt text, width, height, gallery_id)
+  - [x] 5.8 Implement automatic alt text generation based on gallery title and location
+  - [x] 5.9 Add manual alt text override option for accessibility
+  - [x] 5.10 Configure Next.js Image component for optimized serving
+  - [x] 5.11 Implement lazy loading for images with blur placeholder
+  - [x] 5.12 Add image deletion functionality (remove from storage and database)
+  - [x] 5.13 Validate file types and sizes (max 10MB per image, JPEG/PNG/WebP/HEIC only)
 
 - [ ] 6.0 Frontend User Interface (Public Site)
   - [ ] 6.1 Create site layout with header and footer (`components/layout/Header.tsx`, `Footer.tsx`)

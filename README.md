@@ -116,7 +116,16 @@ NEXT_PUBLIC_ADMIN_EMAIL=admin@example.com
 3. Configure Google OAuth provider in Supabase Authentication settings
 4. Copy your project URL and keys to `.env.local`
 
-### 5. Run Development Server
+### 5. Set Up Vercel Blob Storage
+
+1. Create a Vercel account at [vercel.com](https://vercel.com) if you don't have one
+2. Go to [Vercel Blob Dashboard](https://vercel.com/dashboard/stores)
+3. Create a new Blob Store
+4. Copy the `BLOB_READ_WRITE_TOKEN` to your `.env.local`
+
+**Note:** Vercel Blob is used for storing high-resolution portfolio images with automatic CDN distribution.
+
+### 6. Run Development Server
 
 ```bash
 npm run dev
