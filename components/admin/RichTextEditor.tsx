@@ -252,16 +252,17 @@ export function RichTextEditor({
 
   // Display mode
   return (
-    <div
-      onClick={handleClick}
-      className={`${className} ${
-        isEditable
-          ? 'cursor-pointer border-2 border-dashed border-transparent hover:border-sage-300 rounded-md transition-colors relative group'
-          : ''
-      }`}
-      title={isEditable ? 'Click to edit' : undefined}
-      dangerouslySetInnerHTML={{ __html: content || placeholder }}
-    >
+    <div className="relative group">
+      <div
+        onClick={handleClick}
+        className={`${className} ${
+          isEditable
+            ? 'cursor-pointer border-2 border-dashed border-transparent hover:border-sage-300 rounded-md transition-colors'
+            : ''
+        }`}
+        title={isEditable ? 'Click to edit' : undefined}
+        dangerouslySetInnerHTML={{ __html: content || placeholder }}
+      />
       {/* Edit icon on hover */}
       {isEditable && (
         <span className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity">
