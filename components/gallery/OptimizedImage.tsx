@@ -96,7 +96,7 @@ export function OptimizedImage({
   // Render with fill
   if (fill) {
     return (
-      <div className={`relative ${className}`}>
+      <>
         {isLoading && (
           <div className="absolute inset-0 bg-neutral-100 animate-pulse" />
         )}
@@ -105,7 +105,7 @@ export function OptimizedImage({
           alt={alt}
           fill
           sizes={sizes || '100vw'}
-          className={`${objectFit === 'cover' ? 'object-cover' : `object-${objectFit}`} transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+          className={`${className} ${objectFit === 'cover' ? 'object-cover' : `object-${objectFit}`} transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
           onLoad={handleLoadComplete}
           onError={handleError}
           priority={priority}
@@ -113,7 +113,7 @@ export function OptimizedImage({
           placeholder="blur"
           blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
         />
-      </div>
+      </>
     );
   }
 

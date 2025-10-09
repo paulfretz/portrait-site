@@ -283,6 +283,7 @@ open http://localhost:3000/admin/categories
 - **21510f6** - docs: Mark Task 6.0 complete
 - **da23cfa** - Task 7.0: Admin dashboard & inline editing (2161+ lines, all 15 subtasks)
 - **e4a499f** - Task 8.0: Contact/inquiry system (1088+ lines, all 18 subtasks)
+- **f0e226f** - fix: RichTextEditor dangerouslySetInnerHTML error (About page bug)
 
 ---
 
