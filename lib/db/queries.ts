@@ -183,14 +183,42 @@ export async function getGalleriesByCategory(categorySlug: string): Promise<Gall
 
   const { data, error } = await supabase
     .from('galleries')
-    .select(
-      'id, category_id, title, slug, description, date, location, cover_image_id, display_order, created_at, updated_at'
-    )
+    .select(`
+      id,
+      category_id,
+      title,
+      slug,
+      description,
+      date,
+      location,
+      cover_image_id,
+      display_order,
+      created_at,
+      updated_at,
+      images!cover_image_id(url)
+    `)
     .eq('category_id', category.id)
-    .order('display_order', { ascending: true });
+    .eq('is_published', true)
+    .order('date', { ascending: false });
 
   if (error) throw error;
-  return data || [];
+  
+  // Transform the data to match GalleryPublic type
+  return (data || []).map((gallery: any) => ({
+    id: gallery.id,
+    category_id: gallery.category_id,
+    title: gallery.title,
+    slug: gallery.slug,
+    description: gallery.description,
+    date: gallery.date,
+    location: gallery.location,
+    cover_image_id: gallery.cover_image_id,
+    display_order: gallery.display_order,
+    created_at: gallery.created_at,
+    updated_at: gallery.updated_at,
+    cover_image_url: gallery.images?.url || null,
+    category_slug: categorySlug,
+  }));
 }
 
 /**
@@ -768,3 +796,4 @@ export async function getImagesByGalleryId(galleryId: string): Promise<Image[]> 
   if (error) throw error;
   return data || [];
 }
+

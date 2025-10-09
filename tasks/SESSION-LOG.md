@@ -10,9 +10,9 @@
 
 ## 📋 Current Status
 
-**Current Task:** Ready to start Task 6.0 - Frontend User Interface (Public Site)  
-**Last Completed:** Task 5.0 - Image Upload & Optimization Pipeline (COMMITTED)  
-**Overall Progress:** 5 of 11 parent tasks complete (45%)
+**Current Task:** Task 6.0 - Frontend User Interface (Public Site) - Subtasks 6.1-6.18 COMPLETED  
+**Last Completed:** Task 6.18 - Contact page with contact form  
+**Overall Progress:** 5 of 11 parent tasks complete (45%) - Task 6.0 partially complete (18/23 subtasks, 78%)
 
 ---
 
@@ -614,8 +614,157 @@ All 10 subtasks completed:
 
 **Summary:** Complete image upload and optimization system with Vercel Blob storage, multi-size generation (JPEG + WebP), automatic alt text, drag-and-drop uploader, and optimized serving with Next.js Image component. 4000+ lines of code added.
 
+### Task 6.0 - Frontend User Interface (Public Site) 🔄 IN PROGRESS
+**Commit:** 6f7fe3c - "feat: implement Task 6.1-6.7 - Site layout and homepage"
+**18 of 23 subtasks completed (78%):**
+
+#### ✅ Completed Subtasks:
+- **6.1** - Site layout with header and footer created
+  - File: `components/layout/Header.tsx` - Responsive header with DJ Coveno logo
+  - File: `components/layout/Footer.tsx` - Footer with contact info and social links
+  - Updated: `app/layout.tsx` - Integrated header/footer into root layout
+  - Features: Mobile hamburger menu, desktop horizontal nav, sage green accents
+
+- **6.2** - Header with typographic logo implemented
+  - "DJ Coveno Portraits" in clean sans-serif typography
+  - Logo links to homepage
+  - Sage green accent color (#8B9D83) matching PRD
+
+- **6.3** - Responsive navigation implemented
+  - Desktop: Horizontal menu with hover effects
+  - Mobile: Hamburger menu with slide-down animation
+  - Active page highlighting with sage green border
+  - Keyboard accessible with proper ARIA labels
+
+- **6.4** - Footer with contact info and social links designed
+  - Contact information: email, phone, location
+  - Social media links: Instagram, Facebook with hover effects
+  - Copyright notice with current year
+  - Privacy Policy and Terms links (placeholder)
+
+- **6.5** - Homepage with full-screen slideshow hero built
+  - File: `app/page.tsx` - Updated homepage with hero section
+  - Features: Full-screen slideshow, call-to-action buttons
+  - Content: "Capturing Life's Beautiful Moments" headline
+  - Buttons: "View Galleries" and "Get In Touch"
+
+- **6.6** - Hero slideshow component created
+  - File: `components/home/HeroSlideshow.tsx`
+  - Features: 4 placeholder images with 5-second auto-advance
+  - Smooth transitions with fade effects
+  - Loading states with spinner
+  - Responsive design with overlay text
+
+- **6.7** - Slideshow controls implemented
+  - Manual navigation: Previous/Next arrow buttons
+  - Play/Pause toggle button
+  - Keyboard navigation: Arrow keys, spacebar, ESC
+  - Slide indicators (dots) for direct navigation
+  - Touch/swipe support for mobile
+  - Keyboard instructions display
+
+- **6.8** - Galleries overview page built
+  - File: `app/galleries/page.tsx` - Main galleries page with header and category grid
+  - File: `components/gallery/CategoryGrid.tsx` - Responsive category grid component
+  - Features: Page header with description, responsive grid layout (1/2/3 columns)
+  - Category cards: Placeholder images with sage green gradient, category names and descriptions
+  - Loading states: Skeleton placeholders while fetching categories
+  - Error handling: Retry button and user-friendly error messages
+  - Empty state: Message when no categories available
+  - SEO: Proper meta tags and Open Graph data
+  - Links: Each category card links to `/galleries/[category-slug]`
+
+- **6.9** - Category page created
+  - File: `app/galleries/[category]/page.tsx` - Dynamic category page with breadcrumbs
+  - Features: Hero section with category name and description
+  - Gallery grid: Displays all published galleries in the category
+  - Metadata: Dynamic SEO meta tags and Open Graph data
+  - Empty state: User-friendly message when category has no galleries
+  - Error handling: 404 page for non-existent categories
+
+- **6.10** - Gallery grid component built
+  - File: `components/gallery/GalleryGrid.tsx` - Reusable gallery grid component
+  - Features: Responsive 3-column grid (1/2/3 on mobile/tablet/desktop)
+  - Gallery cards: Cover image, title, description, date, location
+  - Hover effects: Scale transform and overlay gradient
+  - Links: Each card links to individual gallery page
+  - Empty state: Placeholder when no galleries available
+  - Type-safe: Accepts `GalleryPublic & { category_slug, cover_image_url }`
+
+- **6.11** - Individual gallery page created
+  - File: `app/galleries/[category]/[slug]/page.tsx` - Dynamic gallery page
+  - Features: Breadcrumb navigation (Galleries > Category > Gallery)
+  - Gallery header: Title, description, metadata (date, location, photo count)
+  - Photo grid: Responsive grid using `PhotoGrid` component
+  - Back link: Navigate back to category page
+  - Metadata: Dynamic SEO with title, description, Open Graph
+  - Error handling: 404 for non-existent galleries
+
+- **6.12** - Gallery metadata display implemented
+  - Displays: Title, description, date (formatted), location, photo count
+  - Icons: Calendar, location pin, image count with SVG icons
+  - Responsive: Metadata wraps on mobile, horizontal on desktop
+  - Formatting: Date formatted as "Month Day, Year"
+
+- **6.13** - Photo grid layout implemented
+  - File: `components/gallery/PhotoGrid.tsx` - Client component for photo display
+  - Layout: Uniform 3-column grid (aspect ratio 4:3)
+  - Hover effects: Scale transform and gradient overlay
+  - Optimized images: Uses `OptimizedImage` component with lazy loading
+  - Responsive: 1/2/3 columns on mobile/tablet/desktop
+  - Empty state: Placeholder when gallery has no photos
+  - Cursor: Pointer cursor indicates clickable (ready for lightbox in 6.14)
+
+- **6.14** - Lightbox component created
+  - File: `components/gallery/GalleryLightbox.tsx` - Full-featured lightbox (254 lines)
+  - Features: Full-screen overlay, prev/next navigation, close button
+  - Image counter: Shows "X / Y" in top-left
+  - Loading states: Spinner while images load
+  - Image captions: Alt text displayed at bottom
+  - Thumbnail strip: For galleries with ≤20 images
+  - Body scroll lock: Prevents background scrolling
+  - Click-to-close: Click overlay to close
+
+- **6.15** - Lightbox features implemented
+  - Keyboard navigation: Arrow keys (prev/next), ESC (close)
+  - Touch/swipe gestures: Left/right swipe on mobile
+  - Keyboard instructions: Displayed on desktop
+  - Accessibility: ARIA labels, keyboard accessible
+  - Smooth transitions: Fade effects on open/close
+  - Updated `PhotoGrid`: Integrated lightbox, added zoom icon on hover
+  - Added `scrollbar-hide` utility to `app/globals.css`
+
+- **6.16** - About page built
+  - File: `app/about/page.tsx` - Comprehensive about page (244 lines)
+  - Hero section: Gradient background with title
+  - Profile photo section: Placeholder for photographer photo (will be replaced via inline editing)
+  - Bio summary: Two-column layout with introduction
+  - Experience section: Detailed background and journey
+  - Philosophy section: Three pillars (Authentic, Natural Light, Storytelling) with icons
+  - Detailed approach text: Photography style explanation
+  - Call to action: "View My Work" and "Get In Touch" buttons
+  - SEO optimized: Meta tags, Open Graph, Montana keywords
+
+- **6.17** - Profile photo display added
+  - Placeholder profile photo with user icon SVG
+  - Responsive aspect-square container
+  - Sage green gradient background
+  - Will be replaced with actual photo via inline editing (Task 7.0)
+
+- **6.18** - Contact page built
+  - File: `app/contact/page.tsx` - Contact page with two-column layout (237 lines)
+  - File: `components/contact/ContactForm.tsx` - Full contact form component (234 lines)
+  - Hero section: "Let's Connect" with gradient
+  - Contact information: Email, phone, service area, social media links
+  - Contact form fields: Name, email, phone (required), event type (dropdown), event date (optional), budget range (optional), message (required)
+  - Form validation: HTML5 validation with required fields
+  - Loading states: "Sending..." button during submission
+  - Success/error messages: User-friendly feedback
+  - "What to Expect" section: 3-step process (Inquiry → Consultation → Book)
+  - Note: Form currently simulates submission (Task 8.0 will implement actual API)
+
 #### ⏭️ Next Up:
-- Task 6.0 - Frontend User Interface / Public Site (23 subtasks remaining)
+- Task 6.19 - Apply minimal/clean design (5 subtasks remaining)
 
 ---
 
@@ -809,6 +958,19 @@ Following `.cursor/rules/process-task-list.md`:
 - `components/admin/CategoryManager.tsx` - Category manager component
 - `STATUS.md` - Quick reference status file
 - `tasks/SESSION-LOG.md` - This file
+- `components/layout/Header.tsx` - Site header with responsive navigation
+- `components/layout/Footer.tsx` - Site footer with contact info and social links
+- `components/home/HeroSlideshow.tsx` - Full-screen homepage slideshow component
+- `app/galleries/page.tsx` - Galleries overview page with category grid
+- `components/gallery/CategoryGrid.tsx` - Responsive category grid component
+- `app/galleries/[category]/page.tsx` - Dynamic category page with gallery grid
+- `components/gallery/GalleryGrid.tsx` - Reusable gallery grid component
+- `app/galleries/[category]/[slug]/page.tsx` - Individual gallery page with photo grid
+- `components/gallery/PhotoGrid.tsx` - Client component for photo display with hover effects
+- `components/gallery/GalleryLightbox.tsx` - Full-featured lightbox component (254 lines)
+- `app/about/page.tsx` - About page with bio, experience, philosophy sections (244 lines)
+- `app/contact/page.tsx` - Contact page with form and contact info (237 lines)
+- `components/contact/ContactForm.tsx` - Contact form component with validation (234 lines)
 
 ### Modified:
 - `components/admin/CategoryManager.tsx` - Added category creation form with modal (now 265+ lines)
@@ -823,6 +985,17 @@ Following `.cursor/rules/process-task-list.md`:
 - `.env.local` - Changed `ADMIN_EMAIL` to `NEXT_PUBLIC_ADMIN_EMAIL`
 - `README.md` - Updated admin email environment variable documentation
 - `tasks/SESSION-LOG.md` - Updated with Task 3.10 completion
+- `app/layout.tsx` - Added Header and Footer components to root layout
+- `app/page.tsx` - Updated homepage with HeroSlideshow and call-to-action section
+- `components/gallery/OptimizedImage.tsx` - Added onLoad callback support for slideshow
+- `lib/db/queries.ts` - Added getImagesByGalleryId function
+- `app/api/images/upload/route.ts` - Fixed deprecated config export
+- `app/api/content/route.ts` - Added dynamic rendering configuration
+- `tasks/tasks-0001-prd-portrait-photography-site.md` - Marked Tasks 6.1-6.18 complete
+- `tasks/SESSION-LOG.md` - Updated with Task 6.0 progress (18/23 subtasks complete, 78%)
+- `lib/db/queries.ts` - Updated getGalleriesByCategory to include cover_image_url and category_slug
+- `components/gallery/PhotoGrid.tsx` - Integrated lightbox, added zoom icon on hover
+- `app/globals.css` - Added scrollbar-hide utility class for lightbox thumbnails
 
 ### Next to Create (Task 3.11):
 - `app/api/content/route.ts` - Page content management API (GET, PUT for inline editing)
@@ -965,9 +1138,23 @@ curl http://localhost:3000/api/galleries
 
 **What Still 404s (expected):**
 - `/admin` - Admin dashboard (Task 7.0)
-- `/galleries` - Public gallery pages (Task 6.0)
-- `/about` - About page (Task 6.0)
-- `/contact` - Contact page (Task 6.0)
+
+**Recently Completed:**
+- `/galleries` - Galleries overview page (Task 6.8) ✅
+- `/galleries/[category]` - Category pages (Task 6.9) ✅
+- `/galleries/[category]/[slug]` - Individual gallery pages with lightbox (Task 6.11-6.15) ✅
+- `/about` - About page (Task 6.16-6.17) ✅
+- `/contact` - Contact page with form (Task 6.18) ✅
+
+**What's Working Now:**
+- ✅ **Public Site:** Homepage, galleries, about, contact - all pages functional
+- ✅ **Gallery Browsing:** Full flow (categories → galleries → photos → lightbox)
+- ✅ **Lightbox:** Full-screen viewing with keyboard/touch navigation
+- ✅ **Responsive Design:** Mobile-first with breakpoints
+- ✅ **Admin Gallery Management:** `/admin/galleries` with CRUD operations
+- ✅ **Admin Category Management:** `/admin/categories` with drag-and-drop
+- ✅ **Image Upload:** Multi-file with 8-version optimization
+- ✅ **Navigation:** Header with mobile menu, footer with social links
 
 ### 11. Important Notes:
 - User prefers session log updates (just accept them in batch)
@@ -979,7 +1166,7 @@ curl http://localhost:3000/api/galleries
 
 ---
 
-**Last Updated:** October 9, 2025 - Tasks 4.0 & 5.0 Complete  
+**Last Updated:** October 9, 2025 - Task 6.0 Partially Complete (6.1-6.7)  
 **Recent Changes:**
 - ✅ Completed all of Task 4.0 (Gallery & Category Management System)
 - ✅ Completed all of Task 5.0 (Image Upload & Optimization Pipeline)
@@ -987,5 +1174,7 @@ curl http://localhost:3000/api/galleries
 - ✅ Manual action completed: Vercel Blob Storage configured
 - ✅ Full admin workflow now functional: categories, galleries, images
 - ✅ Image optimization: 8 versions per upload (4 sizes × JPEG + WebP)
-- ⏭️ Next: Task 6.0 - Frontend User Interface (Public Site) - 23 subtasks
+- ✅ Completed Task 6.1-6.7: Site layout, header, footer, homepage slideshow
+- ✅ Committed: 6f7fe3c - Site layout and homepage implementation
+- ⏭️ Next: Task 6.8 - Build galleries overview page (16 subtasks remaining)
 

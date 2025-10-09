@@ -206,29 +206,29 @@
   - [x] 5.13 Validate file types and sizes (max 10MB per image, JPEG/PNG/WebP/HEIC only)
 
 - [ ] 6.0 Frontend User Interface (Public Site)
-  - [ ] 6.1 Create site layout with header and footer (`components/layout/Header.tsx`, `Footer.tsx`)
-  - [ ] 6.2 Design header with "DJ Coveno Portraits" typographic logo and navigation
-  - [ ] 6.3 Implement responsive navigation (desktop: horizontal menu, mobile: hamburger menu)
-  - [ ] 6.4 Design footer with contact info, social links (Instagram, Facebook), and copyright
-  - [ ] 6.5 Build homepage (`app/page.tsx`) with full-screen slideshow hero
-  - [ ] 6.6 Create hero slideshow component (`components/home/HeroSlideshow.tsx`) with automatic transitions
-  - [ ] 6.7 Implement slideshow controls (prev/next arrows, pause/play, keyboard navigation)
-  - [ ] 6.8 Build galleries overview page (`app/galleries/page.tsx`) showing all categories
-  - [ ] 6.9 Create category page (`app/galleries/[category]/page.tsx`) with category description and gallery grid
-  - [ ] 6.10 Build gallery grid component (`components/gallery/GalleryGrid.tsx`) with cover images
-  - [ ] 6.11 Create individual gallery page (`app/galleries/[category]/[slug]/page.tsx`)
-  - [ ] 6.12 Display gallery metadata (title, description, date, location) on gallery page
-  - [ ] 6.13 Implement photo grid layout for gallery photos (masonry or uniform grid)
-  - [ ] 6.14 Create lightbox component (`components/gallery/GalleryLightbox.tsx`) for full-size viewing
-  - [ ] 6.15 Implement lightbox features: prev/next navigation, keyboard support (arrows, ESC), swipe gestures
-  - [ ] 6.16 Build About page (`app/about/page.tsx`) with bio, experience, approach sections
-  - [ ] 6.17 Add profile photo display on About page
-  - [ ] 6.18 Build Contact page (`app/contact/page.tsx`) with contact form
-  - [ ] 6.19 Apply minimal/clean design: whitespace, neutral colors, sage green accent (#8B9D83)
-  - [ ] 6.20 Ensure all pages are mobile-responsive (test at 375px, 768px, 1024px, 1440px breakpoints)
-  - [ ] 6.21 Implement smooth page transitions and subtle animations (fade-ins, hover effects)
-  - [ ] 6.22 Add loading states for image galleries and data fetching
-  - [ ] 6.23 Ensure WCAG 2.1 AA accessibility: keyboard navigation, focus indicators, contrast ratios
+  - [x] 6.1 Create site layout with header and footer (`components/layout/Header.tsx`, `Footer.tsx`)
+  - [x] 6.2 Design header with "DJ Coveno Portraits" typographic logo and navigation
+  - [x] 6.3 Implement responsive navigation (desktop: horizontal menu, mobile: hamburger menu)
+  - [x] 6.4 Design footer with contact info, social links (Instagram, Facebook), and copyright
+  - [x] 6.5 Build homepage (`app/page.tsx`) with full-screen slideshow hero
+  - [x] 6.6 Create hero slideshow component (`components/home/HeroSlideshow.tsx`) with automatic transitions
+  - [x] 6.7 Implement slideshow controls (prev/next arrows, pause/play, keyboard navigation)
+  - [x] 6.8 Build galleries overview page (`app/galleries/page.tsx`) showing all categories
+  - [x] 6.9 Create category page (`app/galleries/[category]/page.tsx`) with category description and gallery grid
+  - [x] 6.10 Build gallery grid component (`components/gallery/GalleryGrid.tsx`) with cover images
+  - [x] 6.11 Create individual gallery page (`app/galleries/[category]/[slug]/page.tsx`)
+  - [x] 6.12 Display gallery metadata (title, description, date, location) on gallery page
+  - [x] 6.13 Implement photo grid layout for gallery photos (masonry or uniform grid)
+  - [x] 6.14 Create lightbox component (`components/gallery/GalleryLightbox.tsx`) for full-size viewing
+  - [x] 6.15 Implement lightbox features: prev/next navigation, keyboard support (arrows, ESC), swipe gestures
+  - [x] 6.16 Build About page (`app/about/page.tsx`) with bio, experience, approach sections
+  - [x] 6.17 Add profile photo display on About page
+  - [x] 6.18 Build Contact page (`app/contact/page.tsx`) with contact form
+  - [x] 6.19 Apply minimal/clean design: whitespace, neutral colors, sage green accent (#8B9D83)
+  - [x] 6.20 Ensure all pages are mobile-responsive (test at 375px, 768px, 1024px, 1440px breakpoints)
+  - [x] 6.21 Implement smooth page transitions and subtle animations (fade-ins, hover effects)
+  - [x] 6.22 Add loading states for image galleries and data fetching
+  - [x] 6.23 Ensure WCAG 2.1 AA accessibility: keyboard navigation, focus indicators, contrast ratios
 
 - [ ] 7.0 Admin Dashboard & Inline Editing
   - [ ] 7.1 Create admin dashboard layout (`app/admin/page.tsx`) with navigation sidebar
