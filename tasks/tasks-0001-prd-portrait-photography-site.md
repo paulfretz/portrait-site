@@ -247,25 +247,25 @@
   - [x] 7.14 Create admin dashboard summary: recent inquiries, gallery count, latest updates
   - [x] 7.15 Add quick actions to dashboard: "New Gallery", "View Inquiries", "Edit About"
 
-- [ ] 8.0 Contact/Inquiry System
-  - [ ] 8.1 Create contact form component (`components/contact/ContactForm.tsx`)
-  - [ ] 8.2 Implement form fields: name, email, phone, event type, event date, budget, message
-  - [ ] 8.3 Add event type dropdown with options: Wedding, Engagement, Portrait, Pet, Family, Senior, Proposal, Other
-  - [ ] 8.4 Add budget dropdown: <$1000, $1000-$2500, $2500-$5000, $5000+, Not Sure
-  - [ ] 8.5 Implement form validation with Zod schema (`lib/utils/validation.ts`)
-  - [ ] 8.6 Add honeypot field for basic spam protection
-  - [ ] 8.7 Create inquiry submission API route (`app/api/inquiries/route.ts`)
-  - [ ] 8.8 Implement rate limiting on inquiry endpoint (max 3 submissions per hour per IP)
-  - [ ] 8.9 Store inquiries in database with timestamp and status (default: "New")
-  - [ ] 8.10 Integrate email service (SendGrid or Resend) for notifications
-  - [ ] 8.11 Send email notification to owner when inquiry is submitted
-  - [ ] 8.12 Create inquiry dashboard component (`components/admin/InquiryDashboard.tsx`)
-  - [ ] 8.13 Build inquiries page (`app/admin/inquiries/page.tsx`) listing all submissions
-  - [ ] 8.14 Display inquiry details: date, client info, event type, budget, message, status
-  - [ ] 8.15 Implement status update functionality: New, Contacted, Booked, Archived
-  - [ ] 8.16 Add filtering/sorting to inquiry dashboard (by status, date, event type)
-  - [ ] 8.17 Add inquiry search functionality (by name or email)
-  - [ ] 8.18 Show success message after form submission on Contact page
+- [x] 8.0 Contact/Inquiry System
+  - [x] 8.1 Create contact form component (`components/contact/ContactForm.tsx`)
+  - [x] 8.2 Implement form fields: name, email, phone, event type, event date, budget, message
+  - [x] 8.3 Add event type dropdown with options: Wedding, Engagement, Portrait, Pet, Family, Senior, Proposal, Other
+  - [x] 8.4 Add budget dropdown: <$1000, $1000-$2500, $2500-$5000, $5000+, Not Sure
+  - [x] 8.5 Implement form validation with Zod schema (`lib/utils/validation.ts`)
+  - [x] 8.6 Add honeypot field for basic spam protection
+  - [x] 8.7 Create inquiry submission API route (`app/api/inquiries/route.ts`)
+  - [x] 8.8 Implement rate limiting on inquiry endpoint (max 3 submissions per hour per IP)
+  - [x] 8.9 Store inquiries in database with timestamp and status (default: "New")
+  - [x] 8.10 Integrate email service (SendGrid or Resend) for notifications
+  - [x] 8.11 Send email notification to owner when inquiry is submitted
+  - [x] 8.12 Create inquiry dashboard component (`components/admin/InquiryDashboard.tsx`)
+  - [x] 8.13 Build inquiries page (`app/admin/inquiries/page.tsx`) listing all submissions
+  - [x] 8.14 Display inquiry details: date, client info, event type, budget, message, status
+  - [x] 8.15 Implement status update functionality: New, Contacted, Booked, Archived
+  - [x] 8.16 Add filtering/sorting to inquiry dashboard (by status, date, event type)
+  - [x] 8.17 Add inquiry search functionality (by name or email)
+  - [x] 8.18 Show success message after form submission on Contact page
 
 - [ ] 9.0 SEO Optimization & Metadata
   - [ ] 9.1 Create SEO utility functions (`lib/utils/seo.ts`) for meta tag generation

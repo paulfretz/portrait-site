@@ -41,9 +41,30 @@ export function ContactForm() {
     setErrorMessage('');
 
     try {
-      // TODO: This will be implemented in Task 8.0 (Contact/Inquiry System)
-      // For now, just simulate a successful submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          event_type: formData.eventType,
+          event_date: formData.eventDate || null,
+          budget: formData.budget || null,
+          message: formData.message,
+          honeypot: '', // Spam protection field
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Log validation details for debugging
+        if (data.details) {
+          console.error('Validation errors:', data.details);
+        }
+        throw new Error(data.error || 'Failed to submit inquiry');
+      }
 
       setSubmitStatus('success');
       setFormData({
@@ -57,7 +78,11 @@ export function ContactForm() {
       });
     } catch (error) {
       setSubmitStatus('error');
-      setErrorMessage('Something went wrong. Please try again or email me directly.');
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong. Please try again or email me directly.'
+      );
       console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
@@ -150,14 +175,14 @@ export function ContactForm() {
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-sage-500 focus:border-transparent transition-colors"
           >
             <option value="">Select an option</option>
-            <option value="wedding">Wedding</option>
-            <option value="engagement">Engagement</option>
-            <option value="portrait">Portrait</option>
-            <option value="pet">Pet</option>
-            <option value="family">Family</option>
-            <option value="senior">Senior</option>
-            <option value="proposal">Proposal</option>
-            <option value="other">Other</option>
+            <option value="Wedding">Wedding</option>
+            <option value="Engagement">Engagement</option>
+            <option value="Portrait">Portrait</option>
+            <option value="Pet">Pet</option>
+            <option value="Family">Family</option>
+            <option value="Senior">Senior</option>
+            <option value="Proposal">Proposal</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
@@ -189,11 +214,11 @@ export function ContactForm() {
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-sage-500 focus:border-transparent transition-colors"
           >
             <option value="">Select a range</option>
-            <option value="under-1000">Under $1,000</option>
-            <option value="1000-2500">$1,000 - $2,500</option>
-            <option value="2500-5000">$2,500 - $5,000</option>
-            <option value="5000-plus">$5,000+</option>
-            <option value="not-sure">Not Sure</option>
+            <option value="<$1000">&lt;$1,000</option>
+            <option value="$1000-$2500">$1,000 - $2,500</option>
+            <option value="$2500-$5000">$2,500 - $5,000</option>
+            <option value="$5000+">$5,000+</option>
+            <option value="Not Sure">Not Sure</option>
           </select>
         </div>
 

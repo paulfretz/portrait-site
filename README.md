@@ -98,8 +98,8 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 # Site Configuration
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
-# Email Service
-SENDGRID_API_KEY=your-sendgrid-api-key
+# Email Service (Resend)
+RESEND_API_KEY=re_your-resend-api-key-here
 NOTIFICATION_EMAIL=your-email@example.com
 
 # Image Storage
@@ -125,7 +125,21 @@ NEXT_PUBLIC_ADMIN_EMAIL=admin@example.com
 
 **Note:** Vercel Blob is used for storing high-resolution portfolio images with automatic CDN distribution.
 
-### 6. Run Development Server
+### 6. Set Up Resend for Email Notifications
+
+1. Create a free account at [resend.com](https://resend.com)
+2. Go to API Keys section
+3. Create a new API key
+4. Copy the API key to your `.env.local` as `RESEND_API_KEY`
+5. Set `NOTIFICATION_EMAIL` to your email address (where you want to receive inquiry notifications)
+
+**Note:** Resend free tier includes 100 emails/day and 3,000 emails/month, which is perfect for a portfolio site.
+
+**Domain Setup (Optional but Recommended):**
+- For production, verify your domain in Resend to send from `inquiries@djcovenoportraits.com`
+- For development, you can use Resend's test domain
+
+### 7. Run Development Server
 
 ```bash
 npm run dev

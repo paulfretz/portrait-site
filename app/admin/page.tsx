@@ -221,10 +221,9 @@ export default async function AdminDashboard() {
                   New Gallery
                 </Link>
 
-                <button
-                  disabled
-                  className="flex items-center justify-center px-4 py-3 bg-neutral-100 text-neutral-400 rounded-md cursor-not-allowed font-medium"
-                  title="Coming in Task 8.0"
+                <Link
+                  href="/admin/inquiries"
+                  className="flex items-center justify-center px-4 py-3 bg-sage-50 text-sage-700 rounded-md hover:bg-sage-100 transition-colors font-medium"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -235,7 +234,7 @@ export default async function AdminDashboard() {
                     />
                   </svg>
                   View Inquiries
-                </button>
+                </Link>
 
                 <Link
                   href="/about"

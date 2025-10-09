@@ -198,7 +198,6 @@ export async function getGalleriesByCategory(categorySlug: string): Promise<Gall
       images!cover_image_id(url)
     `)
     .eq('category_id', category.id)
-    .eq('is_published', true)
     .order('date', { ascending: false });
 
   if (error) throw error;

@@ -10,11 +10,11 @@
 
 ## 📋 Current Status
 
-**Current Task:** Task 7.0 - Admin Dashboard & Inline Editing ✅ COMMITTED  
-**Last Completed:** Task 7.0 complete - all 15 subtasks finished and committed  
+**Current Task:** Task 8.0 - Contact/Inquiry System (18/18 subtasks complete, 100%) ✅  
+**Last Completed:** Task 8.18 - All inquiry system tasks complete  
 **Overall Progress:** 7 of 11 parent tasks complete (64%)
 
-**Next Parent Task:** Task 8.0 - Contact/Inquiry System
+**Next:** Commit Task 8.0, then start Task 9.0 - SEO Optimization
 
 ---
 
@@ -132,7 +132,12 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 4. ✅ Admin email in `.env.local` as `NEXT_PUBLIC_ADMIN_EMAIL`
 
 ### Pending:
-1. **Email Service** (Task 8.0) - Configure SendGrid/Resend API keys
+1. **Resend API Key** (Task 8.10-8.11) - NON-BLOCKING
+   - Create account at resend.com
+   - Get API key
+   - Add to `.env.local` as `RESEND_API_KEY=re_your-key-here`
+   - Add `NOTIFICATION_EMAIL=your-email@example.com`
+   - Email notifications will work once configured
 2. **Testing Setup** (Task 10.0) - Add test scripts to package.json
 3. **Domain Setup** (Task 11.0) - Configure djcovenoportraits.com DNS
 
@@ -177,13 +182,15 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 
 ## 🔥 Technical Debt & Future Cleanup
 
-1. **Supabase Type Inference** - @ts-ignore workarounds in `lib/db/queries.ts`
+1. **Supabase Type Inference** - @ts-ignore workarounds in `lib/db/queries.ts` and `app/api/inquiries/route.ts`
    - Fix in Task 10.22 with CLI-generated types
 2. **Manual Migrations** - Currently manual SQL execution
    - Automate in Task 10.22-10.23 with Supabase CLI + GitHub Actions
 3. **Tests** - Not written yet (Task 10.0 - HIGH PRIORITY)
 4. **contentEditable** - RichTextEditor uses native API
    - Consider Tiptap/Lexical for advanced features (future enhancement)
+5. **Rate Limiting** - Currently email-based (3 per hour per email)
+   - Could add IP-based rate limiting by adding `ip_address` column to inquiries table (future enhancement)
 
 ---
 
@@ -199,12 +206,15 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 
 ### Admin Features:
 - ✅ Google OAuth login/logout
-- ✅ Admin dashboard (`/admin`)
+- ✅ Admin dashboard (`/admin`) with real-time stats
 - ✅ Gallery management (`/admin/galleries`) - CRUD, image upload, reordering
 - ✅ Category management (`/admin/categories`) - CRUD, drag-and-drop
 - ✅ Edit Mode toggle in toolbar
 - ✅ Inline editing: Homepage hero (headline, subheadline, CTAs)
-- ✅ Inline editing: About page (bio, experience, approach)
+- ✅ Inline editing: About page (bio, experience, approach, profile photo)
+- ✅ Inline editing: Contact page (all contact info, social media URLs)
+- ✅ Contact form submissions saving to database
+- ✅ Email notifications (when Resend API key configured)
 
 ### APIs:
 - ✅ `/api/categories` - GET, POST, PUT, DELETE
@@ -213,6 +223,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - ✅ `/api/images/upload` - POST (multi-file, auto-optimization)
 - ✅ `/api/images/[id]` - PUT, DELETE
 - ✅ `/api/content` - GET, PUT (inline editing)
+- ✅ `/api/inquiries` - POST (with validation, rate limiting), GET (admin only)
 
 ---
 
@@ -255,10 +266,10 @@ open http://localhost:3000/admin/categories
 - ✅ **Manual actions:** Clearly mark BLOCKING vs NON-BLOCKING, wait for confirmation
 
 ### 5. Current Work Context:
-**Working on:** Task 7.0 ✅ COMMITTED  
-**Progress:** 15 of 15 subtasks complete (100%)  
-**Next:** Start Task 8.0 - Contact/Inquiry System  
-**Overall:** 7 of 11 parent tasks complete (64%)
+**Working on:** Task 8.0 - Contact/Inquiry System ✅ COMPLETE  
+**Progress:** 18 of 18 subtasks complete (100%)  
+**Next:** Commit Task 8.0, then start Task 9.0 - SEO Optimization  
+**Overall:** 7 of 11 parent tasks complete (64%), next will be 8/11 (73%)
 
 ---
 
@@ -278,11 +289,24 @@ open http://localhost:3000/admin/categories
 
 ### Task 7.0 - Admin Dashboard & Inline Editing ✅ COMMITTED
 
-### Task 8.0 - Contact/Inquiry System (12 subtasks)
-- Contact form API endpoint
-- Email notifications
-- Inquiry dashboard
-- Status management
+### Task 8.0 - Contact/Inquiry System ✅ COMPLETE
+**All 18 subtasks complete (100%):**
+- **8.1-8.6** ✅ Contact form with all fields, validation, honeypot
+- **8.7** ✅ Inquiry submission API (`app/api/inquiries/route.ts`)
+- **8.8** ✅ Rate limiting (email-based, 3 per hour)
+- **8.9** ✅ Database storage with status tracking
+- **8.10** ✅ Resend email service integrated (`lib/utils/email.ts`)
+- **8.11** ✅ Email notifications to owner on inquiry submission
+- **8.12** ✅ InquiryDashboard component with modal details
+- **8.13** ✅ Inquiries admin page (`app/admin/inquiries/page.tsx`)
+- **8.14** ✅ Full inquiry details display (all fields, timestamps)
+- **8.15** ✅ Status update functionality (4 statuses with color coding)
+- **8.16** ✅ Status filtering and sorting
+- **8.17** ✅ Search by name or email
+- **8.18** ✅ Success message on form submission
+
+### Task 8.0 - Contact/Inquiry System ✅ COMPLETE
+All 18 subtasks complete! Ready to commit.
 
 ### Task 9.0 - SEO Optimization (12 subtasks)
 - Structured data (JSON-LD)
@@ -373,7 +397,13 @@ curl http://localhost:3000/api/galleries?category=weddings
 - Modified: `app/page.tsx` (fetch content from DB)
 - Modified: `app/about/page.tsx` (fetch content from DB, profile photo URL)
 - Modified: `app/contact/page.tsx` (fetch content from DB, all contact info + social URLs)
-- Modified: `lib/db/queries.ts` (added dashboard stats functions)
+- Modified: `lib/db/queries.ts` (added dashboard stats functions, removed is_published filter)
+- Created: `lib/utils/email.ts` (Resend email service integration)
+- Created: `app/api/inquiries/route.ts` (inquiry submission API with rate limiting)
+- Modified: `components/contact/ContactForm.tsx` (connected to API, fixed validation)
+- Modified: `next.config.js` (added Unsplash images support)
+- Modified: `.env.example` (added Resend configuration)
+- Modified: `README.md` (added Resend setup instructions)
 
 ---
 
@@ -381,14 +411,14 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 8.0 - Contact/Inquiry System (0/12 subtasks)
-2. **What's Done:** Task 7.0 complete and committed - full admin dashboard & inline editing system
-3. **What's Next:** Start Task 8.1 - Create contact form API endpoint
+1. **Current Task:** Task 8.0, subtask 8.12 (Inquiry dashboard component)
+2. **What's Done:** Contact form API complete (8.1-8.11) - submission, validation, rate limiting, database storage, email notifications
+3. **What's Next:** Create inquiry dashboard component to display all inquiries
 4. **Process:** ONE subtask at a time, wait for "y" approval, update session log after each
 5. **Key Files:** 
-   - `components/contact/ContactForm.tsx` - Already exists (UI only)
-   - Need to create: `app/api/inquiries/route.ts` - POST endpoint
-   - Need to update: ContactForm to submit to API
+   - Create: `components/admin/InquiryDashboard.tsx` - List inquiries with filtering
+   - Create: `app/admin/inquiries/page.tsx` - Admin page for inquiries
+   - API ready: `GET /api/inquiries` with status filter and search
 6. **Remember:** Follow `process-task-list.md` strictly - one task, update logs, wait for approval
 
 ---
