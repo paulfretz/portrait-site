@@ -105,8 +105,8 @@ NOTIFICATION_EMAIL=your-email@example.com
 # Image Storage
 BLOB_READ_WRITE_TOKEN=your-vercel-blob-token
 
-# Admin User Email
-ADMIN_EMAIL=admin@example.com
+# Admin User Email (must be accessible in browser for auth checks)
+NEXT_PUBLIC_ADMIN_EMAIL=admin@example.com
 ```
 
 ### 4. Set Up Supabase

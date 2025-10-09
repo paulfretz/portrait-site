@@ -35,6 +35,66 @@ Guidelines for managing task lists in markdown files to track progress on comple
    - List every file created or modified.
    - Give each file a one‑line description of its purpose.
 
+## Session Log Maintenance
+
+**Always maintain a session log file** (typically `tasks/SESSION-LOG.md`) to provide continuity across context windows and track the project journey. The session log must include:
+
+### Required Sections:
+
+1. **Current Status:**
+   - Current task being worked on
+   - Last completed task
+   - Overall progress/phase
+
+2. **PRD Context & Overall Goal:**
+   - Link to the PRD document
+   - Brief summary of the project's main objective
+   - Key success criteria or deliverables
+   - Any critical constraints (budget, timeline, technical requirements)
+
+3. **Completed Tasks Log:**
+   - List of all completed tasks with brief descriptions
+   - Key technical decisions made for each task
+   - Any deviations from original plan
+   - Important notes or gotchas discovered
+
+4. **Technical Decisions & Modifications:**
+   - Architecture choices made
+   - Libraries/packages selected and why
+   - Design pattern decisions
+   - Changes to the original PRD or plan
+   - Rationale for modifications
+
+5. **Manual Actions Required:**
+   - List of actions that require user intervention
+   - Clear instructions for each action
+   - Examples where helpful
+   - Track completed manual actions
+
+6. **Future Cleanup Items:**
+   - Temporary solutions that need to be replaced
+   - Technical debt incurred
+   - Files/code that will need refactoring
+   - Dependencies on future tasks (e.g., "placeholder types will be replaced in Task 3.2")
+   - Performance optimizations deferred
+
+7. **Files Created/Modified:**
+   - Clear list of what's been added or changed
+   - Next files to be created
+   - Any files that should be deleted
+
+8. **Quick Start for New Context:**
+   - How to immediately resume work if context window resets
+   - Key files to read first
+   - Current environment state
+   - Important credentials/URLs (non-sensitive)
+
+### Update Frequency:
+- Update session log after completing each sub-task
+- Add cleanup items as they're identified
+- Document technical decisions when made, not later
+- Keep "Current Status" always accurate
+
 ## AI Instructions
 
 When working with task lists, the AI must:
@@ -47,3 +107,22 @@ When working with task lists, the AI must:
 4. Keep "Relevant Files" accurate and up to date.
 5. Before starting work, check which sub‑task is next.
 6. After implementing a sub‑task, update the file and then pause for user approval.
+7. **Maintain the session log:**
+   - Update after each completed sub-task
+   - Document technical decisions as they're made
+   - Add cleanup items when identified
+   - Keep PRD context visible
+   - Ensure new context windows can quickly resume work
+8. **Track manual actions required:**
+   - Maintain "Manual Actions Required" section in session log
+   - Move completed actions to "Completed Manual Actions"
+9. **Notify user of manual actions required:**
+   - Clearly call out when user needs to manually configure something
+   - Provide exact steps and examples for manual changes
+   - Common manual actions include:
+     - Adding actual credentials/API keys to `.env.local`
+     - Creating accounts in third-party services
+     - Configuring external dashboards (Google Cloud, Supabase, etc.)
+     - DNS configuration
+     - Domain setup
+   - Format notifications with clear headers like "🎯 What YOU Need to Do:" or "⚠️ Manual Action Required:"

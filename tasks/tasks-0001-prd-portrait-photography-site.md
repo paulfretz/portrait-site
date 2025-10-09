@@ -144,18 +144,18 @@
   - [x] 1.10 Create initial README.md with project overview and setup instructions
 
 - [ ] 2.0 Authentication & Authorization System
-  - [ ] 2.1 Create Supabase project and obtain API keys
-  - [ ] 2.2 Configure Google OAuth provider in Supabase dashboard
-  - [ ] 2.3 Create `lib/supabase/client.ts` for browser-side Supabase client
-  - [ ] 2.4 Create `lib/supabase/server.ts` for server-side Supabase client (cookies-based)
-  - [ ] 2.5 Implement authentication context (`lib/auth/auth-context.tsx`) with user state management
-  - [ ] 2.6 Create authentication provider component (`lib/auth/auth-provider.tsx`)
-  - [ ] 2.7 Build login page (`app/login/page.tsx`) with Google OAuth button
-  - [ ] 2.8 Create OAuth callback handler (`app/api/auth/callback/route.ts`)
-  - [ ] 2.9 Implement logout API route (`app/api/auth/logout/route.ts`)
-  - [ ] 2.10 Create Next.js middleware (`middleware.ts`) to protect admin routes
-  - [ ] 2.11 Create `useAuth` hook (`lib/hooks/useAuth.ts`) for easy authentication access
-  - [ ] 2.12 Add visual admin indicator (e.g., small toolbar) that shows when user is logged in
+  - [x] 2.1 Create Supabase project and obtain API keys
+  - [x] 2.2 Configure Google OAuth provider in Supabase dashboard
+  - [x] 2.3 Create `lib/supabase/client.ts` for browser-side Supabase client
+  - [x] 2.4 Create `lib/supabase/server.ts` for server-side Supabase client (cookies-based)
+  - [x] 2.5 Implement authentication context (`lib/auth/auth-context.tsx`) with user state management
+  - [x] 2.6 Create authentication provider component (`lib/auth/auth-provider.tsx`)
+  - [x] 2.7 Build login page (`app/login/page.tsx`) with Google OAuth button
+  - [x] 2.8 Create OAuth callback handler (`app/api/auth/callback/route.ts`)
+  - [x] 2.9 Implement logout API route (`app/api/auth/logout/route.ts`)
+  - [x] 2.10 Create Next.js middleware (`middleware.ts`) to protect admin routes
+  - [x] 2.11 Create `useAuth` hook (`lib/hooks/useAuth.ts`) for easy authentication access
+  - [x] 2.12 Add visual admin indicator (e.g., small toolbar) that shows when user is logged in
 
 - [ ] 3.0 Database Schema & API Layer
   - [ ] 3.1 Design PostgreSQL database schema (categories, galleries, images, inquiries, page_content tables)
