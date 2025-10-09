@@ -10,9 +10,9 @@
 
 ## 📋 Current Status
 
-**Current Task:** Task 4.5 - Create sortable/draggable category list component  
-**Last Completed:** Task 4.4 - Category deletion with confirmation  
-**Overall Progress:** Task 4.0 in progress (4 of 15 subtasks complete)
+**Current Task:** Ready to start Task 6.0 - Frontend User Interface (Public Site)  
+**Last Completed:** Task 5.0 - Image Upload & Optimization Pipeline (COMMITTED)  
+**Overall Progress:** 5 of 11 parent tasks complete (45%)
 
 ---
 
@@ -359,7 +359,9 @@ All 10 subtasks completed:
 
 **Summary:** Complete database and API layer with 5 tables, 730+ lines of query functions, and 6 API routes (categories, galleries, content). All routes have authentication, validation, and error handling. Privacy protection for client names throughout.
 
-### Task 4.0 - Gallery & Category Management System (IN PROGRESS)
+### Task 4.0 - Gallery & Category Management System ✅ COMMITTED
+**Commit:** 89a3903 - "feat: implement gallery/category management and image upload system"
+**All 15 subtasks completed:**
 
 #### ✅ Completed Subtasks:
 - **4.1** - Category manager component created
@@ -519,14 +521,11 @@ All 10 subtasks completed:
   - **Cover image:** PUT request to `/api/galleries/[id]` updates cover_image_id
   - Component 350+ lines with full image management
 
-#### 🎉 Task 4.0 - COMPLETE! (100%)
-- **All 15 subtasks complete!** ✅
-- **Full admin interface for categories and galleries**
-- **Drag-and-drop reordering for categories and images**
-- **Complete CRUD operations for all entities**
-- **Search, filter, and management tools**
+**Summary:** Complete admin interface for managing categories and galleries with drag-and-drop reordering, full CRUD operations, search/filter, and comprehensive image management including upload, reordering, and cover image selection.
 
-### Task 5.0 - Image Upload & Optimization Pipeline (IN PROGRESS)
+### Task 5.0 - Image Upload & Optimization Pipeline ✅ COMMITTED
+**Commit:** 89a3903 - "feat: implement gallery/category management and image upload system"
+**All 13 subtasks completed:**
 
 #### ✅ Completed Subtasks:
 - **5.1** - Chose and configured Vercel Blob Storage
@@ -586,21 +585,37 @@ All 10 subtasks completed:
   - **Deletes from Vercel Blob:** Uses `del()` from `@vercel/blob`
   - **Deletes from database:** Removes image record from `images` table
   - **Error handling:** Continues even if blob deletion fails (handles already-deleted blobs)
-  - Uses `getImageById()` and `deleteImage()` from queries.ts
+  - PUT `/api/images/[id]` endpoint added for updating metadata
+  - Uses `getImageById()`, `deleteImage()`, and `updateImage()` from queries.ts
   - Returns success message on completion
 
-#### 🎉 Task 5.0 Status:
-- **Completed:** 9 of 13 subtasks (69%)
-- **Core functionality complete:** Upload, storage, metadata, validation, deletion ✅
-- **Deferred optimization:** Image resizing and Next.js Image component (can be added later)
+- **5.5 & 5.6** - Image optimization with multiple sizes implemented
+  - File: `lib/utils/image-optimizer.ts`
+  - Installed `sharp` library for server-side image processing
+  - **Generates 4 sizes:** thumbnail (400px), medium (1200px), large (2400px), original
+  - **Dual format:** Both JPEG (quality 85, mozjpeg) and WebP (quality 85) for each size
+  - **Smart resizing:** Skips sizes larger than original, maintains aspect ratio
+  - **Metadata extraction:** Gets actual dimensions for database storage
+  - Utility functions: `optimizeImage()`, `getImageDimensions()`, `generateOptimizedFilename()`
+  - Integrated into upload API route - all uploads now auto-optimized
+  - Total of 8 versions per image uploaded to Vercel Blob (4 sizes × 2 formats)
 
-#### ⏭️ Remaining in Task 5.0 (Optimization Only):
-- 5.5-5.6 - Image optimization with multiple sizes (requires `sharp` library)
-- 5.10-5.11 - Next.js Image component configuration and lazy loading
+- **5.10 & 5.11** - Next.js Image component configured with lazy loading
+  - File: `components/gallery/OptimizedImage.tsx`
+  - Wrapper around Next.js `<Image>` component
+  - **Lazy loading:** Only loads when image enters viewport
+  - **Blur placeholder:** Base64 SVG placeholder during load
+  - **Loading states:** Animated pulse while loading
+  - **Error handling:** Fallback UI if image fails to load
+  - **Responsive:** Supports fill mode and explicit dimensions
+  - **Priority flag:** Can disable lazy loading for above-the-fold images
+  - **Smooth transitions:** Fade-in effect when loaded
+  - `next.config.js` already configured with Vercel Blob remote patterns
 
-#### ⏭️ Next Up After Task 5.0:
-- Task 4.11-4.12 - Photo reordering and cover image selection (now possible with uploads)
-- Task 6.0 - Frontend User Interface / Public Site (38 subtasks)
+**Summary:** Complete image upload and optimization system with Vercel Blob storage, multi-size generation (JPEG + WebP), automatic alt text, drag-and-drop uploader, and optimized serving with Next.js Image component. 4000+ lines of code added.
+
+#### ⏭️ Next Up:
+- Task 6.0 - Frontend User Interface / Public Site (23 subtasks remaining)
 
 ---
 
@@ -907,43 +922,54 @@ If context window resets, here's how to continue:
 - **b1f51e9** - docs: mark Task 2.0 complete
 - **ca19e0c** - feat: implement complete database schema and API layer (3360+ lines)
 - **201db3f** - docs: mark Task 3.0 complete
+- **89a3903** - feat: implement gallery/category management and image upload system (4000+ lines, Tasks 4.0 & 5.0)
 
 ### 9. Priority for Remaining Tasks:
-1. **Task 4.0** - Gallery & Category Management System (admin UI)
-2. **Task 5.0** - Image Upload & Optimization Pipeline
-3. **Task 6.0** - Frontend User Interface (public site)
-4. **Task 7.0** - Admin Dashboard & Inline Editing
-5. **Task 8.0** - Contact/Inquiry System
-6. **Task 9.0** - SEO Optimization
-7. **Task 10.0** - Testing Suite (CRITICAL - should be done alongside features)
-8. **Task 11.0** - Deployment & Production
+1. **Task 6.0** - Frontend User Interface (public site) ← NEXT
+2. **Task 7.0** - Admin Dashboard & Inline Editing
+3. **Task 8.0** - Contact/Inquiry System
+4. **Task 9.0** - SEO Optimization
+5. **Task 10.0** - Testing Suite (CRITICAL - should be done alongside features)
+6. **Task 11.0** - Deployment & Production
 
 ### 10. What You Can Test Right Now:
 **Start dev server:** `npm run dev`
 
-**Test Authentication:**
+**Test Full Admin Workflow:**
 1. Go to http://localhost:3000/login
-2. Click "Sign in with Google"
-3. Should see admin toolbar after login
-4. Try accessing http://localhost:3000/admin (will 404 but proves auth works)
+2. Click "Sign in with Google" (use your admin email)
+3. After login, you'll see admin toolbar at top
+4. Go to http://localhost:3000/admin/galleries
+5. Click "+ New Gallery" - create a gallery (select a category)
+6. Click on the gallery you just created
+7. Click "+ Upload Images" - test drag-and-drop image upload!
+8. Drag to reorder images
+9. Click "Set as Cover" on an image
+10. Go to http://localhost:3000/admin/categories
+11. Try drag-and-drop reordering categories
 
-**Test APIs (use curl, Postman, or browser):**
+**Test APIs:**
 ```bash
 # Get all categories (should return 7 seeded categories)
 curl http://localhost:3000/api/categories
 
-# Get specific category
-curl http://localhost:3000/api/categories/weddings
-
-# Get all page content for home page
-curl http://localhost:3000/api/content?page=home
+# Get all galleries
+curl http://localhost:3000/api/galleries
 ```
 
+**What's Working:**
+- ✅ `/admin/galleries` - Full gallery management
+- ✅ `/admin/categories` - Full category management
+- ✅ Image upload with automatic optimization (8 versions per image!)
+- ✅ Drag-and-drop reordering
+- ✅ Cover image selection
+- ✅ All CRUD operations
+
 **What Still 404s (expected):**
-- `/admin` - Admin dashboard not built yet (Task 7.0)
-- `/galleries` - Public gallery pages not built yet (Task 6.0)
-- `/about` - About page not built yet (Task 6.0)
-- `/contact` - Contact page not built yet (Task 6.0)
+- `/admin` - Admin dashboard (Task 7.0)
+- `/galleries` - Public gallery pages (Task 6.0)
+- `/about` - About page (Task 6.0)
+- `/contact` - Contact page (Task 6.0)
 
 ### 11. Important Notes:
 - User prefers session log updates (just accept them in batch)
@@ -955,12 +981,13 @@ curl http://localhost:3000/api/content?page=home
 
 ---
 
-**Last Updated:** October 9, 2025 - Task 4.4 Complete  
+**Last Updated:** October 9, 2025 - Tasks 4.0 & 5.0 Complete  
 **Recent Changes:**
-- ✅ Implemented category deletion with confirmation dialog
-- ✅ Warning modal explains cascade delete (galleries + images)
-- ✅ Red color scheme for destructive action
-- ✅ DELETE request to /api/categories/[id] endpoint
-- ✅ Component now 520+ lines with complete category CRUD
-- ⏭️ Next: Task 4.5 - Sortable/draggable category list (waiting for user approval)
+- ✅ Completed all of Task 4.0 (Gallery & Category Management System)
+- ✅ Completed all of Task 5.0 (Image Upload & Optimization Pipeline)
+- ✅ Committed: 89a3903 - 4000+ lines, 13 new files
+- ✅ Manual action completed: Vercel Blob Storage configured
+- ✅ Full admin workflow now functional: categories, galleries, images
+- ✅ Image optimization: 8 versions per upload (4 sizes × JPEG + WebP)
+- ⏭️ Next: Task 6.0 - Frontend User Interface (Public Site) - 23 subtasks
 
