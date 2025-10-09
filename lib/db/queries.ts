@@ -752,3 +752,19 @@ export async function isCategorySlugUnique(slug: string, excludeId?: string): Pr
   if (error) throw error;
   return !data || data.length === 0;
 }
+
+/**
+ * Get all images for a specific gallery
+ */
+export async function getImagesByGalleryId(galleryId: string): Promise<Image[]> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('images')
+    .select('*')
+    .eq('gallery_id', galleryId)
+    .order('display_order', { ascending: true });
+
+  if (error) throw error;
+  return data || [];
+}

@@ -196,10 +196,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Configure max file size for Next.js API route
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// Configure runtime for Next.js API route
+export const runtime = 'nodejs';
 

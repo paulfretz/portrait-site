@@ -4,6 +4,9 @@ import { createClient } from '@/lib/supabase/server';
 import { getPageContent, getPageContents, upsertPageContent } from '@/lib/db/queries';
 import type { PageContentInsert, ContentType } from '@/lib/db/types';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/content
  * Get page content

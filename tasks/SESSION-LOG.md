@@ -705,14 +705,6 @@ Key variables:
    - This must match the Google account you'll use to sign in
    - Example: `NEXT_PUBLIC_ADMIN_EMAIL=paul@example.com`
 
-2. **Set Up Vercel Blob Storage (Task 5.1):** ⚠️ BLOCKING for image uploads
-   - Go to [Vercel Blob Dashboard](https://vercel.com/dashboard/stores)
-   - Create a new Blob Store (or use existing one)
-   - Copy the `BLOB_READ_WRITE_TOKEN`
-   - Add to `.env.local`: `BLOB_READ_WRITE_TOKEN=your-token-here`
-   - **Note:** This is required for the ImageUploader component to work
-   - **Cost:** Vercel Blob has a generous free tier, paid plans available
-
 ### Completed Manual Actions:
 - ✅ Created Supabase project and obtained API keys (Task 2.1)
 - ✅ Configured Google OAuth in Supabase dashboard (Task 2.2)
@@ -722,6 +714,12 @@ Key variables:
   - 5 tables created: categories, galleries, images, inquiries, page_content
   - 7 categories seeded with default data
   - All RLS policies and indexes created
+- ✅ Set up Vercel Blob Storage (Task 5.1)
+  - Created Blob Store in Vercel dashboard
+  - Obtained `BLOB_READ_WRITE_TOKEN`
+  - Added token to `.env.local`
+  - Restarted dev server
+  - Image uploads now functional! 🎉
 
 ---
 

@@ -14,12 +14,14 @@ import { GalleryEditor } from '@/components/admin/GalleryEditor';
  *
  * Protected route - requires admin authentication (handled by middleware)
  */
-export default function GalleryEditorPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function GalleryEditorPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  
   return (
     <div className="min-h-screen bg-neutral-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Gallery Editor Component */}
-        <GalleryEditor params={params} />
+        <GalleryEditor galleryId={id} />
       </div>
     </div>
   );

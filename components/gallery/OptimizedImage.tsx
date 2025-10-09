@@ -36,6 +36,7 @@ interface OptimizedImageProps {
   sizes?: string;
   fill?: boolean;
   objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
+  onLoad?: () => void;
 }
 
 export function OptimizedImage({
@@ -48,6 +49,7 @@ export function OptimizedImage({
   sizes,
   fill = false,
   objectFit = 'cover',
+  onLoad,
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -55,6 +57,7 @@ export function OptimizedImage({
   // Handle image load complete
   const handleLoadComplete = () => {
     setIsLoading(false);
+    onLoad?.();
   };
 
   // Handle image error

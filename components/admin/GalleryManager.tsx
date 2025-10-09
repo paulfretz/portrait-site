@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import type { GalleryPublic, Category } from '@/lib/db/types';
 
 /**
@@ -21,6 +22,8 @@ import type { GalleryPublic, Category } from '@/lib/db/types';
  * @component
  */
 export function GalleryManager() {
+  const router = useRouter();
+  
   // Gallery list state
   const [galleries, setGalleries] = useState<GalleryPublic[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -74,7 +77,11 @@ export function GalleryManager() {
       // Build query string
       const params = new URLSearchParams();
       if (selectedCategoryId) {
-        params.append('category_id', selectedCategoryId);
+        // API expects category slug, not ID
+        const category = categories.find((c) => c.id === selectedCategoryId);
+        if (category) {
+          params.append('category', category.slug);
+        }
       }
 
       const response = await fetch(`/api/galleries?${params.toString()}`);
@@ -187,17 +194,9 @@ export function GalleryManager() {
     setCreateError(null);
   };
 
-  // Open edit modal with gallery data
+  // Navigate to gallery editor page
   const handleEditClick = (gallery: GalleryPublic) => {
-    setEditingGallery(gallery);
-    setEditTitle(gallery.title);
-    setEditDescription(gallery.description || '');
-    setEditLocation(gallery.location || '');
-    setEditDate(gallery.date || '');
-    // Note: client_name is not in GalleryPublic, so we'll need to fetch it or leave it empty
-    setEditClientName(''); // Will need to fetch full gallery data to get client_name
-    setEditCategoryId(gallery.category_id);
-    setShowEditModal(true);
+    router.push(`/admin/galleries/${gallery.id}`);
   };
 
   // Edit gallery handler

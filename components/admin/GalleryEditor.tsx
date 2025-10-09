@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { Gallery, Image, Category } from '@/lib/db/types';
 import { ImageUploader } from './ImageUploader';
@@ -22,11 +22,10 @@ import { SortableList } from './SortableList';
  */
 
 interface GalleryEditorProps {
-  params: Promise<{ id: string }>;
+  galleryId: string;
 }
 
-export function GalleryEditor({ params }: GalleryEditorProps) {
-  const { id: galleryId } = use(params);
+export function GalleryEditor({ galleryId }: GalleryEditorProps) {
 
   // State
   const [gallery, setGallery] = useState<Gallery | null>(null);
