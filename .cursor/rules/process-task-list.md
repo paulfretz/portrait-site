@@ -126,3 +126,12 @@ When working with task lists, the AI must:
      - DNS configuration
      - Domain setup
    - Format notifications with clear headers like "🎯 What YOU Need to Do:" or "⚠️ Manual Action Required:"
+10. **STOP and wait for manual action completion:**
+   - **CRITICAL:** If a task requires manual action AND the next task depends on it, STOP and wait
+   - Ask the user to confirm completion before proceeding: "Have you completed this? Reply 'done' or 'y' to continue"
+   - Examples of blocking manual actions:
+     - Running database migrations before creating queries/APIs
+     - Adding API keys before using external services
+     - Configuring OAuth before testing authentication
+   - Do NOT proceed to dependent tasks until user confirms
+   - Non-blocking actions (like adding admin email) can allow proceeding with a reminder

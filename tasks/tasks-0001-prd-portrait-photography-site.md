@@ -157,20 +157,21 @@
   - [x] 2.11 Create `useAuth` hook (`lib/hooks/useAuth.ts`) for easy authentication access
   - [x] 2.12 Add visual admin indicator (e.g., small toolbar) that shows when user is logged in
 
-- [ ] 3.0 Database Schema & API Layer
-  - [ ] 3.1 Design PostgreSQL database schema (categories, galleries, images, inquiries, page_content tables)
-  - [ ] 3.2 Create Supabase migration file (`supabase/migrations/001_initial_schema.sql`)
-  - [ ] 3.3 Define relationships: categories → galleries (one-to-many), galleries → images (one-to-many)
-  - [ ] 3.4 Add row-level security (RLS) policies: public read access, authenticated write access
-  - [ ] 3.5 Create TypeScript types for database models (`lib/db/types.ts`)
-  - [ ] 3.6 Implement database query functions (`lib/db/queries.ts`) for common operations
-  - [ ] 3.7 Create API route for categories CRUD (`app/api/categories/route.ts`)
-  - [ ] 3.8 Create API route for individual category operations (`app/api/categories/[id]/route.ts`)
-  - [ ] 3.9 Create API route for galleries CRUD (`app/api/galleries/route.ts`)
-  - [ ] 3.10 Create API route for individual gallery operations (`app/api/galleries/[id]/route.ts`)
-  - [ ] 3.11 Create API route for page content management (`app/api/content/route.ts`)
-  - [ ] 3.12 Add authentication checks to all admin API routes
-  - [ ] 3.13 Implement error handling and validation for all API endpoints
+- [x] 3.0 Database Schema & API Layer
+  - [x] 3.1 Design PostgreSQL database schema (categories, galleries, images, inquiries, page_content tables)
+  - [x] 3.2 Create Supabase migration file (`supabase/migrations/001_initial_schema.sql`)
+  - [x] 3.3 Define relationships: categories → galleries (one-to-many), galleries → images (one-to-many)
+  - [x] 3.4 Add row-level security (RLS) policies: public read access, authenticated write access
+  - [x] 3.5 Create TypeScript types for database models (`lib/db/types.ts`)
+  - [x] 3.5a Run database migration manually in Supabase dashboard (deferred CLI setup to Task 10.22)
+  - [x] 3.6 Implement database query functions (`lib/db/queries.ts`) for common operations
+  - [x] 3.7 Create API route for categories CRUD (`app/api/categories/route.ts`)
+  - [x] 3.8 Create API route for individual category operations (`app/api/categories/[id]/route.ts`)
+  - [x] 3.9 Create API route for galleries CRUD (`app/api/galleries/route.ts`)
+  - [x] 3.10 Create API route for individual gallery operations (`app/api/galleries/[id]/route.ts`)
+  - [x] 3.11 Create API route for page content management (`app/api/content/route.ts`)
+  - [x] 3.12 Add authentication checks to all admin API routes
+  - [x] 3.13 Implement error handling and validation for all API endpoints
 
 - [ ] 4.0 Gallery & Category Management System
   - [ ] 4.1 Create category manager component (`components/admin/CategoryManager.tsx`)
@@ -310,7 +311,16 @@
   - [ ] 10.19 Write E2E test for inline editing (`e2e/inline-editing.spec.ts`)
   - [ ] 10.20 Achieve 80%+ code coverage on critical paths
   - [ ] 10.21 Add test scripts to package.json: `npm test`, `npm run test:e2e`, `npm run test:coverage`
-  - [ ] 10.22 Set up CI pipeline to run tests automatically (optional but recommended)
+  - [ ] 10.22 Set up Supabase CLI for local development
+  - [ ] 10.22a Install Supabase CLI and initialize project
+  - [ ] 10.22b Link CLI to remote Supabase project
+  - [ ] 10.22c Set up local Supabase with Docker
+  - [ ] 10.22d Test migrations locally before pushing to remote
+  - [ ] 10.23 Set up GitHub Actions CI/CD pipeline
+  - [ ] 10.23a Configure workflow to run tests on pull requests
+  - [ ] 10.23b Configure workflow to run database migrations on deployment
+  - [ ] 10.23c Set up staging environment for testing migrations before production
+  - [ ] 10.23d Add Supabase credentials to GitHub Secrets
 
 - [ ] 11.0 Deployment & Production Configuration
   - [ ] 11.1 Create production environment variables in Vercel dashboard
