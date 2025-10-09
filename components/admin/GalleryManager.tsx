@@ -84,7 +84,7 @@ export function GalleryManager() {
       }
 
       const data = await response.json();
-      setGalleries(data);
+      setGalleries(data.data || data);
     } catch (err) {
       console.error('Error fetching galleries:', err);
       setError(err instanceof Error ? err.message : 'Failed to load galleries');
@@ -102,7 +102,7 @@ export function GalleryManager() {
       }
 
       const data = await response.json();
-      setCategories(data);
+      setCategories(data.data || data);
     } catch (err) {
       console.error('Error fetching categories:', err);
     }
