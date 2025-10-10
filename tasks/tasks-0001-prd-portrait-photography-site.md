@@ -306,7 +306,7 @@
   - [x] 10.14 Write E2E test for public site navigation (`e2e/public-site.spec.ts`)
   - [x] 10.15 Write E2E test for gallery browsing and lightbox (`e2e/gallery-viewing.spec.ts`)
   - [x] 10.16 Write E2E test for contact form submission (`e2e/contact-form.spec.ts`)
-  - [ ] 10.17 Write E2E test for admin login flow (`e2e/admin-auth.spec.ts`)
+  - [x] 10.17 Write E2E test for admin login flow (`e2e/admin-auth.spec.ts`)
   - [ ] 10.18 Write E2E test for gallery management (create, edit, delete) (`e2e/gallery-management.spec.ts`)
   - [ ] 10.19 Write E2E test for inline editing (`e2e/inline-editing.spec.ts`)
   - [ ] 10.20 Achieve 80%+ code coverage on critical paths
