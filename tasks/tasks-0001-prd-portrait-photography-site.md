@@ -293,7 +293,7 @@
   - [x] 10.1 Configure Jest for unit testing (`jest.config.js`)
   - [x] 10.2 Configure React Testing Library for component tests
   - [x] 10.3 Configure Playwright for E2E tests (`playwright.config.ts`)
-  - [ ] 10.4 Write unit tests for gallery grid component (`__tests__/components/GalleryGrid.test.tsx`)
+  - [x] 10.4 Write unit tests for gallery grid component (`__tests__/components/GalleryGrid.test.tsx`)
   - [ ] 10.5 Write unit tests for contact form component (`__tests__/components/ContactForm.test.tsx`)
   - [ ] 10.6 Write unit tests for lightbox component (`__tests__/components/GalleryLightbox.test.tsx`)
   - [ ] 10.7 Write unit tests for inline editor component (`__tests__/components/InlineEditor.test.tsx`)
