@@ -300,7 +300,7 @@
   - [x] 10.8 Write integration tests for categories API (`__tests__/api/categories.test.ts`)
   - [x] 10.9 Write integration tests for galleries API (`__tests__/api/galleries.test.ts`)
   - [x] 10.10 Write integration tests for inquiries API (`__tests__/api/inquiries.test.ts`)
-  - [ ] 10.11 Write unit tests for authentication flow (`__tests__/auth/auth-flow.test.ts`)
+  - [x] 10.11 Write unit tests for authentication flow (`__tests__/auth/auth-flow.test.tsx`)
   - [ ] 10.12 Write unit tests for image optimization utilities (`__tests__/utils/image-optimizer.test.ts`)
   - [ ] 10.13 Write unit tests for validation schemas (`__tests__/utils/validation.test.ts`)
   - [ ] 10.14 Write E2E test for public site navigation (`e2e/public-site.spec.ts`)
