@@ -8,6 +8,15 @@
 
 ## 🚨 CRITICAL: Process Rules (READ FIRST)
 
+### **Rule #0: UPDATE SESSION-LOG.md BEFORE EVERY COMMIT (NEVER SKIP)**
+**This is the MOST violated rule - it is MANDATORY, not optional!**
+
+- Update `tasks/SESSION-LOG.md` AFTER completing work, BEFORE running `git commit`
+- Verify ALL 13 sections systematically (see Rule #4 for details)
+- This happens BEFORE marking task [x], BEFORE committing
+- If you skip this, you are breaking the entire workflow
+- **NO EXCEPTIONS - This rule applies to EVERY single commit**
+
 ### **Rule #1: One Sub-Task at a Time**
 - **NEVER** start the next sub-task until you ask the user for permission
 - After completing a sub-task: **STOP** and ask "May I proceed with Task X.X?"
@@ -28,15 +37,22 @@
   4. Wait for user to review and merge PR
   5. Then mark parent task as `[x]`
 
-### **Rule #3: Completion Protocol**
-After finishing a sub-task:
-1. **Run linter** (`npm run lint`) and fix any errors
-2. **Run all tests** (`npm test`) and ensure they all pass
-3. **Verify build** (`npm run build` if applicable) compiles successfully
-4. **Only if all checks pass:** Mark it `[x]` in `tasks/tasks-0001-prd-portrait-photography-site.md`
-5. Update `tasks/SESSION-LOG.md` (see Rule #4)
-6. Stage and commit changes with descriptive message
-7. **STOP and ask for permission to continue**
+### **Rule #3: Completion Protocol (PRE-COMMIT CHECKLIST)**
+After finishing a sub-task, follow this EXACT sequence:
+
+**🚨 PRE-COMMIT CHECKLIST (MANDATORY - DO NOT SKIP ANY STEP):**
+1. ✅ **Run linter** (`npm run lint`) and fix any errors
+2. ✅ **Run all tests** (`npm test`) and ensure they all pass
+3. ✅ **Run TypeScript** (`npx tsc --noEmit`) and fix any errors
+4. ✅ **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (see Rule #4)
+5. ✅ **Mark task [x]** in `tasks/tasks-0001-prd-portrait-photography-site.md`
+6. ✅ **Update TODO list** using todo_write tool
+7. ✅ **Stage changes** (`git add`)
+8. ✅ **Commit** with descriptive conventional commit message
+9. ✅ **STOP** and ask user: "May I proceed with Task X.X?"
+10. ⏸️ **WAIT** for user approval before continuing
+
+**If you skip Step 4 (SESSION-LOG update), you are violating Rule #0!**
 
 If all subtasks under a parent task are `[x]`:
 1. Run full test suite (`npm test`)
