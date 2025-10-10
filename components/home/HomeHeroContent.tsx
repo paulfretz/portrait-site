@@ -29,8 +29,8 @@ export function HomeHeroContent({
             page="homepage"
             section="hero-headline"
             initialValue={headline}
-            as="h2"
-            className="text-3xl font-light text-neutral-900 mb-4"
+            as="h1"
+            className="text-3xl md:text-4xl font-light text-neutral-900 mb-4"
             onSave={setHeadline}
           />
           <InlineEditor

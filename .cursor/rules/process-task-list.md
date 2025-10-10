@@ -95,6 +95,25 @@ Guidelines for managing task lists in markdown files to track progress on comple
 - Document technical decisions when made, not later
 - Keep "Current Status" always accurate
 
+### Section-by-Section Verification (After Each Subtask):
+When updating the session log, systematically verify and update EACH section:
+
+1. **Current Status** - Update task number, progress %, last completed, next subtask
+2. **PRD Context** - Usually static, verify it's still accurate
+3. **Completed Tasks Summary** - Add newly completed subtasks/tasks with descriptions
+4. **Technical Decisions** - Add any new architecture/library choices made in this subtask
+5. **Manual Actions Required** - Move completed actions to "Completed", add new ones
+6. **Key Files Created** - Add new files from this subtask, organize by category
+7. **Technical Debt** - Add any workarounds or "TODO later" items
+8. **What's Working Right Now** - Update with new functionality
+9. **Quick Start** - Update if environment or key files changed
+10. **Commit History** - Add commit when parent task completes
+11. **Remaining Tasks** - Update progress counts and subtask details
+12. **Known Issues** - Remove resolved issues, add new ones
+13. **Context for Next Session** - Always update with current task/subtask
+
+**This ensures the session log is always 100% current and ready for a context window handoff.**
+
 ## AI Instructions
 
 When working with task lists, the AI must:
@@ -113,6 +132,8 @@ When working with task lists, the AI must:
    - Add cleanup items when identified
    - Keep PRD context visible
    - Ensure new context windows can quickly resume work
+   - **CRITICAL:** After each subtask, verify and update ALL 13 sections systematically (see "Section-by-Section Verification" above)
+   - Don't just update one section - check every section for accuracy and completeness
 8. **Track manual actions required:**
    - Maintain "Manual Actions Required" section in session log
    - Move completed actions to "Completed Manual Actions"

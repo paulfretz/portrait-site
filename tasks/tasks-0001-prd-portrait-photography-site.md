@@ -268,26 +268,26 @@
   - [x] 8.18 Show success message after form submission on Contact page
 
 - [ ] 9.0 SEO Optimization & Metadata
-  - [ ] 9.1 Create SEO utility functions (`lib/utils/seo.ts`) for meta tag generation
-  - [ ] 9.2 Implement dynamic page title generation (format: "Page Title | DJ Coveno Portraits")
-  - [ ] 9.3 Create meta description generator with Montana location keywords
-  - [ ] 9.4 Add Open Graph meta tags for social sharing (image, title, description)
-  - [ ] 9.5 Add Twitter Card meta tags
-  - [ ] 9.6 Create structured data generators (`lib/seo/structured-data.ts`) for JSON-LD
-  - [ ] 9.7 Implement Organization/Person schema with photographer details
-  - [ ] 9.8 Add ImageObject schema to gallery pages with location data
-  - [ ] 9.9 Implement Breadcrumb schema for gallery navigation
-  - [ ] 9.10 Create dynamic sitemap (`app/sitemap.ts`) including all galleries and categories
-  - [ ] 9.11 Generate robots.txt (`app/robots.ts`) allowing all crawlers
-  - [ ] 9.12 Add canonical URLs to all pages to prevent duplicate content
-  - [ ] 9.13 Optimize for Montana location keywords in meta tags: Big Sky, Bozeman, Yellowstone, Montana
-  - [ ] 9.14 Optimize for service keywords: wedding photographer, engagement photos, portrait photographer, etc.
-  - [ ] 9.15 Add location information to gallery pages for local SEO boost
-  - [ ] 9.16 Implement semantic HTML with proper heading hierarchy (h1, h2, h3)
-  - [ ] 9.17 Optimize Core Web Vitals: lazy loading, code splitting, image optimization
+  - [x] 9.1 Create SEO utility functions (`lib/utils/seo.ts`) for meta tag generation
+  - [x] 9.2 Implement dynamic page title generation (format: "Page Title | DJ Coveno Portraits")
+  - [x] 9.3 Create meta description generator with Montana location keywords
+  - [x] 9.4 Add Open Graph meta tags for social sharing (image, title, description)
+  - [x] 9.5 Add Twitter Card meta tags
+  - [x] 9.6 Create structured data generators (`lib/seo/structured-data.ts`) for JSON-LD
+  - [x] 9.7 Implement Organization/Person schema with photographer details
+  - [x] 9.8 Add ImageObject schema to gallery pages with location data
+  - [x] 9.9 Implement Breadcrumb schema for gallery navigation
+  - [x] 9.10 Create dynamic sitemap (`app/sitemap.ts`) including all galleries and categories
+  - [x] 9.11 Generate robots.txt (`app/robots.ts`) allowing all crawlers
+  - [x] 9.12 Add canonical URLs to all pages to prevent duplicate content
+  - [x] 9.13 Optimize for Montana location keywords in meta tags: Big Sky, Bozeman, Yellowstone, Montana
+  - [x] 9.14 Optimize for service keywords: wedding photographer, engagement photos, portrait photographer, etc.
+  - [x] 9.15 Add location information to gallery pages for local SEO boost
+  - [x] 9.16 Implement semantic HTML with proper heading hierarchy (h1, h2, h3)
+  - [x] 9.17 Optimize Core Web Vitals: lazy loading, code splitting, image optimization
   - [ ] 9.18 Run Lighthouse audit and address performance, SEO, and accessibility issues
-  - [ ] 9.19 Create `public/manifest.json` for PWA support
-  - [ ] 9.20 Set up Google Search Console integration documentation
+  - [x] 9.19 Create `public/manifest.json` for PWA support
+  - [x] 9.20 Set up Google Search Console integration documentation
 
 - [ ] 10.0 Testing Suite (Unit, Integration, E2E)
   - [ ] 10.1 Configure Jest for unit testing (`jest.config.js`)

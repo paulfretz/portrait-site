@@ -1,17 +1,24 @@
 import { Metadata } from 'next';
 import { AboutContent } from '@/components/about/AboutContent';
 import { getPageContents } from '@/lib/db/queries';
+import { generatePageTitle, generateMetaDescription, generateOpenGraphTags, generateCanonicalUrl } from '@/lib/utils/seo';
+import { generatePersonSchema, renderStructuredData } from '@/lib/seo/structured-data';
 
 export const metadata: Metadata = {
-  title: 'About | DJ Coveno Portraits',
-  description:
-    'Meet DJ Coveno, a Montana-based portrait photographer specializing in weddings, engagements, families, and more. Capturing authentic moments across Big Sky, Bozeman, and Yellowstone.',
-  openGraph: {
-    title: 'About DJ Coveno | Montana Portrait Photography',
-    description:
-      'Professional portrait photographer serving Montana. Specializing in weddings, engagements, families, and authentic storytelling.',
-    type: 'website',
+  title: generatePageTitle('About'),
+  description: generateMetaDescription(
+    'Meet DJ Coveno, Montana wedding photographer and portrait specialist. Capturing weddings, engagements, families, seniors, and pets',
+    { includeLocation: true }
+  ),
+  alternates: {
+    canonical: generateCanonicalUrl('/about'),
   },
+  openGraph: generateOpenGraphTags({
+    title: 'About DJ Coveno | Montana Wedding & Portrait Photographer',
+    description:
+      'Professional wedding photographer and portrait specialist serving Montana. Specializing in weddings, engagement photos, family portraits, and authentic storytelling.',
+    type: 'website',
+  }),
 };
 
 export default async function AboutPage() {
@@ -33,30 +40,50 @@ export default async function AboutPage() {
 
   const profilePhotoUrl = content.find((c) => c.section === 'profile-photo-url')?.content || null;
 
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-sage-50 to-sage-100 py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-6">
-              About DJ Coveno
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-              Montana portrait photographer capturing life's beautiful moments
-            </p>
-          </div>
-        </div>
-      </section>
+  // Generate Person schema for photographer
+  const personSchema = generatePersonSchema({
+    image: profilePhotoUrl || undefined,
+    sameAs: [
+      // Add social media profiles here when available
+      // 'https://www.instagram.com/djcoveno',
+      // 'https://www.facebook.com/djcoveno',
+    ],
+  });
 
-      {/* Editable Content Sections */}
-      <AboutContent
-        bioTitle={bioTitle}
-        bioContent={bioContent}
-        experienceContent={experienceContent}
-        approachContent={approachContent}
-        profilePhotoUrl={profilePhotoUrl}
+  return (
+    <>
+      {/* Structured Data (JSON-LD) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: renderStructuredData(personSchema),
+        }}
       />
-    </div>
+
+      <div className="min-h-screen bg-white">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-sage-50 to-sage-100 py-16 md:py-24">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-6">
+                About DJ Coveno
+              </h1>
+              <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                Montana portrait photographer capturing life's beautiful moments
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Editable Content Sections */}
+        <AboutContent
+          bioTitle={bioTitle}
+          bioContent={bioContent}
+          experienceContent={experienceContent}
+          approachContent={approachContent}
+          profilePhotoUrl={profilePhotoUrl}
+        />
+      </div>
+    </>
   );
 }

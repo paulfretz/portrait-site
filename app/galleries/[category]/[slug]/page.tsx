@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { PhotoGrid } from '@/components/gallery/PhotoGrid';
 import { getGalleryBySlug, getCategoryBySlug, getImagesByGalleryId } from '@/lib/db/queries';
+import { generateImageGallerySchema, generateBreadcrumbSchema, renderStructuredData } from '@/lib/seo/structured-data';
+import { generateCanonicalUrl } from '@/lib/utils/seo';
 
 interface GalleryPageProps {
   params: Promise<{ category: string; slug: string }>;
@@ -23,10 +25,13 @@ export async function generateMetadata({ params }: GalleryPageProps): Promise<Me
 
     return {
       title: `${gallery.title} | Montana Portrait Photography`,
-      description: gallery.description || `View ${gallery.title} portrait photography gallery by Montana Portrait Photography.`,
+      description: gallery.description || `View ${gallery.title} portrait photography gallery. ${gallery.location ? `Photographed in ${gallery.location}, Montana.` : 'Professional photography in Montana.'}`,
+      alternates: {
+        canonical: generateCanonicalUrl(`/galleries/${category}/${slug}`),
+      },
       openGraph: {
         title: `${gallery.title} | Montana Portrait Photography`,
-        description: gallery.description || `View ${gallery.title} portrait photography gallery.`,
+        description: gallery.description || `View ${gallery.title} portrait photography${gallery.location ? ` in ${gallery.location}` : ''}.`,
         type: 'website',
         images: gallery.cover_image_id ? [{ url: gallery.cover_image_id }] : [],
       },
@@ -55,28 +60,52 @@ export default async function GalleryPage({ params }: GalleryPageProps) {
       notFound();
     }
 
+    // Generate ImageGallery structured data
+    const gallerySchema = generateImageGallerySchema({
+      gallery,
+      category: categoryData,
+      images,
+    });
+
+    // Generate Breadcrumb structured data
+    const breadcrumbSchema = generateBreadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Galleries', url: '/galleries' },
+      { name: categoryData.name, url: `/galleries/${category}` },
+      { name: gallery.title, url: `/galleries/${category}/${slug}` },
+    ]);
+
     return (
-      <div className="min-h-screen bg-white">
-        {/* Breadcrumb Navigation */}
-        <nav className="bg-gradient-to-br from-sage-50 to-sage-100 py-4 border-b border-sage-200">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center text-sm text-gray-600">
-              <Link href="/galleries" className="hover:text-sage-700 transition-colors">
-                Galleries
-              </Link>
-              <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-              <Link href={`/galleries/${category}`} className="hover:text-sage-700 transition-colors">
-                {categoryData.name}
-              </Link>
-              <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-              <span className="text-gray-900 font-medium">{gallery.title}</span>
+      <>
+        {/* Structured Data (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: renderStructuredData([gallerySchema, breadcrumbSchema]),
+          }}
+        />
+
+        <div className="min-h-screen bg-white">
+          {/* Breadcrumb Navigation */}
+          <nav className="bg-gradient-to-br from-sage-50 to-sage-100 py-4 border-b border-sage-200">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center text-sm text-gray-600">
+                <Link href="/galleries" className="hover:text-sage-700 transition-colors">
+                  Galleries
+                </Link>
+                <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                <Link href={`/galleries/${category}`} className="hover:text-sage-700 transition-colors">
+                  {categoryData.name}
+                </Link>
+                <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                <span className="text-gray-900 font-medium">{gallery.title}</span>
+              </div>
             </div>
-          </div>
-        </nav>
+          </nav>
 
         {/* Gallery Header */}
         <section className="py-12 md:py-16">
@@ -159,21 +188,22 @@ export default async function GalleryPage({ params }: GalleryPageProps) {
           </div>
         </section>
 
-        {/* Back to Category Link */}
-        <section className="pb-16">
-          <div className="container mx-auto px-4 text-center">
-            <Link
-              href={`/galleries/${category}`}
-              className="inline-flex items-center text-sage-700 hover:text-sage-800 font-medium transition-colors"
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to {categoryData.name}
-            </Link>
-          </div>
-        </section>
-      </div>
+          {/* Back to Category Link */}
+          <section className="pb-16">
+            <div className="container mx-auto px-4 text-center">
+              <Link
+                href={`/galleries/${category}`}
+                className="inline-flex items-center text-sage-700 hover:text-sage-800 font-medium transition-colors"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to {categoryData.name}
+              </Link>
+            </div>
+          </section>
+        </div>
+      </>
     );
   } catch (error) {
     console.error('Error loading gallery page:', error);

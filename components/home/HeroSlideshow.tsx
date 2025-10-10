@@ -135,9 +135,9 @@ export function HeroSlideshow() {
             {/* Slide Content */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white px-4">
-                <h1 className="text-4xl md:text-6xl font-light mb-4 tracking-wide">
+                <p className="text-4xl md:text-6xl font-light mb-4 tracking-wide">
                   DJ Coveno Portraits
-                </h1>
+                </p>
                 <p className="text-lg md:text-xl mb-8 opacity-90">
                   {slide.title}
                 </p>
@@ -186,7 +186,7 @@ export function HeroSlideshow() {
       >
         {isPlaying ? (
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 4h4v16H observableVzM14 4h4v16h-4z" />
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
           </svg>
         ) : (
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">

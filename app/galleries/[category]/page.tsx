@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { GalleryGrid } from '@/components/gallery/GalleryGrid';
 import { getCategoryBySlug, getGalleriesByCategory } from '@/lib/db/queries';
+import { generateCollectionPageSchema, generateBreadcrumbSchema, renderStructuredData } from '@/lib/seo/structured-data';
+import { generateCanonicalUrl } from '@/lib/utils/seo';
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
@@ -22,10 +24,13 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
     return {
       title: `${categoryData.name} | Montana Portrait Photography`,
-      description: categoryData.description || `Explore ${categoryData.name} portrait photography galleries by Montana Portrait Photography.`,
+      description: categoryData.description || `Explore ${categoryData.name} portrait photography galleries. Serving Big Sky, Bozeman, Yellowstone, and throughout Montana.`,
+      alternates: {
+        canonical: generateCanonicalUrl(`/galleries/${category}`),
+      },
       openGraph: {
         title: `${categoryData.name} | Montana Portrait Photography`,
-        description: categoryData.description || `Explore ${categoryData.name} portrait photography galleries.`,
+        description: categoryData.description || `Explore ${categoryData.name} portrait photography galleries in Big Sky, Bozeman, and Montana.`,
         type: 'website',
       },
     };
@@ -52,23 +57,45 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       notFound();
     }
 
+    // Generate CollectionPage structured data
+    const collectionSchema = generateCollectionPageSchema({
+      category: categoryData,
+      galleries,
+    });
+
+    // Generate Breadcrumb structured data
+    const breadcrumbSchema = generateBreadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Galleries', url: '/galleries' },
+      { name: categoryData.name, url: `/galleries/${category}` },
+    ]);
+
     return (
-      <div className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-sage-50 to-sage-100 py-16 md:py-24">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-6">
-                {categoryData.name}
-              </h1>
-              {categoryData.description && (
-                <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                  {categoryData.description}
-                </p>
-              )}
+      <>
+        {/* Structured Data (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: renderStructuredData([collectionSchema, breadcrumbSchema]),
+          }}
+        />
+
+        <div className="min-h-screen bg-white">
+          {/* Hero Section */}
+          <section className="bg-gradient-to-br from-sage-50 to-sage-100 py-16 md:py-24">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-6">
+                  {categoryData.name}
+                </h1>
+                {categoryData.description && (
+                  <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                    {categoryData.description}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
         {/* Galleries Section */}
         <section className="py-16 md:py-24">
@@ -115,7 +142,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             )}
           </div>
         </section>
-      </div>
+        </div>
+      </>
     );
   } catch (error) {
     console.error('Error loading category page:', error);

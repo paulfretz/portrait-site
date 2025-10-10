@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { CategoryGrid } from '@/components/gallery/CategoryGrid';
+import { generateCanonicalUrl } from '@/lib/utils/seo';
 
 /**
  * Galleries Overview Page
@@ -66,11 +67,14 @@ function CategoryGridSkeleton() {
 
 export const metadata = {
   title: 'Photography Galleries | DJ Coveno Portraits',
-  description: 'Explore our portrait photography galleries including weddings, engagements, families, seniors, pets, and proposals in Montana.',
-  keywords: 'photography galleries, wedding photography, engagement photos, family portraits, Montana photographer, Bozeman photographer, Big Sky photographer',
+  description: 'Explore Montana wedding photographer and portrait photography galleries. View weddings, engagement photos, family portraits, senior photos, pet photography, and proposals. Serving Big Sky, Bozeman, Yellowstone, and Montana.',
+  keywords: 'Montana wedding photographer, Big Sky wedding photographer, Bozeman wedding photographer, engagement photographer, portrait photographer Montana, family portrait photographer, senior photo photographer',
+  alternates: {
+    canonical: generateCanonicalUrl('/galleries'),
+  },
   openGraph: {
-    title: 'Photography Galleries | DJ Coveno Portraits',
-    description: 'Explore our portrait photography galleries including weddings, engagements, families, seniors, pets, and proposals in Montana.',
+    title: 'Photography Galleries | Montana Wedding & Portrait Photographer',
+    description: 'Wedding photography and portrait galleries from Big Sky, Bozeman, Yellowstone, and throughout Montana. Weddings, engagement photos, family portraits, and more.',
     type: 'website',
   },
 };

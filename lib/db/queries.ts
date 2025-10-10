@@ -52,6 +52,11 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 /**
+ * Alias for getCategories() - used in sitemap generation
+ */
+export const getAllCategories = getCategories;
+
+/**
  * Get category by slug
  */
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
@@ -217,6 +222,50 @@ export async function getGalleriesByCategory(categorySlug: string): Promise<Gall
     updated_at: gallery.updated_at,
     cover_image_url: gallery.images?.url || null,
     category_slug: categorySlug,
+  }));
+}
+
+/**
+ * Get all galleries with their category slugs (for sitemap generation)
+ */
+export async function getAllGalleries(): Promise<Array<GalleryPublic & { category_slug: string }>> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('galleries')
+    .select(`
+      id,
+      category_id,
+      title,
+      slug,
+      description,
+      date,
+      location,
+      cover_image_id,
+      display_order,
+      created_at,
+      updated_at,
+      categories!inner(slug)
+    `)
+    .order('created_at', { ascending: false });
+
+  if (error) throw error;
+  
+  // Transform the data to include category_slug
+  return (data || []).map((gallery: any) => ({
+    id: gallery.id,
+    category_id: gallery.category_id,
+    title: gallery.title,
+    slug: gallery.slug,
+    description: gallery.description,
+    date: gallery.date,
+    location: gallery.location,
+    cover_image_id: gallery.cover_image_id,
+    display_order: gallery.display_order,
+    created_at: gallery.created_at,
+    updated_at: gallery.updated_at,
+    cover_image_url: null,
+    category_slug: gallery.categories.slug,
   }));
 }
 

@@ -1,6 +1,31 @@
+import { Metadata } from 'next';
 import { HeroSlideshow } from '@/components/home/HeroSlideshow';
 import { HomeHeroContent } from '@/components/home/HomeHeroContent';
 import { getPageContents } from '@/lib/db/queries';
+import { generatePageTitle, generateMetaDescription, generateOpenGraphTags, generateTwitterCardTags, generateCanonicalUrl } from '@/lib/utils/seo';
+import { generateOrganizationSchema, generateWebSiteSchema, renderStructuredData } from '@/lib/seo/structured-data';
+
+export const metadata: Metadata = {
+  title: generatePageTitle(''),
+  description: generateMetaDescription(
+    'Professional portrait photographer capturing authentic moments and timeless memories in Montana',
+    { includeLocation: true, includeService: 'wedding photographer' }
+  ),
+  alternates: {
+    canonical: generateCanonicalUrl('/'),
+  },
+  openGraph: generateOpenGraphTags({
+    title: 'DJ Coveno Portraits - Montana Portrait Photography',
+    description:
+      'Professional portrait photographer serving Big Sky, Bozeman, and Yellowstone. Specializing in weddings, engagements, families, and authentic storytelling.',
+    type: 'website',
+  }),
+  twitter: generateTwitterCardTags({
+    title: 'DJ Coveno Portraits - Montana Portrait Photography',
+    description:
+      'Professional portrait photographer serving Big Sky, Bozeman, and Yellowstone. Specializing in weddings, engagements, families, and authentic storytelling.',
+  }),
+};
 
 /**
  * Homepage Component
@@ -24,18 +49,39 @@ export default async function Home() {
   const ctaPrimary = content.find((c) => c.section === 'cta-primary')?.content || 'View Galleries';
   const ctaSecondary = content.find((c) => c.section === 'cta-secondary')?.content || 'Get In Touch';
 
-  return (
-    <div className="relative">
-      {/* Hero Slideshow */}
-      <HeroSlideshow />
+  // Generate structured data for homepage
+  const organizationSchema = generateOrganizationSchema({
+    sameAs: [
+      // Add social media profiles here when available
+      // 'https://www.instagram.com/djcoveno',
+      // 'https://www.facebook.com/djcoveno',
+    ],
+  });
 
-      {/* Content below slideshow */}
-      <HomeHeroContent
-        headline={headline}
-        subheadline={subheadline}
-        ctaPrimary={ctaPrimary}
-        ctaSecondary={ctaSecondary}
+  const websiteSchema = generateWebSiteSchema();
+
+  return (
+    <>
+      {/* Structured Data (JSON-LD) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: renderStructuredData([organizationSchema, websiteSchema]),
+        }}
       />
-    </div>
+
+      <div className="relative">
+        {/* Hero Slideshow */}
+        <HeroSlideshow />
+
+        {/* Content below slideshow */}
+        <HomeHeroContent
+          headline={headline}
+          subheadline={subheadline}
+          ctaPrimary={ctaPrimary}
+          ctaSecondary={ctaSecondary}
+        />
+      </div>
+    </>
   );
 }

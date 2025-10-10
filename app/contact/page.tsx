@@ -2,17 +2,23 @@ import { Metadata } from 'next';
 import { ContactForm } from '@/components/contact/ContactForm';
 import { ContactContent } from '@/components/contact/ContactContent';
 import { getPageContents } from '@/lib/db/queries';
+import { generatePageTitle, generateMetaDescription, generateOpenGraphTags, generateCanonicalUrl } from '@/lib/utils/seo';
 
 export const metadata: Metadata = {
-  title: 'Contact | DJ Coveno Portraits',
-  description:
-    'Get in touch with DJ Coveno for portrait photography in Montana. Specializing in weddings, engagements, families, and more across Big Sky, Bozeman, and Yellowstone.',
-  openGraph: {
-    title: 'Contact DJ Coveno | Montana Portrait Photography',
-    description:
-      'Book your portrait session in Montana. Professional photography for weddings, engagements, families, and special moments.',
-    type: 'website',
+  title: generatePageTitle('Contact'),
+  description: generateMetaDescription(
+    'Book your Montana wedding photographer or portrait session. Professional photography for weddings, engagement photos, family portraits, senior photos, and more',
+    { includeLocation: true }
+  ),
+  alternates: {
+    canonical: generateCanonicalUrl('/contact'),
   },
+  openGraph: generateOpenGraphTags({
+    title: 'Contact DJ Coveno | Montana Wedding & Portrait Photographer',
+    description:
+      'Book your Montana wedding photographer or portrait session. Professional photography for weddings, engagement photos, family portraits, senior photos, and special moments.',
+    type: 'website',
+  }),
 };
 
 export default async function ContactPage() {

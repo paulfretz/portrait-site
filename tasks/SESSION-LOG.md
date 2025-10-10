@@ -10,11 +10,11 @@
 
 ## 📋 Current Status
 
-**Current Task:** Task 8.0 - Contact/Inquiry System ✅ COMMITTED  
-**Last Completed:** Task 8.0 complete - all 18 subtasks finished and committed  
+**Current Task:** Task 9.0 - SEO Optimization & Metadata (19/20 subtasks complete, 95%) ✅ READY TO COMMIT  
+**Last Completed:** Task 9.20 - Google Search Console documentation created  
 **Overall Progress:** 8 of 11 parent tasks complete (73%)
 
-**Next Parent Task:** Task 9.0 - SEO Optimization & Metadata
+**Next:** Commit Task 9.0 (9.18 Lighthouse audit pending as manual action)
 
 ---
 
@@ -81,24 +81,16 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - Responsive design, animations, accessibility (WCAG 2.1 AA)
 - Files: `app/galleries/`, `components/gallery/`, `components/home/`, `components/layout/`, `app/about/page.tsx`, `app/contact/page.tsx`
 
-### Task 7.0 - Admin Dashboard & Inline Editing ✅ COMMITTED
-**Commit:** da23cfa - "feat: complete Task 7.0 - Admin Dashboard & Inline Editing"
-**All 15 subtasks complete (100%):**
-- **7.1** ✅ Admin dashboard with sidebar (`app/admin/page.tsx`)
-- **7.2** ✅ Enhanced AdminToolbar with Edit Mode toggle
-- **7.3** ✅ EditModeProvider added to layout (`lib/admin/edit-mode-context.tsx`)
-- **7.4** ✅ InlineEditor component for text (`components/admin/InlineEditor.tsx`)
-- **7.5** ✅ Homepage hero inline editing (`components/home/HomeHeroContent.tsx`)
-- **7.6** ✅ RichTextEditor with formatting toolbar (`components/admin/RichTextEditor.tsx`)
-- **7.7** ✅ About page inline editing (`components/about/AboutContent.tsx`)
-- **7.8** ✅ Profile photo upload on About page (`components/about/AboutContent.tsx`)
-- **7.9** ✅ Contact page inline editing (`components/contact/ContactContent.tsx`)
-- **7.10** ✅ Social media link editing (Instagram, Facebook, Pinterest)
-- **7.11** ✅ Save mechanism (auto-save + explicit buttons)
-- **7.12** ✅ Visual feedback (dashed borders, hover icons, save status)
-- **7.13** ✅ Undo/discard functionality (Cancel button + ESC key)
-- **7.14** ✅ Admin dashboard summary (real stats: galleries, categories, images, inquiries, recent updates)
-- **7.15** ✅ Quick actions (New Gallery, View Inquiries, Edit About, Edit Contact)
+### Task 7.0 - Admin Dashboard & Inline Editing ✅
+**Commit:** da23cfa
+- Admin dashboard with real-time stats (galleries, categories, images, inquiries)
+- Edit Mode toggle in AdminToolbar with global context
+- InlineEditor for simple text fields (headlines, titles, contact info)
+- RichTextEditor for formatted content (bio, experience, approach)
+- Homepage, About, and Contact page inline editing
+- Profile photo upload, social media link editing
+- Auto-save, visual feedback, undo/cancel functionality
+- Files: `app/admin/page.tsx`, `lib/admin/edit-mode-context.tsx`, `components/admin/InlineEditor.tsx`, `RichTextEditor.tsx`, `components/home/HomeHeroContent.tsx`, `components/about/AboutContent.tsx`, `components/contact/ContactContent.tsx`
 
 ---
 
@@ -130,16 +122,17 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 2. ✅ Database migration (Task 3.5)
 3. ✅ Vercel Blob token setup (Task 5.1)
 4. ✅ Admin email in `.env.local` as `NEXT_PUBLIC_ADMIN_EMAIL`
+5. ✅ Resend API key configured (Task 8.10-8.11)
 
 ### Pending:
-1. **Resend API Key** (Task 8.10-8.11) - NON-BLOCKING
-   - Create account at resend.com
-   - Get API key
-   - Add to `.env.local` as `RESEND_API_KEY=re_your-key-here`
-   - Add `NOTIFICATION_EMAIL=your-email@example.com`
-   - Email notifications will work once configured
+1. **Lighthouse Audit** (Task 9.18) - NON-BLOCKING
+   - Open Chrome DevTools on localhost:3000
+   - Run Lighthouse audit (Performance, Accessibility, Best Practices, SEO)
+   - Report scores and any issues found
+   - See `docs/lighthouse-audit.md` for detailed instructions
 2. **Testing Setup** (Task 10.0) - Add test scripts to package.json
 3. **Domain Setup** (Task 11.0) - Configure djcovenoportraits.com DNS
+4. **NEXT_PUBLIC_SITE_URL** - Update in production for SEO (sitemap, structured data)
 
 ---
 
@@ -174,6 +167,22 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - `components/contact/ContactForm.tsx`
 - `components/about/AboutContent.tsx`
 
+### Contact & Inquiry System
+- `components/contact/ContactForm.tsx`, `ContactContent.tsx`
+- `app/api/inquiries/route.ts`, `app/api/inquiries/[id]/route.ts`
+- `components/admin/InquiryDashboard.tsx`
+- `app/admin/inquiries/page.tsx`
+- `lib/utils/email.ts` (Resend integration)
+
+### SEO & Metadata
+- `lib/utils/seo.ts` (meta tag generators)
+- `lib/seo/structured-data.ts` (JSON-LD schema generators)
+- `app/sitemap.ts` (dynamic sitemap)
+- `app/robots.ts` (crawler configuration)
+- `public/manifest.json` (PWA manifest)
+- `docs/lighthouse-audit.md` (audit guide)
+- `docs/google-search-console-setup.md` (GSC setup guide)
+
 ### Utilities
 - `lib/utils/image-optimizer.ts` (sharp integration)
 - `app/globals.css` (scrollbar-hide utility)
@@ -190,31 +199,34 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 4. **contentEditable** - RichTextEditor uses native API
    - Consider Tiptap/Lexical for advanced features (future enhancement)
 5. **Rate Limiting** - Currently email-based (3 per hour per email)
-   - Could add IP-based rate limiting by adding `ip_address` column to inquiries table (future enhancement)
+   - Could add IP-based rate limiting (future enhancement)
+6. **NEXT_PUBLIC_SITE_URL** - Currently hardcoded in seo.ts, sitemap.ts, robots.ts, structured-data.ts
+   - Update when deploying to production
 
 ---
 
 ## 🎯 What's Working Right Now
 
 ### Public Site (All Functional):
-- ✅ Homepage with hero slideshow
+- ✅ Homepage with hero slideshow and inline editing
 - ✅ Full gallery browsing (categories → galleries → photos → lightbox)
 - ✅ Lightbox with keyboard/touch navigation
-- ✅ About page
-- ✅ Contact page with form (UI only, API in Task 8.0)
-- ✅ Responsive, accessible, SEO-optimized
+- ✅ About page with inline editing and profile photo
+- ✅ Contact page with working form and inline editing
+- ✅ Responsive, accessible, SEO-optimized with structured data
 
 ### Admin Features:
 - ✅ Google OAuth login/logout
 - ✅ Admin dashboard (`/admin`) with real-time stats
 - ✅ Gallery management (`/admin/galleries`) - CRUD, image upload, reordering
 - ✅ Category management (`/admin/categories`) - CRUD, drag-and-drop
+- ✅ Inquiry management (`/admin/inquiries`) - View, search, filter, status updates
 - ✅ Edit Mode toggle in toolbar
 - ✅ Inline editing: Homepage hero (headline, subheadline, CTAs)
 - ✅ Inline editing: About page (bio, experience, approach, profile photo)
 - ✅ Inline editing: Contact page (all contact info, social media URLs)
-- ✅ Contact form submissions saving to database
-- ✅ Email notifications (when Resend API key configured)
+- ✅ Contact form submissions with validation and rate limiting
+- ✅ Email notifications via Resend
 
 ### APIs:
 - ✅ `/api/categories` - GET, POST, PUT, DELETE
@@ -223,7 +235,15 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - ✅ `/api/images/upload` - POST (multi-file, auto-optimization)
 - ✅ `/api/images/[id]` - PUT, DELETE
 - ✅ `/api/content` - GET, PUT (inline editing)
-- ✅ `/api/inquiries` - POST (with validation, rate limiting), GET (admin only)
+- ✅ `/api/inquiries` - POST (with validation, rate limiting, email), GET (admin only)
+- ✅ `/api/inquiries/[id]` - GET, PUT (status updates, admin only)
+
+### SEO (Automatic):
+- ✅ `/sitemap.xml` - Dynamic sitemap with all pages
+- ✅ `/robots.txt` - Crawler configuration (allow public, disallow admin/api)
+- ✅ Structured data (JSON-LD) on all pages - Organization, Person, ImageGallery, Breadcrumbs
+- ✅ Open Graph and Twitter Card meta tags
+- ✅ Canonical URLs on all 7 pages (home, about, contact, galleries, category, gallery)
 
 ---
 
@@ -266,10 +286,10 @@ open http://localhost:3000/admin/categories
 - ✅ **Manual actions:** Clearly mark BLOCKING vs NON-BLOCKING, wait for confirmation
 
 ### 5. Current Work Context:
-**Working on:** Task 8.0 ✅ COMMITTED  
-**Progress:** 18 of 18 subtasks complete (100%)  
-**Next:** Start Task 9.0 - SEO Optimization & Metadata  
-**Overall:** 8 of 11 parent tasks complete (73%)
+**Working on:** Task 9.0 - SEO Optimization & Metadata  
+**Progress:** 19/20 subtasks complete (95%) - READY TO COMMIT  
+**Status:** All code tasks complete, Task 9.18 pending manual action (NON-BLOCKING)  
+**Next:** Commit Task 9.0, then proceed to Task 10.0 (Testing Suite)
 
 ---
 
@@ -284,37 +304,35 @@ open http://localhost:3000/admin/categories
 - **da23cfa** - Task 7.0: Admin dashboard & inline editing (2161+ lines, all 15 subtasks)
 - **e4a499f** - Task 8.0: Contact/inquiry system (1088+ lines, all 18 subtasks)
 - **f0e226f** - fix: RichTextEditor dangerouslySetInnerHTML error (About page bug)
+- **f5731e6** - fix: SortableList button clicks (Set as Cover, Delete now work)
+- **[Pending]** - Task 9.0: SEO optimization & metadata (in progress, 11/18 subtasks)
 
 ---
 
 ## 🔄 Remaining Tasks
 
-### Task 7.0 - Admin Dashboard & Inline Editing ✅ COMMITTED
-
-### Task 8.0 - Contact/Inquiry System ✅ COMMITTED
-**Commit:** e4a499f - "feat: complete Task 8.0 - Contact/Inquiry System"
-**All 18 subtasks complete (100%):**
-- **8.1-8.6** ✅ Contact form with all fields, validation, honeypot
-- **8.7** ✅ Inquiry submission API (`app/api/inquiries/route.ts`)
-- **8.8** ✅ Rate limiting (email-based, 3 per hour)
-- **8.9** ✅ Database storage with status tracking
-- **8.10** ✅ Resend email service integrated (`lib/utils/email.ts`)
-- **8.11** ✅ Email notifications to owner on inquiry submission
-- **8.12** ✅ InquiryDashboard component with modal details
-- **8.13** ✅ Inquiries admin page (`app/admin/inquiries/page.tsx`)
-- **8.14** ✅ Full inquiry details display (all fields, timestamps)
-- **8.15** ✅ Status update functionality (4 statuses with color coding)
-- **8.16** ✅ Status filtering and sorting
-- **8.17** ✅ Search by name or email
-- **8.18** ✅ Success message on form submission
-
-### Task 8.0 - Contact/Inquiry System ✅ COMMITTED
-
-### Task 9.0 - SEO Optimization (12 subtasks)
-- Structured data (JSON-LD)
-- Sitemap generation
-- robots.txt
-- Meta tags optimization
+### Task 9.0 - SEO Optimization & Metadata 🔄 IN PROGRESS
+**17 of 20 subtasks complete (85%):**
+- **9.1** ✅ SEO utility functions (`lib/utils/seo.ts`)
+- **9.2** ✅ Dynamic page title generation (homepage updated)
+- **9.3** ✅ Meta description generator with Montana keywords (About page)
+- **9.4** ✅ Open Graph meta tags for social sharing (Contact page)
+- **9.5** ✅ Twitter Card meta tags (homepage)
+- **9.6** ✅ Structured data generators (`lib/seo/structured-data.ts`)
+- **9.7** ✅ Organization/Person schema (homepage + About page)
+- **9.8** ✅ ImageObject/ImageGallery schema (gallery pages with location)
+- **9.9** ✅ Breadcrumb schema (category + gallery pages)
+- **9.10** ✅ Dynamic sitemap (`app/sitemap.ts`)
+- **9.11** ✅ robots.txt (`app/robots.ts`)
+- **9.12** ✅ Canonical URLs (all 7 pages: home, about, contact, galleries, category, gallery)
+- **9.13** ✅ Montana location keywords (Big Sky, Bozeman, Yellowstone) in meta descriptions
+- **9.14** ✅ Service keywords (wedding photographer, engagement photos, portrait photographer, family portraits, senior photos)
+- **9.15** ✅ Location info on gallery pages (visible UI + structured data + meta descriptions)
+- **9.16** ✅ Semantic HTML heading hierarchy (fixed homepage duplicate h1, all pages have proper h1→h2→h3 flow)
+- **9.17** ✅ Core Web Vitals (preconnect, dns-prefetch, viewport, font-display:swap, lazy loading, priority images, AVIF/WebP)
+- **9.18** ⏳ Lighthouse audit (pending manual action - user will run later)
+- **9.19** ✅ PWA manifest (`public/manifest.json`, linked in layout, theme color, Apple Web App meta tags)
+- **9.20** ✅ Google Search Console setup guide (`docs/google-search-console-setup.md`)
 
 ### Task 10.0 - Testing Suite (23 subtasks) - CRITICAL
 - Jest unit tests
@@ -340,9 +358,8 @@ open http://localhost:3000/admin/categories
 
 ### Known Issues
 - **Supabase Types:** @ts-ignore workarounds in queries.ts (fix in Task 10.22)
-- **No Tests Yet:** Task 10.0 not started (high priority after Task 7.0)
-- **Contact Form:** UI only, no API yet (Task 8.0)
-- **Admin Dashboard Stats:** Placeholders (will be dynamic in Task 7.14)
+- **No Tests Yet:** Task 10.0 not started (high priority after Task 9.0)
+- **Production URLs:** NEXT_PUBLIC_SITE_URL needs updating for production deployment
 
 ### Database Seeded Data
 - 7 categories: Weddings, Engagements, Portraits, Pets, Families, Seniors, Proposals
@@ -413,14 +430,19 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 8.0, subtask 8.12 (Inquiry dashboard component)
-2. **What's Done:** Contact form API complete (8.1-8.11) - submission, validation, rate limiting, database storage, email notifications
-3. **What's Next:** Create inquiry dashboard component to display all inquiries
+1. **Current Task:** Ready to commit Task 9.0, then start Task 10.0 (Testing Suite)
+2. **What's Done:** 
+   - Tasks 1.0-8.0 complete (100%)
+   - Task 9.0: 19/20 subtasks complete (95%) - All SEO implementation complete
+   - Task 9.18 pending manual Lighthouse audit (NON-BLOCKING)
+3. **What's Next:** Stage and commit Task 9.0, then begin Task 10.0
 4. **Process:** ONE subtask at a time, wait for "y" approval, update session log after each
 5. **Key Files:** 
-   - Create: `components/admin/InquiryDashboard.tsx` - List inquiries with filtering
-   - Create: `app/admin/inquiries/page.tsx` - Admin page for inquiries
-   - API ready: `GET /api/inquiries` with status filter and search
+   - Completed: `lib/utils/seo.ts`, `lib/seo/structured-data.ts`, `app/sitemap.ts`, `app/robots.ts`, `public/manifest.json`, `docs/lighthouse-audit.md`, `docs/google-search-console-setup.md`
+   - Updated: All pages with canonical URLs, keywords, location data, proper heading hierarchy
+   - Updated: `app/layout.tsx` with preconnect, dns-prefetch, viewport, PWA manifest, theme color
+   - Fixed: Homepage duplicate h1, SVG path error, viewport warning, structured-data type errors
+   - Next: Stage and commit Task 9.0
 6. **Remember:** Follow `process-task-list.md` strictly - one task, update logs, wait for approval
 
 ---
