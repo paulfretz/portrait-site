@@ -11,12 +11,6 @@ export const metadata: Metadata = {
   description:
     'Montana portrait photographer specializing in weddings, engagements, families, and more in Bozeman, Big Sky, and Yellowstone areas',
   manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'DJ Coveno Portraits',
-  },
-  themeColor: '#8B9D83',
 };
 
 export const viewport = {

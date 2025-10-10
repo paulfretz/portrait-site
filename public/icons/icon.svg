@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sage green background -->
+  <rect width="512" height="512" fill="#8B9D83"/>
+  
+  <!-- Camera icon in white -->
+  <g transform="translate(106, 106)">
+    <path d="M256 192c-35.29 0-64 28.71-64 64s28.71 64 64 64 64-28.71 64-64-28.71-64-64-64zm0 96c-17.64 0-32-14.36-32-32s14.36-32 32-32 32 14.36 32 32-14.36 32-32 32z" fill="white"/>
+    <path d="M448 128h-85.33l-21.34-32H256l-21.33 32H149.33l-21.34-32H64c-35.35 0-64 28.65-64 64v256c0 35.35 28.65 64 64 64h384c35.35 0 64-28.65 64-64V192c0-35.35-28.65-64-64-64zm32 320c0 17.64-14.36 32-32 32H64c-17.64 0-32-14.36-32-32V192c0-17.64 14.36-32 32-32h85.33l21.34-32h42.66l21.34 32H320l21.33-32h42.67l21.33 32H448c17.64 0 32 14.36 32 32v256z" fill="white"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="256" y="440" font-family="Arial, sans-serif" font-size="48" font-weight="300" fill="white" text-anchor="middle">DJ COVENO</text>
+</svg>
+

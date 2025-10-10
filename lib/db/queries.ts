@@ -162,18 +162,44 @@ export async function deleteCategory(id: string): Promise<void> {
 /**
  * Get all galleries (public-safe, excludes client_name)
  */
-export async function getGalleriesPublic(): Promise<GalleryPublic[]> {
+export async function getGalleriesPublic(): Promise<Array<GalleryPublic & { cover_image_url?: string | null }>> {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from('galleries')
-    .select(
-      'id, category_id, title, slug, description, date, location, cover_image_id, display_order, created_at, updated_at'
-    )
-    .order('display_order', { ascending: true });
+    .select(`
+      id,
+      category_id,
+      title,
+      slug,
+      description,
+      date,
+      location,
+      cover_image_id,
+      display_order,
+      created_at,
+      updated_at,
+      images!cover_image_id(url)
+    `)
+    .order('display_order', { ascending: true});
 
   if (error) throw error;
-  return data || [];
+  
+  // Transform to include cover_image_url
+  return (data || []).map((gallery: any) => ({
+    id: gallery.id,
+    category_id: gallery.category_id,
+    title: gallery.title,
+    slug: gallery.slug,
+    description: gallery.description,
+    date: gallery.date,
+    location: gallery.location,
+    cover_image_id: gallery.cover_image_id,
+    display_order: gallery.display_order,
+    created_at: gallery.created_at,
+    updated_at: gallery.updated_at,
+    cover_image_url: gallery.images?.url || null,
+  }));
 }
 
 /**

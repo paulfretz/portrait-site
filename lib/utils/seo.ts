@@ -85,7 +85,7 @@ export function generateKeywords(
   }
 
   // Remove duplicates
-  return [...new Set(keywords)];
+  return Array.from(new Set(keywords));
 }
 
 /**

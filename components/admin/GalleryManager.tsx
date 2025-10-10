@@ -738,10 +738,15 @@ export function GalleryManager() {
             >
               {/* Cover Image */}
               <div className="aspect-[4/3] bg-neutral-100 relative">
-                {gallery.cover_image_id ? (
+                {gallery.cover_image_url ? (
+                  <img
+                    src={gallery.cover_image_url}
+                    alt={gallery.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : gallery.cover_image_id ? (
                   <div className="w-full h-full flex items-center justify-center text-neutral-400">
-                    {/* TODO: Task 5.10 - Display actual cover image */}
-                    <span className="text-sm">Cover Image: {gallery.cover_image_id}</span>
+                    <span className="text-xs">No preview available</span>
                   </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-neutral-400">

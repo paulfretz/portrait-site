@@ -10,11 +10,12 @@
 
 ## 📋 Current Status
 
-**Current Task:** Task 10.0 - Testing Suite (next to start)  
-**Last Completed:** Task 9.0 - SEO Optimization & Metadata ✅ COMMITTED  
-**Overall Progress:** 9 of 11 parent tasks complete (82%)
+**Current Task:** Task 10.0 - Testing Suite (3/23 subtasks complete, 13%)  
+**Last Completed:** Task 10.3 - Playwright configured  
+**Overall Progress:** 9 of 11 parent tasks complete (82%)  
+**Branch:** task-10.0-testing-suite
 
-**Next:** Begin Task 10.0 - Testing Suite (23 subtasks)
+**Next Subtask:** Task 10.4 - Write unit tests for gallery grid component
 
 ---
 
@@ -290,10 +291,11 @@ open http://localhost:3000/admin/categories
 - ✅ **Manual actions:** Clearly mark BLOCKING vs NON-BLOCKING, wait for confirmation
 
 ### 5. Current Work Context:
-**Working on:** Ready to start Task 10.0 - Testing Suite  
-**Last Commit:** Task 9.0 - SEO Optimization & Metadata (ade8055)  
-**Progress:** 9 of 11 parent tasks complete (82%)  
-**Next:** Task 10.1 - Configure Jest for unit testing
+**Working on:** Task 10.0 - Testing Suite  
+**Branch:** task-10.0-testing-suite  
+**Progress:** 3 of 23 subtasks complete (13%)  
+**Next:** Task 10.4 - Write unit tests for gallery grid component  
+**Remaining:** 10.4-10.23 (20 subtasks)
 
 ---
 
@@ -317,11 +319,12 @@ open http://localhost:3000/admin/categories
 
 ### Task 9.0 - SEO Optimization & Metadata ✅ COMMITTED
 
-### Task 10.0 - Testing Suite (23 subtasks) - NEXT
-- Jest unit tests
-- React Testing Library integration tests
-- Playwright E2E tests
-- 80%+ coverage target
+### Task 10.0 - Testing Suite 🔄 IN PROGRESS
+**3 of 23 subtasks complete (13%):**
+- **10.1** ✅ Jest configuration (`jest.config.js`, `jest.setup.js`, test scripts in package.json)
+- **10.2** ✅ React Testing Library config (`__tests__/utils/test-utils.tsx`, custom render with providers, mock data)
+- **10.3** ✅ Playwright configuration (`playwright.config.ts`, 3 browsers, dev server integration, GitHub Actions workflow)
+- **10.4-10.23** - Test writing (unit, integration, E2E), Supabase CLI, GitHub Actions
 
 ### Task 11.0 - Deployment & Production (11 subtasks)
 - Vercel deployment
@@ -338,10 +341,67 @@ open http://localhost:3000/admin/categories
 - User wants session log updated **after each subtask**
 - User prefers **batch accepting** session log updates (just do it)
 - User wants **clear notifications** for manual actions (BLOCKING vs NON-BLOCKING)
+- **NEW:** Each parent task in its own feature branch → PR workflow (starting Task 10.0)
 
-### Known Issues
+### Issues Fixed (Before Test Writing):
+1. ✅ **Apple Web App Meta Tag Deprecation:**
+   - Fixed: Removed `appleWebApp.capable` from metadata (manifest handles this now)
+   - File: `app/layout.tsx`
+
+2. ✅ **Missing PWA Icons (404 errors):**
+   - Fixed: Created SVG icon at `/public/icons/icon.svg`
+   - Updated manifest.json to use SVG (works for all sizes)
+   - File: `public/icons/icon.svg`, `public/manifest.json`
+
+3. ✅ **Gallery Cover Image Display:**
+   - Fixed: Updated `getGalleriesPublic()` to join images table and include `cover_image_url`
+   - Updated GalleryManager to display actual image instead of UUID
+   - Files: `lib/db/queries.ts`, `components/admin/GalleryManager.tsx`
+
+4. ✅ **Set spread TypeScript error:**
+   - Fixed: Changed `[...new Set(keywords)]` to `Array.from(new Set(keywords))`
+   - File: `lib/utils/seo.ts`
+
+### Critical Issues Still Pending:
+
+1. **Hero Photo Management UI (HIGH PRIORITY):**
+   - **Issue:** No admin interface to select which photos appear in homepage hero slideshow
+   - **Current State:** Slideshow uses hardcoded Unsplash URLs in `HeroSlideshow.tsx`
+   - **Needed:** Admin UI to:
+     - Select images from uploaded galleries
+     - Set display order for hero slideshow
+     - Add/remove hero images
+   - **Proposed Solution:** 
+     - Store hero image IDs in `page_content` table (section: 'hero-images', content: JSON array of image IDs)
+     - Create admin page `/admin/hero-images` or section in dashboard
+     - Allow drag-and-drop reordering
+   - **Severity:** HIGH (core admin feature missing)
+   - **Estimate:** 30-45 minutes implementation
+
+2. **Image Quality & Display Issues (CRITICAL):**
+   - **Issues Reported:**
+     - Images appear blurry
+     - Dimensions are not correct for most photos
+     - This is a photography website - image quality is paramount
+   - **Areas to Investigate:**
+     - Image upload/optimization pipeline (Task 5.0 implementation)
+     - Next.js Image component configuration
+     - Blur placeholder interference
+     - Image sizes/quality settings in `sharp`
+     - Display dimensions vs actual dimensions
+     - OptimizedImage component settings
+   - **Potential Causes:**
+     - Too aggressive compression in sharp
+     - Wrong image sizes being selected
+     - Blur placeholder not clearing properly
+     - Aspect ratio issues
+     - Quality settings too low for photography
+   - **Severity:** CRITICAL (affects core value proposition)
+   - **May Need:** Separate PRD for comprehensive image quality overhaul
+   - **Estimate:** 1-2 hours investigation + fixes, or full PRD if major rework needed
+
+### Other Known Issues
 - **Supabase Types:** @ts-ignore workarounds in queries.ts (fix in Task 10.22)
-- **No Tests Yet:** Task 10.0 not started (high priority after Task 9.0)
 - **Production URLs:** NEXT_PUBLIC_SITE_URL needs updating for production deployment
 
 ### Database Seeded Data
@@ -413,16 +473,18 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 10.0 - Testing Suite, subtask 10.1 (Jest configuration)
+1. **Current Task:** Task 10.0 - Testing Suite, subtask 10.4 (Unit tests - GalleryGrid)
 2. **What's Done:** 
-   - Tasks 1.0-9.0 complete (100%)
-   - All parent tasks through SEO committed
+   - Tasks 1.0-9.0 complete (100%), all committed to main
+   - Task 10.0: 3/23 subtasks complete (13%) - Jest, React Testing Library, Playwright configured
+   - Working in feature branch: task-10.0-testing-suite
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
-3. **What's Next:** Configure Jest for unit testing (Task 10.1)
+3. **What's Next:** Write unit tests for gallery grid component
 4. **Process:** ONE subtask at a time, wait for "y" approval, update session log after each
 5. **Key Files:** 
-   - Task 9.0 committed: `lib/utils/seo.ts`, `lib/seo/structured-data.ts`, `app/sitemap.ts`, `app/robots.ts`, `public/manifest.json`, documentation
-   - Next: Configure Jest (Task 10.1)
+   - Task 9.0 committed: All SEO infrastructure
+   - Task 10.1-10.3 complete: Jest config, React Testing Library, Playwright config, test utilities, GitHub Actions workflow
+   - Next: Write unit tests for components
 6. **Remember:** Follow `process-task-list.md` strictly - one task, update logs, wait for approval
 
 ---
