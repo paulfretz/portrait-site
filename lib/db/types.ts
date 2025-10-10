@@ -122,6 +122,11 @@ export interface GalleryUpdate {
 // Public-safe gallery type (excludes client_name)
 export type GalleryPublic = Omit<Gallery, 'client_name'>;
 
+// Gallery with joined cover image URL (from queries with joins)
+export type GalleryWithCoverImage = GalleryPublic & {
+  cover_image_url: string | null;
+};
+
 // ----------------------------------------------------------------------------
 // Images
 // ----------------------------------------------------------------------------

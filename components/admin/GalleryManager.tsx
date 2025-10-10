@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import type { GalleryPublic, Category } from '@/lib/db/types';
+import type { GalleryWithCoverImage, Category } from '@/lib/db/types';
 
 /**
  * Gallery Manager Component
@@ -25,7 +25,7 @@ export function GalleryManager() {
   const router = useRouter();
   
   // Gallery list state
-  const [galleries, setGalleries] = useState<GalleryPublic[]>([]);
+  const [galleries, setGalleries] = useState<GalleryWithCoverImage[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +47,7 @@ export function GalleryManager() {
 
   // Edit modal state
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editingGallery, setEditingGallery] = useState<GalleryPublic | null>(null);
+  const [editingGallery, setEditingGallery] = useState<GalleryWithCoverImage | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
   const [editLocation, setEditLocation] = useState('');
@@ -59,7 +59,7 @@ export function GalleryManager() {
 
   // Delete modal state
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deletingGallery, setDeletingGallery] = useState<GalleryPublic | null>(null);
+  const [deletingGallery, setDeletingGallery] = useState<GalleryWithCoverImage | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
@@ -195,7 +195,7 @@ export function GalleryManager() {
   };
 
   // Navigate to gallery editor page
-  const handleEditClick = (gallery: GalleryPublic) => {
+  const handleEditClick = (gallery: GalleryWithCoverImage) => {
     router.push(`/admin/galleries/${gallery.id}`);
   };
 
@@ -264,7 +264,7 @@ export function GalleryManager() {
   };
 
   // Open delete confirmation modal
-  const handleDeleteClick = (gallery: GalleryPublic) => {
+  const handleDeleteClick = (gallery: GalleryWithCoverImage) => {
     setDeletingGallery(gallery);
     setShowDeleteModal(true);
   };
