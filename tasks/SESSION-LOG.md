@@ -312,6 +312,8 @@ open http://localhost:3000/admin/categories
 - **f0e226f** - fix: RichTextEditor dangerouslySetInnerHTML error (About page bug)
 - **f5731e6** - fix: SortableList button clicks (Set as Cover, Delete now work)
 - **ade8055** - Task 9.0: SEO optimization & metadata (1691+ lines, 19/20 subtasks, 9.18 pending manual)
+- **7bdfcd2** - Task 10.1-10.3: Testing infrastructure + bug fixes (605+ lines, Jest, RTL, Playwright)
+- **b26c3d5** - fix: GalleryWithCoverImage type for joined queries (TypeScript error)
 
 ---
 
