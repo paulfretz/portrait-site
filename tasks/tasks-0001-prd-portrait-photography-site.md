@@ -298,7 +298,7 @@
   - [x] 10.6 Write unit tests for lightbox component (`__tests__/components/GalleryLightbox.test.tsx`)
   - [x] 10.7 Write unit tests for inline editor component (`__tests__/components/InlineEditor.test.tsx`)
   - [x] 10.8 Write integration tests for categories API (`__tests__/api/categories.test.ts`)
-  - [ ] 10.9 Write integration tests for galleries API (`__tests__/api/galleries.test.ts`)
+  - [x] 10.9 Write integration tests for galleries API (`__tests__/api/galleries.test.ts`)
   - [ ] 10.10 Write integration tests for inquiries API (`__tests__/api/inquiries.test.ts`)
   - [ ] 10.11 Write unit tests for authentication flow (`__tests__/auth/auth-flow.test.ts`)
   - [ ] 10.12 Write unit tests for image optimization utilities (`__tests__/utils/image-optimizer.test.ts`)
