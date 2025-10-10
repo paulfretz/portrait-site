@@ -282,7 +282,11 @@ open http://localhost:3000/admin/categories
 - ✅ **One sub-task at a time** - Wait for user approval ("y") before next
 - ✅ **Update session log** - After EACH subtask completion
 - ✅ **Update task list** - Mark `[x]` immediately after finishing
-- ✅ **When parent task complete:** Run tests (if exist) → stage → clean up → commit → mark parent `[x]`
+- ✅ **Git branching (NEW from Task 10.0 forward):**
+  - Each parent task in its own feature branch
+  - Branch naming: `task-X.0-short-description`
+  - When complete: push branch → create PR → wait for merge → mark `[x]`
+- ✅ **When parent task complete:** Run tests → stage → clean up → commit → push → create PR → wait for merge
 - ✅ **Manual actions:** Clearly mark BLOCKING vs NON-BLOCKING, wait for confirmation
 
 ### 5. Current Work Context:

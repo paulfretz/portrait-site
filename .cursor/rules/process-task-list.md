@@ -5,23 +5,35 @@ Guidelines for managing task lists in markdown files to track progress on comple
 ## Task Implementation
 
 - **One sub-task at a time:** Do **NOT** start the next sub‑task until you ask the user for permission and they say "yes" or "y"
+- **Git Branching Strategy (NEW):**
+  - **Each parent task gets its own feature branch**
+  - Branch naming: `task-X.0-short-description` (e.g., `task-10.0-testing-suite`)
+  - When starting a new parent task:
+    1. Create and checkout a new branch from `main`
+    2. Work on all subtasks in this branch
+    3. Commit subtask completions as you go (optional, or one final commit)
+  - When parent task is complete:
+    1. Run tests, clean up, make final commit
+    2. Push branch to origin
+    3. Create Pull Request (PR) to `main`
+    4. Wait for user to review and merge PR
+    5. Then mark parent task as `[x]`
 - **Completion protocol:**
   1. When you finish a **sub‑task**, immediately mark it as completed by changing `[ ]` to `[x]`.
   2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
   - **First**: Run the full test suite (`pytest`, `npm test`, `bin/rails test`, etc.)
   - **Only if all tests pass**: Stage changes (`git add .`)
-  - **Clean up**: Remove any temporary files and temporary code before committing
+  - **Clean up**: Remove any temporary files and temporary code before staging
   - **Commit**: Use a descriptive commit message that:
     - Uses conventional commit format (`feat:`, `fix:`, `refactor:`, etc.)
     - Summarizes what was accomplished in the parent task
     - Lists key changes and additions
     - References the task number and PRD context
-    - **Formats the message as a single-line command using `-m` flags**, e.g.:
-
-      ```
-      git commit -m "feat: add payment validation logic" -m "- Validates card type and expiry" -m "- Adds unit tests for edge cases" -m "Related to T123 in PRD"
-      ```
-  3. Once all the subtasks are marked completed and changes have been committed, mark the **parent task** as completed.
+    - **Formats the message as a single-line command using `-m` flags**
+  - **Push**: Push the feature branch to origin (`git push -u origin task-X.0-description`)
+  - **Create PR**: Provide PR title and description for user to create
+  - **Wait**: Wait for user to review and merge the PR before marking parent task `[x]`
+  3. Once PR is merged and parent task is marked `[x]`, checkout `main` and pull latest changes before starting next parent task.
 
 - Stop after each sub‑task and wait for the user's go‑ahead.
 
