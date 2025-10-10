@@ -19,7 +19,13 @@ Guidelines for managing task lists in markdown files to track progress on comple
     4. Wait for user to review and merge PR
     5. Then mark parent task as `[x]`
 - **Completion protocol:**
-  1. When you finish a **sub‑task**, immediately mark it as completed by changing `[ ]` to `[x]`.
+  1. When you finish a **sub‑task**:
+     - **First**: Run linter (`npm run lint` or equivalent) and fix any errors
+     - **Second**: Run all tests (`npm test`) and ensure they all pass
+     - **Third**: Verify the build compiles (`npm run build` if applicable)
+     - **Only if all checks pass**: Mark it as completed by changing `[ ]` to `[x]`
+     - **Then**: Stage and commit changes with descriptive message
+     - **Finally**: STOP and ask user for permission to continue
   2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
   - **First**: Run the full test suite (`pytest`, `npm test`, `bin/rails test`, etc.)
   - **Only if all tests pass**: Stage changes (`git add .`)

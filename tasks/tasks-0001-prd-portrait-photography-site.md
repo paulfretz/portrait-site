@@ -294,7 +294,7 @@
   - [x] 10.2 Configure React Testing Library for component tests
   - [x] 10.3 Configure Playwright for E2E tests (`playwright.config.ts`)
   - [x] 10.4 Write unit tests for gallery grid component (`__tests__/components/GalleryGrid.test.tsx`)
-  - [ ] 10.5 Write unit tests for contact form component (`__tests__/components/ContactForm.test.tsx`)
+  - [x] 10.5 Write unit tests for contact form component (`__tests__/components/ContactForm.test.tsx`)
   - [ ] 10.6 Write unit tests for lightbox component (`__tests__/components/GalleryLightbox.test.tsx`)
   - [ ] 10.7 Write unit tests for inline editor component (`__tests__/components/InlineEditor.test.tsx`)
   - [ ] 10.8 Write integration tests for categories API (`__tests__/api/categories.test.ts`)

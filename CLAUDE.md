@@ -30,10 +30,13 @@
 
 ### **Rule #3: Completion Protocol**
 After finishing a sub-task:
-1. Mark it `[x]` in `tasks/tasks-0001-prd-portrait-photography-site.md`
-2. Update `tasks/SESSION-LOG.md` (see Rule #4)
-3. Commit changes with descriptive message
-4. **STOP and ask for permission to continue**
+1. **Run linter** (`npm run lint`) and fix any errors
+2. **Run all tests** (`npm test`) and ensure they all pass
+3. **Verify build** (`npm run build` if applicable) compiles successfully
+4. **Only if all checks pass:** Mark it `[x]` in `tasks/tasks-0001-prd-portrait-photography-site.md`
+5. Update `tasks/SESSION-LOG.md` (see Rule #4)
+6. Stage and commit changes with descriptive message
+7. **STOP and ask for permission to continue**
 
 If all subtasks under a parent task are `[x]`:
 1. Run full test suite (`npm test`)
