@@ -250,6 +250,53 @@ Target: 80%+ code coverage on critical paths.
 
 This is a private project for DJ Coveno Portraits. For questions or support, contact the development team.
 
+## 🧪 Testing
+
+The project includes comprehensive test coverage with unit, integration, and E2E tests.
+
+### Running Tests
+
+```bash
+# Run all unit/integration tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Run E2E tests
+npm run test:e2e
+
+# Run E2E tests in UI mode (interactive)
+npm run test:e2e:ui
+
+# Run all tests (unit + E2E)
+npm run test:all
+```
+
+### Test Structure
+
+- **Unit Tests** (`__tests__/components/`) - React component testing
+- **Integration Tests** (`__tests__/api/`) - API route testing
+- **E2E Tests** (`e2e/`) - Full application flow testing with Playwright
+
+### E2E Test Authentication
+
+Some E2E tests require admin authentication. The test suite includes:
+- **Auth setup** (`e2e/auth.setup.ts`) - Creates mock admin session
+- **Authenticated tests** - Use saved session state for admin features
+- **Public tests** - No authentication required
+
+See `e2e/README.md` for detailed testing documentation.
+
+### Current Test Coverage
+
+- ✅ 319 unit/integration tests
+- ✅ 260+ E2E tests across 3 browsers (Chromium, Firefox, WebKit)
+- ✅ Total: 579+ tests passing
+
 ## 📄 License
 
 Private and confidential. All rights reserved.

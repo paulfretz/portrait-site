@@ -2,6 +2,22 @@
 
 Guidelines for managing task lists in markdown files to track progress on completing a PRD
 
+---
+
+## 🚨 RULE #0: UPDATE SESSION-LOG.md BEFORE EVERY COMMIT
+
+**THIS IS THE MOST VIOLATED RULE - IT IS MANDATORY!**
+
+Before running `git commit` on ANY sub-task:
+1. Open `tasks/SESSION-LOG.md`
+2. Verify and update ALL 13 sections (see "Section-by-Section Verification" below)
+3. This is NOT optional - it must happen BEFORE every commit
+4. If you skip this step, you are breaking the entire workflow
+
+**Remember: SESSION-LOG update happens at Step 4 of the completion protocol, BEFORE marking [x], BEFORE committing!**
+
+---
+
 ## Task Implementation
 
 - **One sub-task at a time:** Do **NOT** start the next sub‑task until you ask the user for permission and they say "yes" or "y"
@@ -19,7 +35,18 @@ Guidelines for managing task lists in markdown files to track progress on comple
     4. Wait for user to review and merge PR
     5. Then mark parent task as `[x]`
 - **Completion protocol:**
-  1. When you finish a **sub‑task**, immediately mark it as completed by changing `[ ]` to `[x]`.
+  1. When you finish a **sub‑task**, follow this EXACT sequence:
+     - **Step 1**: Run linter (`npm run lint` or equivalent) and fix any errors
+     - **Step 2**: Run all tests (`npm test`) and ensure they all pass
+     - **Step 3**: Verify TypeScript compiles (`npx tsc --noEmit` or equivalent)
+     - **Step 4**: **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (MANDATORY, see "Section-by-Section Verification" below)
+     - **Step 5**: Mark it as completed by changing `[ ]` to `[x]` in task list
+     - **Step 6**: Update TODO list using todo_write tool
+     - **Step 7**: Stage changes (`git add`)
+     - **Step 8**: Commit with descriptive conventional commit message
+     - **Step 9**: STOP and ask user for permission to continue
+     - **Step 10**: WAIT for user approval before proceeding
+     - **⚠️ CRITICAL**: If you skip Step 4 (SESSION-LOG update), you are breaking the workflow!
   2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
   - **First**: Run the full test suite (`pytest`, `npm test`, `bin/rails test`, etc.)
   - **Only if all tests pass**: Stage changes (`git add .`)

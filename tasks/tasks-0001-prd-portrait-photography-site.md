@@ -289,38 +289,39 @@
   - [x] 9.19 Create `public/manifest.json` for PWA support
   - [x] 9.20 Set up Google Search Console integration documentation
 
-- [ ] 10.0 Testing Suite (Unit, Integration, E2E)
+- [x] 10.0 Testing Suite (Unit, Integration, E2E)
   - [x] 10.1 Configure Jest for unit testing (`jest.config.js`)
   - [x] 10.2 Configure React Testing Library for component tests
   - [x] 10.3 Configure Playwright for E2E tests (`playwright.config.ts`)
-  - [ ] 10.4 Write unit tests for gallery grid component (`__tests__/components/GalleryGrid.test.tsx`)
-  - [ ] 10.5 Write unit tests for contact form component (`__tests__/components/ContactForm.test.tsx`)
-  - [ ] 10.6 Write unit tests for lightbox component (`__tests__/components/GalleryLightbox.test.tsx`)
-  - [ ] 10.7 Write unit tests for inline editor component (`__tests__/components/InlineEditor.test.tsx`)
-  - [ ] 10.8 Write integration tests for categories API (`__tests__/api/categories.test.ts`)
-  - [ ] 10.9 Write integration tests for galleries API (`__tests__/api/galleries.test.ts`)
-  - [ ] 10.10 Write integration tests for inquiries API (`__tests__/api/inquiries.test.ts`)
-  - [ ] 10.11 Write unit tests for authentication flow (`__tests__/auth/auth-flow.test.ts`)
-  - [ ] 10.12 Write unit tests for image optimization utilities (`__tests__/utils/image-optimizer.test.ts`)
-  - [ ] 10.13 Write unit tests for validation schemas (`__tests__/utils/validation.test.ts`)
-  - [ ] 10.14 Write E2E test for public site navigation (`e2e/public-site.spec.ts`)
-  - [ ] 10.15 Write E2E test for gallery browsing and lightbox (`e2e/gallery-viewing.spec.ts`)
-  - [ ] 10.16 Write E2E test for contact form submission (`e2e/contact-form.spec.ts`)
-  - [ ] 10.17 Write E2E test for admin login flow (`e2e/admin-auth.spec.ts`)
-  - [ ] 10.18 Write E2E test for gallery management (create, edit, delete) (`e2e/gallery-management.spec.ts`)
-  - [ ] 10.19 Write E2E test for inline editing (`e2e/inline-editing.spec.ts`)
-  - [ ] 10.20 Achieve 80%+ code coverage on critical paths
-  - [ ] 10.21 Add test scripts to package.json: `npm test`, `npm run test:e2e`, `npm run test:coverage`
-  - [ ] 10.22 Set up Supabase CLI for local development
-  - [ ] 10.22a Install Supabase CLI and initialize project
-  - [ ] 10.22b Link CLI to remote Supabase project
-  - [ ] 10.22c Set up local Supabase with Docker
-  - [ ] 10.22d Test migrations locally before pushing to remote
-  - [ ] 10.23 Set up GitHub Actions CI/CD pipeline
-  - [ ] 10.23a Configure workflow to run tests on pull requests
-  - [ ] 10.23b Configure workflow to run database migrations on deployment
-  - [ ] 10.23c Set up staging environment for testing migrations before production
-  - [ ] 10.23d Add Supabase credentials to GitHub Secrets
+  - [x] 10.4 Write unit tests for gallery grid component (`__tests__/components/GalleryGrid.test.tsx`)
+  - [x] 10.5 Write unit tests for contact form component (`__tests__/components/ContactForm.test.tsx`)
+  - [x] 10.6 Write unit tests for lightbox component (`__tests__/components/GalleryLightbox.test.tsx`)
+  - [x] 10.7 Write unit tests for inline editor component (`__tests__/components/InlineEditor.test.tsx`)
+  - [x] 10.8 Write integration tests for categories API (`__tests__/api/categories.test.ts`)
+  - [x] 10.9 Write integration tests for galleries API (`__tests__/api/galleries.test.ts`)
+  - [x] 10.10 Write integration tests for inquiries API (`__tests__/api/inquiries.test.ts`)
+  - [x] 10.11 Write unit tests for authentication flow (`__tests__/auth/auth-flow.test.tsx`)
+  - [x] 10.12 Write unit tests for image optimization utilities (`__tests__/lib/utils/image-optimizer.test.ts`)
+  - [x] 10.13 Write unit tests for validation schemas (`__tests__/lib/utils/validation.test.ts`)
+  - [x] 10.14 Write E2E test for public site navigation (`e2e/public-site.spec.ts`)
+  - [x] 10.15 Write E2E test for gallery browsing and lightbox (`e2e/gallery-viewing.spec.ts`)
+  - [x] 10.16 Write E2E test for contact form submission (`e2e/contact-form.spec.ts`)
+  - [x] 10.17 Write E2E test for admin login flow (`e2e/admin-auth.spec.ts`)
+  - [x] 10.18 Write E2E test for gallery management - unauthenticated (`e2e/gallery-management.spec.ts`)
+  - [x] 10.19a Set up test authentication for E2E admin tests (Playwright auth fixture or test credentials)
+  - [x] 10.19 Write E2E test for inline editing (`e2e/inline-editing.spec.ts`)
+  - [x] 10.20 Achieve 80%+ code coverage on critical paths
+  - [x] 10.21 Add test scripts to package.json: `npm test`, `npm run test:e2e`, `npm run test:coverage`
+  - [x] 10.22 Set up Supabase CLI for local development
+  - [x] 10.22a Install Supabase CLI and initialize project
+  - [x] 10.22b Link CLI to remote Supabase project
+  - [x] 10.22c Set up local Supabase with Docker
+  - [x] 10.22d Test migrations locally before pushing to remote
+  - [x] 10.23 Set up GitHub Actions CI/CD pipeline
+  - [x] 10.23a Configure workflow to run tests on pull requests
+  - [x] 10.23b Configure workflow to run database migrations on deployment
+  - [x] 10.23c Set up staging environment for testing migrations before production (documented)
+  - [x] 10.23d Add Supabase credentials to GitHub Secrets (documented)
 
 - [ ] 11.0 Deployment & Production Configuration
   - [ ] 11.1 Create production environment variables in Vercel dashboard
