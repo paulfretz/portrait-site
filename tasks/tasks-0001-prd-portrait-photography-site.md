@@ -310,7 +310,7 @@
   - [x] 10.18 Write E2E test for gallery management - unauthenticated (`e2e/gallery-management.spec.ts`)
   - [x] 10.19a Set up test authentication for E2E admin tests (Playwright auth fixture or test credentials)
   - [x] 10.19 Write E2E test for inline editing (`e2e/inline-editing.spec.ts`)
-  - [ ] 10.20 Achieve 80%+ code coverage on critical paths
+  - [x] 10.20 Achieve 80%+ code coverage on critical paths
   - [ ] 10.21 Add test scripts to package.json: `npm test`, `npm run test:e2e`, `npm run test:coverage`
   - [ ] 10.22 Set up Supabase CLI for local development
   - [ ] 10.22a Install Supabase CLI and initialize project
