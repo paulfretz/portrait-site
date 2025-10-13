@@ -315,8 +315,8 @@
   - [x] 10.22 Set up Supabase CLI for local development
   - [x] 10.22a Install Supabase CLI and initialize project
   - [x] 10.22b Link CLI to remote Supabase project
-  - [ ] 10.22c Set up local Supabase with Docker (OPTIONAL - for future local dev)
-  - [ ] 10.22d Test migrations locally before pushing to remote (OPTIONAL - requires 10.22c)
+  - [x] 10.22c Set up local Supabase with Docker
+  - [x] 10.22d Test migrations locally before pushing to remote
   - [ ] 10.23 Set up GitHub Actions CI/CD pipeline
   - [ ] 10.23a Configure workflow to run tests on pull requests
   - [ ] 10.23b Configure workflow to run database migrations on deployment
