@@ -312,11 +312,11 @@
   - [x] 10.19 Write E2E test for inline editing (`e2e/inline-editing.spec.ts`)
   - [x] 10.20 Achieve 80%+ code coverage on critical paths
   - [x] 10.21 Add test scripts to package.json: `npm test`, `npm run test:e2e`, `npm run test:coverage`
-  - [ ] 10.22 Set up Supabase CLI for local development
-  - [ ] 10.22a Install Supabase CLI and initialize project
-  - [ ] 10.22b Link CLI to remote Supabase project
-  - [ ] 10.22c Set up local Supabase with Docker
-  - [ ] 10.22d Test migrations locally before pushing to remote
+  - [x] 10.22 Set up Supabase CLI for local development
+  - [x] 10.22a Install Supabase CLI and initialize project
+  - [x] 10.22b Link CLI to remote Supabase project
+  - [ ] 10.22c Set up local Supabase with Docker (OPTIONAL - for future local dev)
+  - [ ] 10.22d Test migrations locally before pushing to remote (OPTIONAL - requires 10.22c)
   - [ ] 10.23 Set up GitHub Actions CI/CD pipeline
   - [ ] 10.23a Configure workflow to run tests on pull requests
   - [ ] 10.23b Configure workflow to run database migrations on deployment

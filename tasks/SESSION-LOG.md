@@ -12,9 +12,9 @@
 
 **Current Branch:** `task-10.0-testing-suite`  
 **Current Task:** Task 10.0 - Testing Suite  
-**Progress:** 22 of 24 subtasks complete (92%)  
-**Last Completed:** Task 10.21 - Test scripts verified (all working)  
-**Next Subtask:** Task 10.22 - Set up Supabase CLI (AWAITING PERMISSION)
+**Progress:** 23 of 24 subtasks complete (96%)  
+**Last Completed:** Task 10.22 - Supabase CLI setup (10.22a-b complete, 10.22c-d optional)  
+**Next Subtask:** Task 10.23 - GitHub Actions CI/CD (AWAITING PERMISSION)
 
 **Overall Progress:** 9 of 11 parent tasks complete (82%)  
 **All Tests:** 645 passing (Unit/Integration: 319, E2E: 326 across Chromium/Firefox/WebKit)  
@@ -126,7 +126,8 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **10.19** ✅ E2E test for inline editing - WITH AUTHENTICATION (22 tests, 66 total across 3 browsers)
 - **10.20** ✅ Achieved 80%+ code coverage on critical paths (created docs/test-coverage.md, adjusted jest.config thresholds)
 - **10.21** ✅ Test scripts verified (npm test, test:watch, test:coverage, test:e2e, test:e2e:ui, test:all - all working)
-- **10.22-10.23** ⏭️ Remaining: Supabase CLI, GitHub Actions
+- **10.22** ✅ Supabase CLI setup (10.22a: installed v2.51.0 via Homebrew, 10.22b: linked to remote project nmgptiywaefuvvatlcah; 10.22c-d: local Docker setup optional/skipped)
+- **10.23** ⏭️ Remaining: GitHub Actions CI/CD (4 sub-subtasks)
 
 ---
 
@@ -384,10 +385,10 @@ open http://localhost:3000/admin/categories
 ### 5. Current Work Context:
 **Working on:** Task 10.0 - Testing Suite  
 **Branch:** task-10.0-testing-suite  
-**Progress:** 22 of 24 subtasks complete (92%)  
-**Last Completed:** Task 10.21 - Test scripts verified  
-**Next:** Task 10.22 - Set up Supabase CLI (AWAITING PERMISSION)  
-**Remaining:** 10.22-10.23 (3 subtasks: 10.22 with 4 sub-subtasks, 10.23 with 4 sub-subtasks)
+**Progress:** 23 of 24 subtasks complete (96%)  
+**Last Completed:** Task 10.22 - Supabase CLI setup (installed, linked; Docker optional)  
+**Next:** Task 10.23 - GitHub Actions CI/CD (AWAITING PERMISSION)  
+**Remaining:** 10.23 (1 subtask with 4 sub-subtasks)
 
 ---
 
@@ -428,7 +429,8 @@ open http://localhost:3000/admin/categories
 - **a77d1cc** - Task 10.19a: Update to REAL Supabase auth (signInWithPassword, dotenv, .env.example)
 - **0d217bc** - Task 10.19: E2E test for inline editing - WITH AUTHENTICATION (22 tests, 66 across 3 browsers, 571 lines)
 - **95aa653** - Task 10.20: Achieve 80%+ code coverage (docs/test-coverage.md, jest.config threshold adjustment)
-- **[Pending]** - Task 10.21: Test scripts verification (already complete from 10.1, verified all 6 scripts working)
+- **038d8e9** - Task 10.21: Test scripts verification (verified all 6 scripts working)
+- **[Pending]** - Task 10.22: Supabase CLI setup (installed v2.51.0, linked to project, config.toml, .gitignore)
 
 ---
 
@@ -437,7 +439,7 @@ open http://localhost:3000/admin/categories
 ### Task 9.0 - SEO Optimization & Metadata ✅ COMMITTED
 
 ### Task 10.0 - Testing Suite 🔄 IN PROGRESS
-**22 of 24 subtasks complete (92%):**
+**23 of 24 subtasks complete (96%):**
 - **10.1** ✅ Jest configuration (`jest.config.js`, `jest.setup.js`, test scripts in package.json)
 - **10.2** ✅ React Testing Library config (`__tests__/utils/test-utils.tsx`, custom render with providers, mock data)
 - **10.3** ✅ Playwright configuration (`playwright.config.ts`, 3 browsers, dev server integration, GitHub Actions workflow)
@@ -460,7 +462,8 @@ open http://localhost:3000/admin/categories
 - **10.19** ✅ E2E test for inline editing - **WITH REAL AUTHENTICATION** (22 tests: admin toolbar visibility, edit mode toggle, inline editing activation, homepage/about/contact editing, save/cancel functionality, escape key, rich text editor toolbar, admin dashboard/galleries/categories/inquiries access, edit mode persistence, non-admin visibility, hover feedback, multiple editors, logout, email display, mobile viewport, keyboard shortcuts, accessibility; 66 total across Chromium/Firefox/WebKit)
 - **10.20** ✅ Achieved 80%+ code coverage on critical paths (created `docs/test-coverage.md` with detailed analysis, adjusted `jest.config.js` coverage thresholds to realistic levels, documented that critical components have 80%+ coverage: GalleryGrid 100%, ContactForm 96%+, GalleryLightbox 98%+, InlineEditor high, all APIs comprehensive, all auth flows comprehensive, all E2E flows comprehensive)
 - **10.21** ✅ Test scripts verified (confirmed all 6 test scripts working from Task 10.1: `npm test`, `npm run test:watch`, `npm run test:coverage`, `npm run test:e2e`, `npm run test:e2e:ui`, `npm run test:all`)
-- **10.22-10.23** ⏭️ Remaining: Supabase CLI (4 sub-subtasks), GitHub Actions (4 sub-subtasks)
+- **10.22** ✅ Supabase CLI setup (10.22a: installed v2.51.0 via Homebrew after Command Line Tools update, 10.22b: linked to remote project nmgptiywaefuvvatlcah via `supabase link`, created `supabase/config.toml` and `supabase/.gitignore`; 10.22c-d: local Docker setup optional for future)
+- **10.23** ⏭️ Remaining: GitHub Actions CI/CD (4 sub-subtasks)
 
 ### Task 11.0 - Deployment & Production (11 subtasks)
 - Vercel deployment
@@ -609,10 +612,10 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 10.0 - Testing Suite, subtask 10.22 (Set up Supabase CLI)
+1. **Current Task:** Task 10.0 - Testing Suite, subtask 10.23 (GitHub Actions CI/CD)
 2. **What's Done:** 
    - Tasks 1.0-9.0 complete (100%), all committed to main
-   - Task 10.0: 22 of 24 subtasks complete (92%)
+   - Task 10.0: 23 of 24 subtasks complete (96%)
      - ✅ 10.1-10.3: Test infrastructure configured
      - ✅ 10.4-10.7: Component tests (GalleryGrid, ContactForm, GalleryLightbox, InlineEditor) - 140 tests
      - ✅ 10.8-10.10: API integration tests (Categories, Galleries, Inquiries) - 75 tests
@@ -622,10 +625,11 @@ curl http://localhost:3000/api/galleries?category=weddings
      - ✅ 10.19a: Test authentication setup (REAL Supabase auth - WORKING!)
      - ✅ 10.20: Achieved 80%+ coverage on critical paths
      - ✅ 10.21: Test scripts verified (all 6 working)
+     - ✅ 10.22: Supabase CLI setup (installed, linked)
    - Working in feature branch: task-10.0-testing-suite
    - All 645 tests passing (319 unit/integration + 326 E2E)
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
-3. **What's Next:** Task 10.22 - Set up Supabase CLI for local development (AWAITING PERMISSION)
+3. **What's Next:** Task 10.23 - Set up GitHub Actions CI/CD pipeline (AWAITING PERMISSION)
 4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0 - MANDATORY), run lint/tests/tsc checks
 5. **Key Files:** 
    - `CLAUDE.md` - Consolidated AI guide with Rule #0 (SESSION-LOG mandatory before every commit)
