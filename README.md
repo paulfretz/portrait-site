@@ -60,9 +60,12 @@ This full-featured photography portfolio site serves as both a showcase and busi
 
 - Node.js 20+ and npm
 - Git
-- Supabase account (free tier)
+- Supabase accounts:
+  - **Production project** (for development and production)
+  - **Test project** (for CI/CD E2E tests - recommended)
 - Google OAuth credentials (for admin login)
 - SendGrid or Resend account (for email notifications)
+- Docker Desktop (optional, for local Supabase development)
 
 ## 🚀 Getting Started
 
@@ -79,7 +82,26 @@ cd portrait-site
 npm install
 ```
 
-### 3. Set Up Environment Variables
+### 3. Set Up Supabase Projects
+
+This project uses **two Supabase projects** for proper isolation:
+
+#### **Production Project** (for development and production):
+- **Project:** `nmgptiywaefuvvatlcah`
+- **Purpose:** Real data, development, production deployment
+- **URL:** https://nmgptiywaefuvvatlcah.supabase.co
+
+#### **Test Project** (for CI/CD):
+- **Project:** `viqvpxipqmkswpflpqfx`
+- **Purpose:** E2E tests in GitHub Actions
+- **URL:** https://viqvpxipqmkswpflpqfx.supabase.co
+
+**Why two projects?**
+- Prevents E2E tests from interfering with real data
+- Allows safe, repeatable testing in CI/CD
+- Industry best practice for test isolation
+
+### 4. Set Up Environment Variables
 
 Copy the example environment file and fill in your values:
 
@@ -87,13 +109,13 @@ Copy the example environment file and fill in your values:
 cp .env.example .env.local
 ```
 
-Required environment variables:
+Required environment variables (use **production** project):
 
 ```env
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+# Supabase Configuration (PRODUCTION PROJECT)
+NEXT_PUBLIC_SUPABASE_URL=https://nmgptiywaefuvvatlcah.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-production-service-role-key
 
 # Site Configuration
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
