@@ -45,18 +45,30 @@ To enable full CI/CD functionality, add these secrets to your GitHub repository:
 
 ### Required Secrets:
 
-#### **For E2E Tests (Authenticated):**
+#### **For Production Supabase (Build Job):**
+```
+NEXT_PUBLIC_SUPABASE_URL=https://nmgptiywaefuvvatlcah.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
+NEXT_PUBLIC_ADMIN_EMAIL=your-admin-email@example.com
+```
+
+#### **For Test Supabase (E2E Tests):**
+```
+TEST_SUPABASE_URL=https://viqvpxipqmkswpflpqfx.supabase.co
+TEST_SUPABASE_ANON_KEY=your-test-project-anon-key
+```
+
+#### **For E2E Test Authentication:**
 ```
 TEST_ADMIN_EMAIL=test-admin@example.com
 TEST_ADMIN_PASSWORD=your-test-password
 ```
 
-#### **For Supabase Connection:**
-```
-NEXT_PUBLIC_SUPABASE_URL=https://nmgptiywaefuvvatlcah.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-```
+**Important:** E2E tests use a **dedicated test database**, NOT production!
+- **Production DB:** `nmgptiywaefuvvatlcah` (real data, used for builds only)
+- **Test DB:** `viqvpxipqmkswpflpqfx` (test data, used for E2E tests)
+
+This ensures CI/CD tests don't interfere with production data.
 
 #### **For Database Migrations:**
 ```

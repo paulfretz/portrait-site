@@ -62,10 +62,10 @@ jobs:
     name: E2E Tests (Playwright)
     runs-on: ubuntu-latest
     env:
-      # Note: Authenticated E2E tests will skip without test credentials
-      # Add TEST_ADMIN_EMAIL and TEST_ADMIN_PASSWORD to GitHub Secrets for full coverage
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      # Use dedicated TEST database (not production!)
+      # This ensures E2E tests don't interfere with real data
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.TEST_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.TEST_SUPABASE_ANON_KEY }}
       TEST_ADMIN_EMAIL: ${{ secrets.TEST_ADMIN_EMAIL }}
       TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
     steps:
@@ -98,10 +98,11 @@ jobs:
     name: Build Check
     runs-on: ubuntu-latest
     env:
+      # Build uses production config (read-only, no data modification)
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-      NEXT_PUBLIC_SITE_URL: https://example.com
-      NEXT_PUBLIC_ADMIN_EMAIL: admin@example.com
+      NEXT_PUBLIC_SITE_URL: https://djcovenoportraits.com
+      NEXT_PUBLIC_ADMIN_EMAIL: ${{ secrets.NEXT_PUBLIC_ADMIN_EMAIL }}
     steps:
       - uses: actions/checkout@v4
       
