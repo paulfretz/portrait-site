@@ -17,18 +17,25 @@
 - If you skip this, you are breaking the entire workflow
 - **NO EXCEPTIONS - This rule applies to EVERY single commit**
 
-### **Rule #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS**
-**Before proceeding to the next task, ALL tests must pass!**
+### **Rule #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS + COVERAGE**
+**Before proceeding to the next task, ALL tests must pass AND coverage must be maintained!**
 
 - After implementing ANY change, run the full test suite
 - If tests fail:
   - Fix the tests if they're outdated
   - Fix the code if it's the issue (use industry-standard solutions)
   - **DO NOT proceed to next task until ALL tests pass**
-- This applies to: Unit tests, Integration tests, E2E tests, TypeScript, Linter
+- **Code Coverage Requirements:**
+  - Run `npm run test:coverage` periodically (especially for new components/utilities)
+  - **Critical components (user-facing, business logic):** Target 80%+ coverage
+  - **Utility functions:** Target 80%+ coverage
+  - **Server components / API routes:** E2E coverage may be sufficient
+  - **If coverage drops significantly:** Add tests before proceeding
+- This applies to: Unit tests, Integration tests, E2E tests, TypeScript, Linter, Coverage
 - **"Even if tests or code fail" clause:**
   - If test fails due to outdated expectations → fix the test
   - If code fails due to poor implementation → fix the code using industry-standard solutions
+  - If coverage is low on critical code → write tests before proceeding
   - NEVER skip tests or proceed with failing tests
   - NEVER use hacks or workarounds to make tests pass
   - Quality over speed - do it right the first time

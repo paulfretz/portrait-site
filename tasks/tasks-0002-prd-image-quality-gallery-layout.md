@@ -74,13 +74,13 @@ Transform the site into a professional photography portfolio with high-resolutio
 ## Phase 3: Desktop Gallery Layout (8 subtasks)
 
 - [x] 0002.19 Research and choose justified layout approach (custom algorithm vs `justified-layout` library)
-- [ ] 0002.20 Implement `JustifiedGalleryGrid` component for desktop layout
-- [ ] 0002.21 Create row height calculation algorithm (distribute images to fill row width)
-- [ ] 0002.22 Implement image width scaling to fill rows completely
-- [ ] 0002.23 Set 8px gap between images for desktop
-- [ ] 0002.24 Handle partial last rows (left-align remaining images)
-- [ ] 0002.25 Add responsive breakpoints (tablet: 768px, desktop: 1024px, large: 1440px)
-- [ ] 0002.26 Create unified `ResponsiveGalleryGrid` component that switches between masonry and justified layouts
+- [x] 0002.20 Implement `JustifiedGalleryGrid` component for desktop layout
+- [x] 0002.21 Create row height calculation algorithm (distribute images to fill row width)
+- [x] 0002.22 Implement image width scaling to fill rows completely
+- [x] 0002.23 Set 8px gap between images for desktop
+- [x] 0002.24 Handle partial last rows (left-align remaining images)
+- [x] 0002.25 Add responsive breakpoints (tablet: 768px, desktop: 1024px, large: 1440px)
+- [x] 0002.26 Create unified `ResponsiveGalleryGrid` component that switches between masonry and justified layouts
 
 ---
 

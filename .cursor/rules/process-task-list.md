@@ -18,28 +18,43 @@ Before running `git commit` on ANY sub-task:
 
 ---
 
-## 🚨 RULE #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS
+## 🚨 RULE #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS + COVERAGE
 
-**Before proceeding to the next task, ALL tests must pass!**
+**Before proceeding to the next task, ALL tests must pass AND coverage must be maintained!**
 
 1. After implementing ANY change, run the full test suite
-2. If tests fail:
+2. **If tests fail:**
    - Fix the tests if they're outdated
    - Fix the code if it's the issue (use industry-standard solutions)
    - DO NOT proceed to next task until ALL tests pass
-3. This applies to:
+3. **Code Coverage Requirements:**
+   - Run `npm run test:coverage` periodically (especially for new components)
+   - **Critical components (user-facing, business logic):** Target 80%+ coverage
+   - **Utility functions:** Target 80%+ coverage
+   - **Server components / API routes:** May have lower coverage (covered by E2E tests)
+   - **If coverage drops significantly:** Add tests before proceeding
+   - See `docs/test-coverage.md` for detailed strategy
+4. **This applies to:**
    - Unit tests (`npm test`)
    - Integration tests (included in `npm test`)
    - E2E tests (`npm run test:e2e`) when relevant
    - TypeScript compilation (`npx tsc --noEmit`)
    - Linter (`npm run lint`)
+   - Code coverage (`npm run test:coverage`)
 
 **"Even if tests or code fail" clause:**
 - If a test fails due to outdated expectations → fix the test
 - If code fails due to poor implementation → fix the code using industry-standard solutions
+- If coverage is low on critical code → write tests before proceeding
 - NEVER skip tests or proceed with failing tests
 - NEVER use hacks or workarounds to make tests pass
 - Quality over speed - do it right the first time
+
+**Coverage Guidelines:**
+- New utility functions: Write tests immediately (aim for 80%+)
+- New client components: Write tests for critical paths (aim for 80%+)
+- Server components: E2E tests may be sufficient (lower unit test coverage acceptable)
+- API routes: Integration tests + E2E tests (lower unit test coverage acceptable)
 
 ---
 
