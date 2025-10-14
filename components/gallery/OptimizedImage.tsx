@@ -41,6 +41,7 @@ interface OptimizedImageProps {
   height?: number | null;
   blurDataUrl?: string | null; // Base64 blur placeholder for progressive loading
   priority?: boolean;
+  fetchPriority?: 'high' | 'low' | 'auto'; // Fetch priority hint for browser
   className?: string;
   sizes?: string;
   fill?: boolean;
@@ -55,6 +56,7 @@ export function OptimizedImage({
   height,
   blurDataUrl,
   priority = false,
+  fetchPriority,
   className = '',
   sizes,
   fill = false,
@@ -120,6 +122,7 @@ export function OptimizedImage({
         onLoad={handleLoadComplete}
         onError={handleError}
         priority={priority}
+        fetchPriority={fetchPriority}
         loading={priority ? 'eager' : 'lazy'}
         placeholder="blur"
         blurDataURL={blurPlaceholder}
@@ -140,6 +143,7 @@ export function OptimizedImage({
         onLoad={handleLoadComplete}
         onError={handleError}
         priority={priority}
+        fetchPriority={fetchPriority}
         loading={priority ? 'eager' : 'lazy'}
         placeholder="blur"
         blurDataURL={blurPlaceholder}
@@ -159,6 +163,7 @@ export function OptimizedImage({
       onLoad={handleLoadComplete}
       onError={handleError}
       priority={priority}
+      fetchPriority={fetchPriority}
       loading={priority ? 'eager' : 'lazy'}
       placeholder="blur"
       blurDataURL={blurPlaceholder}
