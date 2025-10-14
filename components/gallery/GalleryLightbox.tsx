@@ -240,7 +240,7 @@ export function GalleryLightbox({
             >
               <OptimizedImage
                 src={image.url}
-                alt=""
+                alt={image.alt_text || `${galleryTitle} - Image ${index + 1}`}
                 blurDataUrl={image.blur_data_url}
                 fill
                 className="object-cover"
