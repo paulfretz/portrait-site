@@ -12,9 +12,9 @@
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
 **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 2 - Mobile Layout)  
-**Progress:** 16 of 51 subtasks complete (31%)  
-**Last Completed:** Tasks 0002.12-0002.15 - Implemented masonry layout with dynamic aspect ratios  
-**Next:** Task 0002.16 - Ensure images fit within column width without cropping (AWAITING PERMISSION)
+**Progress:** 17 of 51 subtasks complete (33%)  
+**Last Completed:** Task 0002.16 - Verified images fit within columns (already done in 0002.12-0002.15)  
+**Next:** Task 0002.17 - Verify lazy loading with IntersectionObserver (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** 645 passing (Unit/Integration: 319, E2E: 326 across Chromium/Firefox/WebKit)  
@@ -134,6 +134,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **✅ PHASE 1 COMPLETE (11/11 subtasks including 0002.10a)** - Upload & Processing infrastructure ready!
 - **0002.11** ✅ Installed react-masonry-css library for mobile masonry layout
 - **0002.12-0002.15** ✅ Implemented masonry layout: 2-col mobile/3-col desktop, 4px/8px gaps, dynamic aspect ratios based on image dimensions
+- **0002.16** ✅ Verified images fit within columns (w-full + proportional paddingBottom - already implemented in 0002.12-0002.15)
 - **10.1-10.3** ✅ Test infrastructure (Jest, RTL, Playwright, GitHub Actions)
 - **10.4** ✅ GalleryGrid unit tests (22 tests)
 - **10.5** ✅ ContactForm unit tests (33 tests)
@@ -423,10 +424,10 @@ open http://localhost:3000/admin/categories
 ### 5. Current Work Context:
 **Working on:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 2 - Mobile Layout)  
 **Branch:** task-0002-image-quality-gallery-layout  
-**Progress:** 16 of 51 subtasks complete (31%)  
-**Last Completed:** Tasks 0002.12-0002.15 - Masonry layout implemented  
-**Next:** Task 0002.16 - Ensure images fit within column width  
-**Remaining:** 35 subtasks across 6 phases (Phase 1 complete!), then Task 11.0 deployment
+**Progress:** 17 of 51 subtasks complete (33%)  
+**Last Completed:** Task 0002.16 - Verified images fit within columns  
+**Next:** Task 0002.17 - Verify lazy loading with IntersectionObserver  
+**Remaining:** 34 subtasks across 6 phases (Phase 1 complete!), then Task 11.0 deployment
 
 ---
 
@@ -681,8 +682,9 @@ curl http://localhost:3000/api/galleries?category=weddings
    - **✅ PHASE 1 COMPLETE!** All 11 upload & processing subtasks done (added 0002.10a for cover image quality)
    - **0002.11 COMPLETE** ✅ Installed react-masonry-css library (Phase 2 begins!)
    - **0002.12-0002.15 COMPLETE** ✅ Masonry layout: 2-col mobile, 3-col desktop, 4px/8px gaps, dynamic heights, edge-to-edge
+   - **0002.16 COMPLETE** ✅ Verified images fit within columns using w-full and proportional height (already implemented)
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
-3. **What's Next:** Task 0002.16 - Ensure images fit within column width without cropping (verify implementation)
+3. **What's Next:** Task 0002.17 - Verify lazy loading with IntersectionObserver works with masonry layout
 4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0 - MANDATORY), run lint/tests/tsc checks
 5. **Key Files:** 
    - `CLAUDE.md` - Consolidated AI guide with Rule #0 (SESSION-LOG mandatory before every commit)
