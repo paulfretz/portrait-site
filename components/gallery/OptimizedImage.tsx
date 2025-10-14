@@ -7,16 +7,24 @@ import { useState } from 'react';
  *
  * Features:
  * - Lazy loading (loads when in viewport)
- * - Blur placeholder while loading
- * - Automatic srcset generation
- * - Responsive sizing
- * - Error handling with fallback
+ * - Blur placeholder while loading (20px JPEG base64)
+ * - Automatic srcset generation (Next.js handles multiple sizes)
+ * - Automatic WebP/AVIF format serving (Next.js detects browser support)
+ * - Responsive sizing with `sizes` prop
+ * - Smooth 500ms fade-in transition
+ * - Error handling with fallback UI
+ *
+ * Image Format Priority (Next.js automatic):
+ * 1. AVIF (best compression, modern browsers)
+ * 2. WebP (good compression, wide support)
+ * 3. JPEG (fallback for older browsers)
  *
  * Usage:
  * ```tsx
  * <OptimizedImage
  *   src={image.url}
  *   alt={image.alt_text}
+ *   blurDataUrl={image.blur_data_url}
  *   width={image.width}
  *   height={image.height}
  *   priority={false}

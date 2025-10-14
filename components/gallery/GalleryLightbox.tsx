@@ -3,6 +3,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import { OptimizedImage } from './OptimizedImage';
 import { Image as ImageType } from '@/lib/db/types';
+import { getLightboxImageUrl } from '@/lib/utils/image-urls';
 
 interface GalleryLightboxProps {
   images: ImageType[];
@@ -195,7 +196,7 @@ export function GalleryLightbox({
         {/* Image */}
         <div className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center">
           <OptimizedImage
-            src={currentImage.url}
+            src={getLightboxImageUrl(currentImage.url) || currentImage.url}
             alt={currentImage.alt_text || galleryTitle}
             blurDataUrl={currentImage.blur_data_url}
             fill
