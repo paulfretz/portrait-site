@@ -44,107 +44,86 @@ Transform the site into a professional photography portfolio with high-resolutio
 
 ## Phase 1: Image Upload & Processing (10 subtasks)
 
-### Configuration & Infrastructure
-- [ ] **0002.1** Update Next.js body size limit to 50MB (`next.config.js`)
-- [ ] **0002.2** Update Vercel Blob upload configuration (check storage limits, configure in dashboard if needed)
-- [ ] **0002.3** Add file size validation to upload API (reject >50MB with clear error message)
-- [ ] **0002.4** Add image dimension validation (max 8000px width/height)
-
-### Image Processing
-- [ ] **0002.5** Update `lib/utils/image-optimizer.ts` to add `xlarge` variant (4000px)
-- [ ] **0002.6** Increase JPEG quality settings (thumbnail: 85, medium: 90, large: 95, xlarge: 95, original: 95)
-- [ ] **0002.7** Increase WebP quality settings (thumbnail: 80, medium: 85, large: 90, xlarge: 90, original: 90)
-- [ ] **0002.8** Update `generateOptimizedSizes()` function to include xlarge in size array
-
-### Upload UI
-- [ ] **0002.9** Add upload progress bar component for large files (`components/admin/UploadProgressBar.tsx`)
-- [ ] **0002.10** Integrate progress bar into `ImageUploader.tsx` (show percentage, file size, estimated time)
+- [ ] 0002.1 Update Next.js body size limit to 50MB (`next.config.js`)
+- [ ] 0002.2 Update Vercel Blob upload configuration (check storage limits, configure in dashboard if needed)
+- [ ] 0002.3 Add file size validation to upload API (reject >50MB with clear error message)
+- [ ] 0002.4 Add image dimension validation (max 8000px width/height)
+- [ ] 0002.5 Update `lib/utils/image-optimizer.ts` to add `xlarge` variant (4000px)
+- [ ] 0002.6 Increase JPEG quality settings (thumbnail: 85, medium: 90, large: 95, xlarge: 95, original: 95)
+- [ ] 0002.7 Increase WebP quality settings (thumbnail: 80, medium: 85, large: 90, xlarge: 90, original: 90)
+- [ ] 0002.8 Update `generateOptimizedSizes()` function to include xlarge in size array
+- [ ] 0002.9 Add upload progress bar component for large files (`components/admin/UploadProgressBar.tsx`)
+- [ ] 0002.10 Integrate progress bar into `ImageUploader.tsx` (show percentage, file size, estimated time)
 
 ---
 
 ## Phase 2: Mobile Gallery Layout (8 subtasks)
 
-### Masonry Layout Implementation
-- [ ] **0002.11** Install `react-masonry-css` or implement custom CSS Grid masonry
-- [ ] **0002.12** Create `MasonryGalleryGrid` component for mobile layout
-- [ ] **0002.13** Implement 2-column configuration for screens ≤768px
-- [ ] **0002.14** Set 4px gap between images (no horizontal padding, edge-to-edge)
-
-### Image Sizing & Lazy Loading
-- [ ] **0002.15** Calculate image heights dynamically based on aspect ratios
-- [ ] **0002.16** Ensure images fit within column width without cropping
-- [ ] **0002.17** Implement lazy loading with IntersectionObserver (verify existing implementation works)
-- [ ] **0002.18** Test masonry reflow on device rotation and window resize
+- [ ] 0002.11 Install `react-masonry-css` or implement custom CSS Grid masonry
+- [ ] 0002.12 Create `MasonryGalleryGrid` component for mobile layout
+- [ ] 0002.13 Implement 2-column configuration for screens ≤768px
+- [ ] 0002.14 Set 4px gap between images (no horizontal padding, edge-to-edge)
+- [ ] 0002.15 Calculate image heights dynamically based on aspect ratios
+- [ ] 0002.16 Ensure images fit within column width without cropping
+- [ ] 0002.17 Implement lazy loading with IntersectionObserver (verify existing implementation works)
+- [ ] 0002.18 Test masonry reflow on device rotation and window resize
 
 ---
 
 ## Phase 3: Desktop Gallery Layout (8 subtasks)
 
-### Justified Layout Algorithm
-- [ ] **0002.19** Research and choose justified layout approach (custom algorithm vs `justified-layout` library)
-- [ ] **0002.20** Implement `JustifiedGalleryGrid` component for desktop layout
-- [ ] **0002.21** Create row height calculation algorithm (distribute images to fill row width)
-- [ ] **0002.22** Implement image width scaling to fill rows completely
-
-### Responsive Layout
-- [ ] **0002.23** Set 8px gap between images for desktop
-- [ ] **0002.24** Handle partial last rows (left-align remaining images)
-- [ ] **0002.25** Add responsive breakpoints (tablet: 768px, desktop: 1024px, large: 1440px)
-- [ ] **0002.26** Create unified `ResponsiveGalleryGrid` component that switches between masonry and justified layouts
+- [ ] 0002.19 Research and choose justified layout approach (custom algorithm vs `justified-layout` library)
+- [ ] 0002.20 Implement `JustifiedGalleryGrid` component for desktop layout
+- [ ] 0002.21 Create row height calculation algorithm (distribute images to fill row width)
+- [ ] 0002.22 Implement image width scaling to fill rows completely
+- [ ] 0002.23 Set 8px gap between images for desktop
+- [ ] 0002.24 Handle partial last rows (left-align remaining images)
+- [ ] 0002.25 Add responsive breakpoints (tablet: 768px, desktop: 1024px, large: 1440px)
+- [ ] 0002.26 Create unified `ResponsiveGalleryGrid` component that switches between masonry and justified layouts
 
 ---
 
 ## Phase 4: Image Display Quality (7 subtasks)
 
-### Progressive Loading
-- [ ] **0002.27** Generate blur placeholder data URLs using `sharp` or `plaiceholder` library
-- [ ] **0002.28** Store blur placeholders in database (`images` table - add `blur_data_url` column)
-- [ ] **0002.29** Update `OptimizedImage` component to show blur placeholder before full image loads
-- [ ] **0002.30** Implement fade-in animation when full image loads
-
-### Srcset & Format Optimization
-- [ ] **0002.31** Update Next.js Image `srcset` to include xlarge variant
-- [ ] **0002.32** Ensure WebP format is served to supporting browsers (JPEG fallback)
-- [ ] **0002.33** Use `large` or `xlarge` variant in lightbox based on screen size/density
+- [ ] 0002.27 Generate blur placeholder data URLs using `sharp` or `plaiceholder` library
+- [ ] 0002.28 Store blur placeholders in database (`images` table - add `blur_data_url` column)
+- [ ] 0002.29 Update `OptimizedImage` component to show blur placeholder before full image loads
+- [ ] 0002.30 Implement fade-in animation when full image loads
+- [ ] 0002.31 Update Next.js Image `srcset` to include xlarge variant
+- [ ] 0002.32 Ensure WebP format is served to supporting browsers (JPEG fallback)
+- [ ] 0002.33 Use `large` or `xlarge` variant in lightbox based on screen size/density
 
 ---
 
 ## Phase 5: Hero Slideshow Upgrade (8 subtasks)
 
-### Database & Data Model
-- [ ] **0002.34** Add `is_hero_image` boolean column to `images` table migration
-- [ ] **0002.35** Add `hero_display_order` integer column for slideshow ordering
-- [ ] **0002.36** Update `lib/db/types.ts` to include new hero image fields
-- [ ] **0002.37** Create `getHeroImages()` query function in `lib/db/queries.ts`
-
-### Hero Management UI
-- [ ] **0002.38** Create hero image management section in admin dashboard (`components/admin/HeroImageManager.tsx`)
-- [ ] **0002.39** Add "Set as Hero Image" toggle in `GalleryEditor` or `ImageUploader`
-- [ ] **0002.40** Implement drag-and-drop reordering for hero images (use `@dnd-kit`)
-- [ ] **0002.41** Update `HeroSlideshow.tsx` to fetch and display photographer's hero images (replace Unsplash placeholders)
+- [ ] 0002.34 Add `is_hero_image` boolean column to `images` table migration
+- [ ] 0002.35 Add `hero_display_order` integer column for slideshow ordering
+- [ ] 0002.36 Update `lib/db/types.ts` to include new hero image fields
+- [ ] 0002.37 Create `getHeroImages()` query function in `lib/db/queries.ts`
+- [ ] 0002.38 Create hero image management section in admin dashboard (`components/admin/HeroImageManager.tsx`)
+- [ ] 0002.39 Add "Set as Hero Image" toggle in `GalleryEditor` or `ImageUploader`
+- [ ] 0002.40 Implement drag-and-drop reordering for hero images (use `@dnd-kit`)
+- [ ] 0002.41 Update `HeroSlideshow.tsx` to fetch and display photographer's hero images (replace Unsplash placeholders)
 
 ---
 
 ## Phase 6: SEO & Performance (5 subtasks)
 
-### SEO Enhancements
-- [ ] **0002.42** Update structured data in `lib/seo/structured-data.ts` to include `contentUrl` with high-res image URLs
-- [ ] **0002.43** Generate image sitemap (`app/image-sitemap.xml/route.ts` or update `app/sitemap.ts`)
-- [ ] **0002.44** Ensure all images have descriptive `alt` attributes (check in GalleryGrid, PhotoGrid, etc.)
-
-### Performance Optimization
-- [ ] **0002.45** Add `fetchPriority="high"` to hero slideshow images for preloading
-- [ ] **0002.46** Run Lighthouse audit and optimize for LCP <2.5s, CLS <0.1, Performance ≥80
+- [ ] 0002.42 Update structured data in `lib/seo/structured-data.ts` to include `contentUrl` with high-res image URLs
+- [ ] 0002.43 Generate image sitemap (`app/image-sitemap.xml/route.ts` or update `app/sitemap.ts`)
+- [ ] 0002.44 Ensure all images have descriptive `alt` attributes (check in GalleryGrid, PhotoGrid, etc.)
+- [ ] 0002.45 Add `fetchPriority="high"` to hero slideshow images for preloading
+- [ ] 0002.46 Run Lighthouse audit and optimize for LCP <2.5s, CLS <0.1, Performance ≥80
 
 ---
 
 ## Phase 7: Testing & Polish (4 subtasks)
 
-### Testing
-- [ ] **0002.47** Write unit tests for image optimizer with new xlarge variant and quality settings
-- [ ] **0002.48** Write component tests for `MasonryGalleryGrid` and `JustifiedGalleryGrid`
-- [ ] **0002.49** Write E2E tests for mobile/desktop gallery layouts and hero slideshow
-- [ ] **0002.50** Cross-browser testing (Chrome, Firefox, Safari, Edge) and mobile device testing (iOS/Android)
+- [ ] 0002.47 Write unit tests for image optimizer with new xlarge variant and quality settings
+- [ ] 0002.48 Write component tests for `MasonryGalleryGrid` and `JustifiedGalleryGrid`
+- [ ] 0002.49 Write E2E tests for mobile/desktop gallery layouts and hero slideshow
+- [ ] 0002.50 Cross-browser testing (Chrome, Firefox, Safari, Edge) and mobile device testing (iOS/Android)
 
 ---
 
