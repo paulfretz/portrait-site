@@ -10,11 +10,11 @@
 
 ## 📋 Current Status
 
-**Current Branch:** `main`  
-**Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (NEW PRD!)  
-**Progress:** 0 of 50 subtasks complete (0%)  
-**Last Action:** PRD 0002 created, task list generated  
-**Next:** Create branch `task-0002-image-quality-gallery-layout`, begin Phase 1 (Upload & Processing)
+**Current Branch:** `task-0002-image-quality-gallery-layout`  
+**Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul  
+**Progress:** 1 of 50 subtasks complete (2%)  
+**Last Completed:** Task 0002.1 - Updated Next.js body size limit to 50MB  
+**Next:** Task 0002.2 - Update Vercel Blob upload configuration (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** 645 passing (Unit/Integration: 319, E2E: 326 across Chromium/Firefox/WebKit)  
@@ -118,7 +118,9 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 ### Task 0002.0 - Image Quality & Gallery Layout Overhaul 🚀 **IN PROGRESS**
 **PRD:** `0002-prd-image-quality-gallery-layout.md` (437 lines)
 **Task List:** `tasks-0002-prd-image-quality-gallery-layout.md` (50 subtasks across 7 phases)
-**Commits:** (pending - not started yet)
+**Branch:** `task-0002-image-quality-gallery-layout`
+**Commits:** (in progress)
+- **0002.1** ✅ Updated Next.js body size limit to 50MB in `next.config.js`
 - **10.1-10.3** ✅ Test infrastructure (Jest, RTL, Playwright, GitHub Actions)
 - **10.4** ✅ GalleryGrid unit tests (22 tests)
 - **10.5** ✅ ContactForm unit tests (33 tests)
@@ -406,12 +408,12 @@ open http://localhost:3000/admin/categories
 - ✅ **Manual actions:** Clearly mark BLOCKING vs NON-BLOCKING, wait for confirmation
 
 ### 5. Current Work Context:
-**Working on:** Task 0002.0 - Image Quality & Gallery Layout Overhaul  
-**Branch:** main (about to create feature branch)  
-**Progress:** 0 of 50 subtasks complete (0%)  
-**Last Completed:** PRD 0002 and task list created  
-**Next:** Create branch `task-0002-image-quality-gallery-layout`, begin Task 0002.1 (Update Next.js body size limit)  
-**Remaining:** All 50 subtasks (7 phases), then Task 11.0 deployment
+**Working on:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 1)  
+**Branch:** task-0002-image-quality-gallery-layout  
+**Progress:** 1 of 50 subtasks complete (2%)  
+**Last Completed:** Task 0002.1 - Updated Next.js body size limit to 50MB  
+**Next:** Task 0002.2 - Update Vercel Blob upload configuration  
+**Remaining:** 49 subtasks across 7 phases, then Task 11.0 deployment
 
 ---
 
@@ -637,7 +639,7 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (NEW PRD - HIGH PRIORITY)
+1. **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (HIGH PRIORITY - Phase 1: Upload & Processing)
 2. **What's Done:** 
    - Tasks 1.0-10.0 complete (100%), all merged to main
    - Task 10.0: 24/24 subtasks complete, PR #1 merged! 🎉
@@ -651,9 +653,10 @@ curl http://localhost:3000/api/galleries?category=weddings
      - Mobile masonry + Desktop justified layouts
      - Hero slideshow upgrade
      - Task list generated: 50 subtasks across 7 phases
-   - Working on main branch
+   - Feature branch created: `task-0002-image-quality-gallery-layout`
+   - **0002.1 COMPLETE** ✅ Next.js body size limit increased to 50MB
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
-3. **What's Next:** Create branch `task-0002-image-quality-gallery-layout`, start Phase 1 (Upload & Processing - 10 subtasks)
+3. **What's Next:** Task 0002.2 - Update Vercel Blob upload configuration (check storage limits, may require dashboard config)
 4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0 - MANDATORY), run lint/tests/tsc checks
 5. **Key Files:** 
    - `CLAUDE.md` - Consolidated AI guide with Rule #0 (SESSION-LOG mandatory before every commit)
