@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { OptimizedImage } from './OptimizedImage';
 import { GalleryPublic } from '@/lib/db/types';
+import { getCoverImageUrl } from '@/lib/utils/image-urls';
 
 interface GalleryGridProps {
   galleries: (GalleryPublic & { category_slug: string; cover_image_url?: string | null })[];
@@ -51,7 +52,7 @@ export function GalleryGrid({ galleries }: GalleryGridProps) {
           <div className="aspect-[4/3] relative overflow-hidden bg-gray-100">
             {gallery.cover_image_url ? (
               <OptimizedImage
-                src={gallery.cover_image_url}
+                src={getCoverImageUrl(gallery.cover_image_url) || gallery.cover_image_url}
                 alt={gallery.title}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"

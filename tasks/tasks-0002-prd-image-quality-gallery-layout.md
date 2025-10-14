@@ -54,6 +54,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 - [x] 0002.8 Update `generateOptimizedSizes()` function to include xlarge in size array
 - [x] 0002.9 Add upload progress bar component for large files (`components/admin/UploadProgressBar.tsx`)
 - [x] 0002.10 Integrate progress bar into `ImageUploader.tsx` (show percentage, file size, estimated time)
+- [x] 0002.10a Update cover image URLs to use high-resolution variants (large/xlarge instead of thumbnail) - **CRITICAL for photography quality**
 
 ---
 

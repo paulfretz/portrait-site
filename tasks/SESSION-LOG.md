@@ -12,8 +12,8 @@
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
 **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul  
-**Progress:** 10 of 50 subtasks complete (20%) - ✅ **PHASE 1 COMPLETE!**  
-**Last Completed:** Task 0002.10 - Integrated UploadProgressBar into ImageUploader  
+**Progress:** 11 of 51 subtasks complete (22%) - ✅ **PHASE 1 COMPLETE!**  
+**Last Completed:** Task 0002.10a - Updated cover images to use large (2400px) high-res variants  
 **Next:** Task 0002.11 - Install masonry library for mobile layout (Phase 2 start) (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
@@ -130,7 +130,8 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.8** ✅ Verified xlarge variant included in sizeConfigs array (already done in 0002.5, no additional code needed)
 - **0002.9** ✅ Created UploadProgressBar component with real-time progress tracking, time estimates, and status indicators
 - **0002.10** ✅ Integrated UploadProgressBar into ImageUploader with 50MB limit update
-- **✅ PHASE 1 COMPLETE (10/10 subtasks)** - Upload & Processing infrastructure ready!
+- **0002.10a** ✅ Updated cover images to use large (2400px JPEG Q95) variants instead of originals - CRITICAL quality fix!
+- **✅ PHASE 1 COMPLETE (11/11 subtasks including 0002.10a)** - Upload & Processing infrastructure ready!
 - **10.1-10.3** ✅ Test infrastructure (Jest, RTL, Playwright, GitHub Actions)
 - **10.4** ✅ GalleryGrid unit tests (22 tests)
 - **10.5** ✅ ContactForm unit tests (33 tests)
@@ -420,8 +421,8 @@ open http://localhost:3000/admin/categories
 ### 5. Current Work Context:
 **Working on:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 2 - Mobile Layout)  
 **Branch:** task-0002-image-quality-gallery-layout  
-**Progress:** 10 of 50 subtasks complete (20%) - ✅ **PHASE 1 COMPLETE!**  
-**Last Completed:** Task 0002.10 - Integrated UploadProgressBar into ImageUploader  
+**Progress:** 11 of 51 subtasks complete (22%) - ✅ **PHASE 1 COMPLETE!**  
+**Last Completed:** Task 0002.10a - Updated cover images to use large high-res variants  
 **Next:** Task 0002.11 - Install masonry library for mobile layout  
 **Remaining:** 40 subtasks across 6 phases (Phase 1 done!), then Task 11.0 deployment
 
@@ -674,7 +675,8 @@ curl http://localhost:3000/api/galleries?category=weddings
    - **0002.8 COMPLETE** ✅ Verified xlarge included in sizeConfigs (already done in 0002.5)
    - **0002.9 COMPLETE** ✅ Created UploadProgressBar component (155 lines) with progress %, time estimates, status indicators
    - **0002.10 COMPLETE** ✅ Integrated UploadProgressBar into ImageUploader, updated to 50MB limit
-   - **✅ PHASE 1 COMPLETE!** All 10 upload & processing subtasks done
+   - **0002.10a COMPLETE** ✅ Updated cover images to use large (2400px Q95) variants - created image-urls.ts utility
+   - **✅ PHASE 1 COMPLETE!** All 11 upload & processing subtasks done (added 0002.10a for cover image quality)
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
 3. **What's Next:** Task 0002.11 - Install masonry library for mobile gallery layout (Phase 2 begins)
 4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0 - MANDATORY), run lint/tests/tsc checks

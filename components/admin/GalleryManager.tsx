@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { GalleryWithCoverImage, Category } from '@/lib/db/types';
+import { getCoverImageUrl } from '@/lib/utils/image-urls';
 
 /**
  * Gallery Manager Component
@@ -740,7 +741,7 @@ export function GalleryManager() {
               <div className="aspect-[4/3] bg-neutral-100 relative">
                 {gallery.cover_image_url ? (
                   <img
-                    src={gallery.cover_image_url}
+                    src={getCoverImageUrl(gallery.cover_image_url) || gallery.cover_image_url}
                     alt={gallery.title}
                     className="w-full h-full object-cover"
                   />
