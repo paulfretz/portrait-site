@@ -33,6 +33,7 @@ export interface OptimizedImageSet {
     width: number;
     height: number;
   };
+  blurDataUrl: string; // Base64 blur placeholder for progressive loading
 }
 
 /**
@@ -151,9 +152,18 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
     dimensions: originalDimensions,
   });
 
+  // Generate blur placeholder (tiny 20px image for progressive loading)
+  const blurBuffer = await sharp(buffer)
+    .resize(20, null, { fit: 'inside' })
+    .jpeg({ quality: 50 })
+    .toBuffer();
+  
+  const blurDataUrl = `data:image/jpeg;base64,${blurBuffer.toString('base64')}`;
+
   return {
     sizes,
     originalDimensions,
+    blurDataUrl,
   };
 }
 
