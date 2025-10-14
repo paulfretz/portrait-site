@@ -11,14 +11,21 @@
 ## 📋 Current Status
 
 **Current Branch:** `main`  
-**Current Task:** Task 10.0 - Testing Suite ✅ **MERGED TO MAIN!**  
-**Progress:** 24 of 24 subtasks complete (100%)  
-**Last Action:** PR #1 merged (27 commits, +8,456 additions)  
-**Next:** Task 11.0 - Deployment & Production Configuration (AWAITING PERMISSION)
+**Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (NEW PRD!)  
+**Progress:** 0 of 50 subtasks complete (0%)  
+**Last Action:** PRD 0002 created, task list generated  
+**Next:** Create branch `task-0002-image-quality-gallery-layout`, begin Phase 1 (Upload & Processing)
 
-**Overall Progress:** 10 of 11 parent tasks complete (91%)  
+**Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** 645 passing (Unit/Integration: 319, E2E: 326 across Chromium/Firefox/WebKit)  
 **Coverage:** 80%+ on critical paths (components, APIs, auth flows)
+
+**NEW PRD:** High-priority image quality overhaul before production deployment
+- 50MB uploads, 8000px max resolution
+- Mobile: 2-column masonry layout
+- Desktop: Justified row layout
+- Hero slideshow upgrade
+- Progressive loading + blur placeholders
 
 ---
 
@@ -107,6 +114,11 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 ### Task 10.0 - Testing Suite ✅ **MERGED TO MAIN!**
 **PR #1:** https://github.com/paulfretz/portrait-site/pull/1 (27 commits squashed, +8,456 additions)
 **Merge Commit:** 55a169c
+
+### Task 0002.0 - Image Quality & Gallery Layout Overhaul 🚀 **IN PROGRESS**
+**PRD:** `0002-prd-image-quality-gallery-layout.md` (437 lines)
+**Task List:** `tasks-0002-prd-image-quality-gallery-layout.md` (50 subtasks across 7 phases)
+**Commits:** (pending - not started yet)
 - **10.1-10.3** ✅ Test infrastructure (Jest, RTL, Playwright, GitHub Actions)
 - **10.4** ✅ GalleryGrid unit tests (22 tests)
 - **10.5** ✅ ContactForm unit tests (33 tests)
@@ -394,12 +406,12 @@ open http://localhost:3000/admin/categories
 - ✅ **Manual actions:** Clearly mark BLOCKING vs NON-BLOCKING, wait for confirmation
 
 ### 5. Current Work Context:
-**Working on:** Task 11.0 - Deployment & Production Configuration  
-**Branch:** main (Task 10.0 merged!)  
-**Progress:** 0 of 20 subtasks (Task 11.0)  
-**Last Completed:** Task 10.0 - Testing Suite (PR #1 merged)  
-**Next:** Create branch task-11.0-deployment, begin Task 11.1  
-**Remaining:** Task 11.0 (20 subtasks), then project complete!
+**Working on:** Task 0002.0 - Image Quality & Gallery Layout Overhaul  
+**Branch:** main (about to create feature branch)  
+**Progress:** 0 of 50 subtasks complete (0%)  
+**Last Completed:** PRD 0002 and task list created  
+**Next:** Create branch `task-0002-image-quality-gallery-layout`, begin Task 0002.1 (Update Next.js body size limit)  
+**Remaining:** All 50 subtasks (7 phases), then Task 11.0 deployment
 
 ---
 
@@ -625,7 +637,7 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 11.0 - Deployment & Production Configuration (AWAITING PERMISSION)
+1. **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (NEW PRD - HIGH PRIORITY)
 2. **What's Done:** 
    - Tasks 1.0-10.0 complete (100%), all merged to main
    - Task 10.0: 24/24 subtasks complete, PR #1 merged! 🎉
@@ -634,9 +646,14 @@ curl http://localhost:3000/api/galleries?category=weddings
      - ✅ Real authenticated E2E tests
      - ✅ Supabase CLI with local Docker
      - ✅ GitHub Actions CI/CD with isolated test database
+   - NEW PRD 0002 created: Image Quality & Gallery Layout Overhaul
+     - 50MB uploads up to 8000px
+     - Mobile masonry + Desktop justified layouts
+     - Hero slideshow upgrade
+     - Task list generated: 50 subtasks across 7 phases
    - Working on main branch
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
-3. **What's Next:** Task 11.0 - Deployment & Production Configuration (20 subtasks)
+3. **What's Next:** Create branch `task-0002-image-quality-gallery-layout`, start Phase 1 (Upload & Processing - 10 subtasks)
 4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0 - MANDATORY), run lint/tests/tsc checks
 5. **Key Files:** 
    - `CLAUDE.md` - Consolidated AI guide with Rule #0 (SESSION-LOG mandatory before every commit)
