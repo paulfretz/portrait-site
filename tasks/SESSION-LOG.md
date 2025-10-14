@@ -12,9 +12,9 @@
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
 **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 6 - SEO & Performance)  
-**Progress:** 41 of 51 subtasks complete (80%)  
-**Last Completed:** Task 0002.41 - Updated HeroSlideshow to use photographer's images ✅ **PHASE 5 COMPLETE!**  
-**Next:** Task 0002.42 - Enhanced structured data for images (Phase 6 begins!) (AWAITING PERMISSION)
+**Progress:** 42 of 51 subtasks complete (82%)  
+**Last Completed:** Task 0002.42 - Enhanced structured data with high-res image URLs  
+**Next:** Task 0002.43 - Generate image sitemap (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** ~784 passing (Unit/Integration: 319, E2E: ~465 across Chromium/Firefox/WebKit)  
@@ -219,8 +219,12 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.40** ✅ Implemented drag-and-drop reordering (@dnd-kit, SortableHeroImage)
 - **0002.41** ✅ Updated HeroSlideshow to use photographer's images (xlarge, blur placeholders)
 
-#### Phase 6: SEO & Performance (0/5)
-- **0002.42-0002.46** ⏳ Enhanced structured data, image sitemaps, Lighthouse
+#### Phase 6: SEO & Performance 🚧 IN PROGRESS (1/5)
+- **0002.42** ✅ Enhanced structured data with high-res URLs (xlarge contentUrl, thumbnail thumbnailUrl)
+- **0002.43** ⏳ Generate image sitemap
+- **0002.44** ⏳ Ensure descriptive alt attributes
+- **0002.45** ⏳ Add fetchPriority="high" to hero images
+- **0002.46** ⏳ Run Lighthouse audit
 
 #### Phase 7: Testing & Polish (0/4)
 - **0002.47-0002.50** ⏳ Unit tests, E2E tests, cross-browser testing

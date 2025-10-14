@@ -111,7 +111,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 
 ## Phase 6: SEO & Performance (5 subtasks)
 
-- [ ] 0002.42 Update structured data in `lib/seo/structured-data.ts` to include `contentUrl` with high-res image URLs
+- [x] 0002.42 Update structured data in `lib/seo/structured-data.ts` to include `contentUrl` with high-res image URLs
 - [ ] 0002.43 Generate image sitemap (`app/image-sitemap.xml/route.ts` or update `app/sitemap.ts`)
 - [ ] 0002.44 Ensure all images have descriptive `alt` attributes (check in GalleryGrid, PhotoGrid, etc.)
 - [ ] 0002.45 Add `fetchPriority="high"` to hero slideshow images for preloading
