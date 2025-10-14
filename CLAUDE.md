@@ -17,6 +17,22 @@
 - If you skip this, you are breaking the entire workflow
 - **NO EXCEPTIONS - This rule applies to EVERY single commit**
 
+### **Rule #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS**
+**Before proceeding to the next task, ALL tests must pass!**
+
+- After implementing ANY change, run the full test suite
+- If tests fail:
+  - Fix the tests if they're outdated
+  - Fix the code if it's the issue (use industry-standard solutions)
+  - **DO NOT proceed to next task until ALL tests pass**
+- This applies to: Unit tests, Integration tests, E2E tests, TypeScript, Linter
+- **"Even if tests or code fail" clause:**
+  - If test fails due to outdated expectations → fix the test
+  - If code fails due to poor implementation → fix the code using industry-standard solutions
+  - NEVER skip tests or proceed with failing tests
+  - NEVER use hacks or workarounds to make tests pass
+  - Quality over speed - do it right the first time
+
 ### **Rule #1: One Sub-Task at a Time**
 - **NEVER** start the next sub-task until you ask the user for permission
 - After completing a sub-task: **STOP** and ask "May I proceed with Task X.X?"
@@ -41,18 +57,23 @@
 After finishing a sub-task, follow this EXACT sequence:
 
 **🚨 PRE-COMMIT CHECKLIST (MANDATORY - DO NOT SKIP ANY STEP):**
-1. ✅ **Run linter** (`npm run lint`) and fix any errors
-2. ✅ **Run all tests** (`npm test`) and ensure they all pass
-3. ✅ **Run TypeScript** (`npx tsc --noEmit`) and fix any errors
-4. ✅ **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (see Rule #4)
-5. ✅ **Mark task [x]** in `tasks/tasks-0001-prd-portrait-photography-site.md`
+1. ✅ **Run linter** (`npm run lint`) and fix any errors - **MUST PASS** before Step 2
+2. ✅ **Run all tests** (`npm test`) and ensure they all pass - **MUST PASS** before Step 3
+   - **TDD Rule #0.5**: If tests fail, STOP and fix them (or the code) before continuing
+   - Fix tests if outdated, fix code using industry-standard solutions if broken
+   - NEVER proceed with failing tests - Quality over speed!
+3. ✅ **Run TypeScript** (`npx tsc --noEmit`) and fix any errors - **MUST PASS** before Step 4
+4. ✅ **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (see Rule #4) - **MANDATORY (Rule #0)**
+5. ✅ **Mark task [x]** in task list file
 6. ✅ **Update TODO list** using todo_write tool
 7. ✅ **Stage changes** (`git add`)
 8. ✅ **Commit** with descriptive conventional commit message
 9. ✅ **STOP** and ask user: "May I proceed with Task X.X?"
 10. ⏸️ **WAIT** for user approval before continuing
 
-**If you skip Step 4 (SESSION-LOG update), you are violating Rule #0!**
+**Critical Violations:**
+- **If you skip Step 4 (SESSION-LOG update), you are violating Rule #0!**
+- **If you proceed with failing tests in Step 2, you are violating Rule #0.5 (TDD)!**
 
 If all subtasks under a parent task are `[x]`:
 1. Run full test suite (`npm test`)

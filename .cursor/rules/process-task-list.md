@@ -18,6 +18,31 @@ Before running `git commit` on ANY sub-task:
 
 ---
 
+## 🚨 RULE #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS
+
+**Before proceeding to the next task, ALL tests must pass!**
+
+1. After implementing ANY change, run the full test suite
+2. If tests fail:
+   - Fix the tests if they're outdated
+   - Fix the code if it's the issue (use industry-standard solutions)
+   - DO NOT proceed to next task until ALL tests pass
+3. This applies to:
+   - Unit tests (`npm test`)
+   - Integration tests (included in `npm test`)
+   - E2E tests (`npm run test:e2e`) when relevant
+   - TypeScript compilation (`npx tsc --noEmit`)
+   - Linter (`npm run lint`)
+
+**"Even if tests or code fail" clause:**
+- If a test fails due to outdated expectations → fix the test
+- If code fails due to poor implementation → fix the code using industry-standard solutions
+- NEVER skip tests or proceed with failing tests
+- NEVER use hacks or workarounds to make tests pass
+- Quality over speed - do it right the first time
+
+---
+
 ## Task Implementation
 
 - **One sub-task at a time:** Do **NOT** start the next sub‑task until you ask the user for permission and they say "yes" or "y"
@@ -36,9 +61,12 @@ Before running `git commit` on ANY sub-task:
     5. Then mark parent task as `[x]`
 - **Completion protocol:**
   1. When you finish a **sub‑task**, follow this EXACT sequence:
-     - **Step 1**: Run linter (`npm run lint` or equivalent) and fix any errors
-     - **Step 2**: Run all tests (`npm test`) and ensure they all pass
-     - **Step 3**: Verify TypeScript compiles (`npx tsc --noEmit` or equivalent)
+     - **Step 1**: Run linter (`npm run lint`) and fix any errors - **MUST PASS** before Step 2
+     - **Step 2**: Run all tests (`npm test`) and ensure they all pass - **MUST PASS** before Step 3
+       - **TDD Rule #0.5**: If tests fail, you MUST fix them (or the code) before continuing
+       - Fix tests if outdated, fix code using industry-standard solutions if broken
+       - NEVER proceed with failing tests - Quality over speed!
+     - **Step 3**: Verify TypeScript compiles (`npx tsc --noEmit`) and fix any errors - **MUST PASS** before Step 4
      - **Step 4**: **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (MANDATORY, see "Section-by-Section Verification" below)
      - **Step 5**: Mark it as completed by changing `[ ]` to `[x]` in task list
      - **Step 6**: Update TODO list using todo_write tool
@@ -46,7 +74,8 @@ Before running `git commit` on ANY sub-task:
      - **Step 8**: Commit with descriptive conventional commit message
      - **Step 9**: STOP and ask user for permission to continue
      - **Step 10**: WAIT for user approval before proceeding
-     - **⚠️ CRITICAL**: If you skip Step 4 (SESSION-LOG update), you are breaking the workflow!
+     - **⚠️ CRITICAL**: If you skip Step 4 (SESSION-LOG update), you are breaking Rule #0!
+     - **⚠️ CRITICAL**: If you proceed with failing tests in Step 2, you are breaking Rule #0.5 (TDD)!
   2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
   - **First**: Run the full test suite (`pytest`, `npm test`, `bin/rails test`, etc.)
   - **Only if all tests pass**: Stage changes (`git add .`)
