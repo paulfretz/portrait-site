@@ -11,10 +11,10 @@
 ## 📋 Current Status
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
-**Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 5 - Hero Slideshow)  
-**Progress:** 40 of 51 subtasks complete (78%)  
-**Last Completed:** Task 0002.40 - Implemented drag-and-drop reordering for hero images  
-**Next:** Task 0002.41 - Update HeroSlideshow to use photographer's images (FINAL TASK OF PHASE 5!) (AWAITING PERMISSION)
+**Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 6 - SEO & Performance)  
+**Progress:** 41 of 51 subtasks complete (80%)  
+**Last Completed:** Task 0002.41 - Updated HeroSlideshow to use photographer's images ✅ **PHASE 5 COMPLETE!**  
+**Next:** Task 0002.42 - Enhanced structured data for images (Phase 6 begins!) (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** ~784 passing (Unit/Integration: 319, E2E: ~465 across Chromium/Firefox/WebKit)  
@@ -209,7 +209,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.32** ✅ Verified WebP/AVIF serving (Next.js automatic, formats configured)
 - **0002.33** ✅ Implemented high-res lightbox (xlarge 4000px WebP variant)
 
-#### Phase 5: Hero Slideshow 🚧 IN PROGRESS (7/8)
+#### Phase 5: Hero Slideshow ✅ COMPLETE (8/8)
 - **0002.34** ✅ Added is_hero_image boolean column (migration 003)
 - **0002.35** ✅ Added hero_display_order integer column (migration 003)
 - **0002.36** ✅ Updated TypeScript types (Image, ImageInsert, ImageUpdate, mockImage)
@@ -217,7 +217,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.38** ✅ Created HeroImageManager component (view, remove, refresh)
 - **0002.39** ✅ Added "Set as Hero Image" toggle in GalleryEditor (⭐ Hero button)
 - **0002.40** ✅ Implemented drag-and-drop reordering (@dnd-kit, SortableHeroImage)
-- **0002.41** ⏳ Update HeroSlideshow to use photographer's images
+- **0002.41** ✅ Updated HeroSlideshow to use photographer's images (xlarge, blur placeholders)
 
 #### Phase 6: SEO & Performance (0/5)
 - **0002.42-0002.46** ⏳ Enhanced structured data, image sitemaps, Lighthouse
