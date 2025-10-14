@@ -13,15 +13,16 @@ import { optimizeImage, generateOptimizedFilename } from '@/lib/utils/image-opti
  *
  * Request:
  * - Content-Type: multipart/form-data
- * - Files: images[] (JPEG/PNG/WebP/HEIC, max 10MB each)
+ * - Files: images[] (JPEG/PNG/WebP/HEIC, max 50MB each, up to 8000px)
  * - Fields:
  *   - gallery_id: string (required)
  *   - alt_text_override?: string (optional, for single image)
  *
  * Response:
  * - 200: { success: true, images: Image[] }
- * - 400: { success: false, error: string }
+ * - 400: { success: false, error: string } (invalid file type, size >50MB, or missing gallery_id)
  * - 401: { success: false, error: 'Unauthorized' }
+ * - 404: { success: false, error: 'Gallery not found' }
  * - 500: { success: false, error: string }
  */
 export async function POST(request: NextRequest) {
@@ -92,7 +93,7 @@ export async function POST(request: NextRequest) {
 
     // Validate file types and sizes
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic'];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 50 * 1024 * 1024; // 50MB (for high-resolution professional photography)
 
     for (const file of files) {
       if (!allowedTypes.includes(file.type)) {
@@ -106,10 +107,11 @@ export async function POST(request: NextRequest) {
       }
 
       if (file.size > maxSize) {
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
         return NextResponse.json(
           {
             success: false,
-            error: `File ${file.name} is too large. Maximum size: 10MB`,
+            error: `File "${file.name}" is too large (${fileSizeMB}MB). Maximum size: 50MB`,
           },
           { status: 400 }
         );
