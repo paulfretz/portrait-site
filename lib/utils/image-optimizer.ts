@@ -8,15 +8,16 @@ import sharp from 'sharp';
  * - Thumbnail: 400px width
  * - Medium: 1200px width
  * - Large: 2400px width
+ * - XLarge: 4000px width (for high-DPI displays and professional viewing)
  * - Original: unchanged
  *
  * Formats:
- * - JPEG (quality 85)
+ * - JPEG (quality 85-95 depending on size)
  * - WebP (for modern browsers)
  */
 
 export interface ImageSize {
-  name: 'thumbnail' | 'medium' | 'large' | 'original';
+  name: 'thumbnail' | 'medium' | 'large' | 'xlarge' | 'original';
   width: number | null; // null = original size
   buffer: Buffer;
   format: 'jpeg' | 'webp';
@@ -56,10 +57,11 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
   const sizes: ImageSize[] = [];
 
   // Define size configurations
-  const sizeConfigs: Array<{ name: 'thumbnail' | 'medium' | 'large'; width: number }> = [
+  const sizeConfigs: Array<{ name: 'thumbnail' | 'medium' | 'large' | 'xlarge'; width: number }> = [
     { name: 'thumbnail', width: 400 },
     { name: 'medium', width: 1200 },
     { name: 'large', width: 2400 },
+    { name: 'xlarge', width: 4000 }, // For high-DPI displays and professional viewing
   ];
 
   // Generate each size in both JPEG and WebP
