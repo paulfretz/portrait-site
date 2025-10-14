@@ -122,7 +122,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 ## Phase 7: Testing & Polish (4 subtasks)
 
 - [x] 0002.47 Write unit tests for image optimizer with new xlarge variant and quality settings
-- [ ] 0002.48 Write component tests for `MasonryGalleryGrid` and `JustifiedGalleryGrid`
+- [x] 0002.48 Write component tests for `MasonryGalleryGrid` and `JustifiedGalleryGrid`
 - [ ] 0002.49 Write E2E tests for mobile/desktop gallery layouts and hero slideshow
 - [ ] 0002.50 Cross-browser testing (Chrome, Firefox, Safari, Edge) and mobile device testing (iOS/Android)
 
