@@ -12,12 +12,12 @@
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
 **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 7 - Testing & Polish)  
-**Progress:** 47 of 51 subtasks complete (92%)  
-**Last Completed:** Task 0002.48 - Wrote component tests for PhotoGrid (15 tests)  
-**Next:** Task 0002.49 - Write E2E tests for layouts and hero (AWAITING PERMISSION)
+**Progress:** 48 of 51 subtasks complete (94%)  
+**Last Completed:** Task 0002.49 - Wrote E2E tests for gallery layouts and hero (17 tests)  
+**Next:** Task 0002.50 - Cross-browser testing verification (FINAL TASK!) (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
-**All Tests:** ~806 passing (Unit/Integration: 341, E2E: ~465 across Chromium/Firefox/WebKit)  
+**All Tests:** ~857 passing (Unit/Integration: 341, E2E: ~516 across Chromium/Firefox/WebKit)  
 **Coverage:** 80%+ on critical paths (components, APIs, auth flows)
 
 **NEW PRD:** High-priority image quality overhaul before production deployment
@@ -226,10 +226,10 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.45** ✅ Added fetchPriority="high" to first hero image (LCP optimization)
 - **0002.46** ⏸️ DEFERRED - Lighthouse audit (manual task, run later)
 
-#### Phase 7: Testing & Polish 🚧 IN PROGRESS (2/4)
+#### Phase 7: Testing & Polish 🚧 IN PROGRESS (3/4)
 - **0002.47** ✅ Wrote unit tests for xlarge variant, quality settings, blur placeholders (7 new tests)
 - **0002.48** ✅ Wrote component tests for PhotoGrid (15 tests: masonry, justified, responsive)
-- **0002.49** ⏳ Write E2E tests for layouts and hero
+- **0002.49** ✅ Wrote E2E tests for gallery layouts and hero (17 tests × 3 browsers = 51 tests)
 - **0002.50** ⏳ Cross-browser testing verification
 
 ---
