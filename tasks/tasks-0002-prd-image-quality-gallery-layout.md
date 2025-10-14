@@ -101,7 +101,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 - [x] 0002.34 Add `is_hero_image` boolean column to `images` table migration
 - [x] 0002.35 Add `hero_display_order` integer column for slideshow ordering
 - [x] 0002.36 Update `lib/db/types.ts` to include new hero image fields
-- [ ] 0002.37 Create `getHeroImages()` query function in `lib/db/queries.ts`
+- [x] 0002.37 Create `getHeroImages()` query function in `lib/db/queries.ts`
 - [ ] 0002.38 Create hero image management section in admin dashboard (`components/admin/HeroImageManager.tsx`)
 - [ ] 0002.39 Add "Set as Hero Image" toggle in `GalleryEditor` or `ImageUploader`
 - [ ] 0002.40 Implement drag-and-drop reordering for hero images (use `@dnd-kit`)
