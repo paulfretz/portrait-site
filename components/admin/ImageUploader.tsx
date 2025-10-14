@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react';
 import type { Image } from '@/lib/db/types';
+import UploadProgressBar from './UploadProgressBar';
 
 /**
  * Image Uploader Component
@@ -37,7 +38,7 @@ interface FileWithPreview {
   file: File;
   preview: string;
   progress: number;
-  status: 'pending' | 'uploading' | 'success' | 'error';
+  status: 'pending' | 'uploading' | 'processing' | 'complete' | 'error';
   error?: string;
 }
 
@@ -49,7 +50,7 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
 
   // Allowed file types
   const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic'];
-  const maxSize = 10 * 1024 * 1024; // 10MB
+  const maxSize = 50 * 1024 * 1024; // 50MB (for high-resolution professional photography)
 
   // Validate files
   const validateFile = (file: File): string | null => {
@@ -57,7 +58,7 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
       return `Invalid file type. Allowed: JPEG, PNG, WebP, HEIC`;
     }
     if (file.size > maxSize) {
-      return `File too large (max 10MB). This file is ${(file.size / 1024 / 1024).toFixed(2)}MB`;
+      return `File too large (max 50MB). This file is ${(file.size / 1024 / 1024).toFixed(2)}MB`;
     }
     return null;
   };
@@ -163,9 +164,9 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
         throw new Error(data.error || 'Upload failed');
       }
 
-      // Mark all uploaded files as success
+      // Mark all uploaded files as complete
       setFiles((prev) =>
-        prev.map((f) => (f.status === 'uploading' ? { ...f, status: 'success' as const, progress: 100 } : f))
+        prev.map((f) => (f.status === 'uploading' ? { ...f, status: 'complete' as const, progress: 100 } : f))
       );
 
       // Call success callback
@@ -247,7 +248,7 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
           <div className="text-sm text-neutral-600">
             <span className="font-medium text-sage-600">Click to upload</span> or drag and drop
           </div>
-          <p className="text-xs text-neutral-500">JPEG, PNG, WebP, HEIC up to 10MB each</p>
+          <p className="text-xs text-neutral-500">JPEG, PNG, WebP, HEIC up to 50MB each</p>
         </div>
       </div>
 
@@ -268,67 +269,63 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
             )}
           </div>
 
-          <div className="grid grid-cols-1 gap-2">
+          <div className="space-y-3">
             {files.map((fileWithPreview, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 p-3 bg-white border border-neutral-200 rounded-lg"
-              >
-                {/* Preview thumbnail */}
-                <div className="relative w-16 h-16 flex-shrink-0 bg-neutral-100 rounded overflow-hidden">
-                  <img
-                    src={fileWithPreview.preview}
-                    alt={fileWithPreview.file.name}
-                    className="w-full h-full object-cover"
+              <div key={index} className="relative">
+                {/* Use UploadProgressBar for uploading/processing/complete/error states */}
+                {(fileWithPreview.status === 'uploading' ||
+                  fileWithPreview.status === 'processing' ||
+                  fileWithPreview.status === 'complete' ||
+                  fileWithPreview.status === 'error') && (
+                  <UploadProgressBar
+                    fileName={fileWithPreview.file.name}
+                    fileSize={fileWithPreview.file.size}
+                    progress={fileWithPreview.progress}
+                    status={fileWithPreview.status}
+                    error={fileWithPreview.error}
                   />
-                </div>
+                )}
 
-                {/* File info */}
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-neutral-900 truncate">
-                    {fileWithPreview.file.name}
-                  </p>
-                  <p className="text-xs text-neutral-500">
-                    {(fileWithPreview.file.size / 1024 / 1024).toFixed(2)} MB
-                  </p>
-
-                  {/* Status and progress */}
-                  {fileWithPreview.status === 'pending' && (
-                    <p className="text-xs text-neutral-500 mt-1">Ready to upload</p>
-                  )}
-                  {fileWithPreview.status === 'uploading' && (
-                    <div className="mt-1">
-                      <div className="w-full bg-neutral-200 rounded-full h-1.5">
-                        <div
-                          className="bg-sage-500 h-1.5 rounded-full transition-all"
-                          style={{ width: `${fileWithPreview.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                  {fileWithPreview.status === 'success' && (
-                    <p className="text-xs text-green-600 mt-1">✓ Uploaded</p>
-                  )}
-                  {fileWithPreview.status === 'error' && (
-                    <p className="text-xs text-red-600 mt-1">✗ {fileWithPreview.error}</p>
-                  )}
-                </div>
-
-                {/* Remove button */}
-                {!isUploading && fileWithPreview.status !== 'success' && (
-                  <button
-                    onClick={() => removeFile(index)}
-                    className="flex-shrink-0 text-neutral-400 hover:text-red-500 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
+                {/* Simple preview for pending files */}
+                {fileWithPreview.status === 'pending' && (
+                  <div className="flex items-center gap-3 p-3 bg-white border border-neutral-200 rounded-lg">
+                    {/* Preview thumbnail */}
+                    <div className="relative w-16 h-16 flex-shrink-0 bg-neutral-100 rounded overflow-hidden">
+                      <img
+                        src={fileWithPreview.preview}
+                        alt={fileWithPreview.file.name}
+                        className="w-full h-full object-cover"
                       />
-                    </svg>
-                  </button>
+                    </div>
+
+                    {/* File info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-neutral-900 truncate">
+                        {fileWithPreview.file.name}
+                      </p>
+                      <p className="text-xs text-neutral-500">
+                        {(fileWithPreview.file.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                      <p className="text-xs text-neutral-500 mt-1">Ready to upload</p>
+                    </div>
+
+                    {/* Remove button */}
+                    {!isUploading && (
+                      <button
+                        onClick={() => removeFile(index)}
+                        className="flex-shrink-0 text-neutral-400 hover:text-red-500 transition-colors"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
             ))}

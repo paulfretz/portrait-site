@@ -53,7 +53,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 - [x] 0002.7 Increase WebP quality settings (thumbnail: 80, medium: 85, large: 90, xlarge: 90, original: 90)
 - [x] 0002.8 Update `generateOptimizedSizes()` function to include xlarge in size array
 - [x] 0002.9 Add upload progress bar component for large files (`components/admin/UploadProgressBar.tsx`)
-- [ ] 0002.10 Integrate progress bar into `ImageUploader.tsx` (show percentage, file size, estimated time)
+- [x] 0002.10 Integrate progress bar into `ImageUploader.tsx` (show percentage, file size, estimated time)
 
 ---
 
