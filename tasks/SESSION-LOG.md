@@ -169,6 +169,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 2. **Hand-Crafted Types** - `lib/db/types.ts` mirrors SQL schema (will use CLI-generated types in Task 10.22)
 3. **Edit Mode Context** - Global state for inline editing across app
 4. **Server/Client Split** - Server components fetch data, client components handle editing
+5. **Test-Driven Development (TDD)** - Rule #0.5: All tests must pass before proceeding. If tests fail, fix tests (if outdated) or code (industry-standard solutions). Never proceed with failing tests.
 
 ### Image Optimization
 - **Vercel Blob** - Chosen over Supabase Storage for native Next.js integration
@@ -689,7 +690,7 @@ curl http://localhost:3000/api/galleries?category=weddings
    - **✅ PHASE 2 COMPLETE (8/8 subtasks)** - Mobile masonry layout with 2 columns, 4px gaps, natural aspect ratios!
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
 3. **What's Next:** Task 0002.19 - Research and choose justified layout approach for desktop (Phase 3 begins)
-4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0 - MANDATORY), run lint/tests/tsc checks
+4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0), **ALL TESTS MUST PASS** (Rule #0.5 TDD), run lint/tests/tsc checks
 5. **Key Files:** 
    - `CLAUDE.md` - Consolidated AI guide with Rule #0 (SESSION-LOG mandatory before every commit)
    - `.cursor/rules/process-task-list.md` - Updated with Rule #0 and 10-step checklist
