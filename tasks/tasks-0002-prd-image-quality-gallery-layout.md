@@ -87,7 +87,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 ## Phase 4: Image Display Quality (7 subtasks)
 
 - [x] 0002.27 Generate blur placeholder data URLs using `sharp` or `plaiceholder` library
-- [ ] 0002.28 Store blur placeholders in database (`images` table - add `blur_data_url` column)
+- [x] 0002.28 Store blur placeholders in database (`images` table - add `blur_data_url` column)
 - [ ] 0002.29 Update `OptimizedImage` component to show blur placeholder before full image loads
 - [ ] 0002.30 Implement fade-in animation when full image loads
 - [ ] 0002.31 Update Next.js Image `srcset` to include xlarge variant

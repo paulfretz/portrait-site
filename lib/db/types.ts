@@ -138,6 +138,7 @@ export interface Image {
   alt_text: string | null;
   width: number | null;
   height: number | null;
+  blur_data_url: string | null; // Base64 blur placeholder for progressive loading
   display_order: number;
   created_at: string;
   updated_at: string;
@@ -150,6 +151,7 @@ export interface ImageInsert {
   alt_text?: string | null;
   width?: number | null;
   height?: number | null;
+  blur_data_url?: string | null;
   display_order?: number;
   created_at?: string;
   updated_at?: string;
@@ -162,6 +164,7 @@ export interface ImageUpdate {
   alt_text?: string | null;
   width?: number | null;
   height?: number | null;
+  blur_data_url?: string | null;
   display_order?: number;
   updated_at?: string;
 }

@@ -193,13 +193,14 @@ export async function POST(request: NextRequest) {
           altTextOverride ||
           `${gallery.title}${gallery.location ? ` in ${gallery.location}` : ''}`;
 
-        // Save to database with actual dimensions
+        // Save to database with actual dimensions and blur placeholder
         const imageData: ImageInsert = {
           gallery_id: galleryId,
           url: originalJpegBlob.url,
           alt_text: altText,
           width: optimized.originalDimensions.width,
           height: optimized.originalDimensions.height,
+          blur_data_url: optimized.blurDataUrl, // Base64 blur placeholder
           display_order: 0, // Will be updated when reordering is implemented
         };
 
