@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { put } from '@vercel/blob';
+import sharp from 'sharp';
 import { createClient } from '@/lib/supabase/server';
 import { createImage } from '@/lib/db/queries';
 import type { ImageInsert } from '@/lib/db/types';
@@ -112,6 +113,45 @@ export async function POST(request: NextRequest) {
           {
             success: false,
             error: `File "${file.name}" is too large (${fileSizeMB}MB). Maximum size: 50MB`,
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Validate image dimensions (max 8000px width or height)
+    const maxDimension = 8000; // 8000px for professional high-res photography
+    
+    for (const file of files) {
+      try {
+        const buffer = await file.arrayBuffer();
+        const metadata = await sharp(Buffer.from(buffer)).metadata();
+        
+        if (!metadata.width || !metadata.height) {
+          return NextResponse.json(
+            {
+              success: false,
+              error: `Could not read dimensions of "${file.name}". File may be corrupted.`,
+            },
+            { status: 400 }
+          );
+        }
+
+        if (metadata.width > maxDimension || metadata.height > maxDimension) {
+          return NextResponse.json(
+            {
+              success: false,
+              error: `Image "${file.name}" dimensions (${metadata.width}×${metadata.height}px) exceed maximum (${maxDimension}px). Please resize before uploading.`,
+            },
+            { status: 400 }
+          );
+        }
+      } catch (error) {
+        console.error('Error reading image dimensions:', error);
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Failed to process "${file.name}". Please ensure it's a valid image file.`,
           },
           { status: 400 }
         );
