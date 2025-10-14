@@ -12,9 +12,9 @@
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
 **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 5 - Hero Slideshow)  
-**Progress:** 39 of 51 subtasks complete (76%)  
-**Last Completed:** Task 0002.39 - Added "Set as Hero Image" toggle in GalleryEditor  
-**Next:** Task 0002.40 - Implement drag-and-drop reordering for hero images (AWAITING PERMISSION)
+**Progress:** 40 of 51 subtasks complete (78%)  
+**Last Completed:** Task 0002.40 - Implemented drag-and-drop reordering for hero images  
+**Next:** Task 0002.41 - Update HeroSlideshow to use photographer's images (FINAL TASK OF PHASE 5!) (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** ~784 passing (Unit/Integration: 319, E2E: ~465 across Chromium/Firefox/WebKit)  
@@ -209,14 +209,14 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.32** ✅ Verified WebP/AVIF serving (Next.js automatic, formats configured)
 - **0002.33** ✅ Implemented high-res lightbox (xlarge 4000px WebP variant)
 
-#### Phase 5: Hero Slideshow 🚧 IN PROGRESS (6/8)
+#### Phase 5: Hero Slideshow 🚧 IN PROGRESS (7/8)
 - **0002.34** ✅ Added is_hero_image boolean column (migration 003)
 - **0002.35** ✅ Added hero_display_order integer column (migration 003)
 - **0002.36** ✅ Updated TypeScript types (Image, ImageInsert, ImageUpdate, mockImage)
 - **0002.37** ✅ Created getHeroImages() query function (ordered by hero_display_order)
 - **0002.38** ✅ Created HeroImageManager component (view, remove, refresh)
 - **0002.39** ✅ Added "Set as Hero Image" toggle in GalleryEditor (⭐ Hero button)
-- **0002.40** ⏳ Implement drag-and-drop reordering
+- **0002.40** ✅ Implemented drag-and-drop reordering (@dnd-kit, SortableHeroImage)
 - **0002.41** ⏳ Update HeroSlideshow to use photographer's images
 
 #### Phase 6: SEO & Performance (0/5)

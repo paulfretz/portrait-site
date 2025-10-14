@@ -4,6 +4,103 @@ import { useState, useEffect } from 'react';
 import { OptimizedImage } from '@/components/gallery/OptimizedImage';
 import { Image } from '@/lib/db/types';
 import { getHeroImages } from '@/lib/db/queries';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+/**
+ * Sortable Hero Image Item Component
+ * Individual draggable hero image card
+ */
+interface SortableHeroImageProps {
+  image: Image;
+  index: number;
+  onRemove: (imageId: string) => void;
+}
+
+function SortableHeroImage({ image, index, onRemove }: SortableHeroImageProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: image.id,
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+    >
+      {/* Drag Handle */}
+      <div
+        {...attributes}
+        {...listeners}
+        className="bg-neutral-50 border-b border-neutral-200 px-4 py-2 cursor-grab active:cursor-grabbing flex items-center gap-2"
+      >
+        <svg className="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
+        </svg>
+        <span className="text-sm text-neutral-600 font-medium">Drag to reorder</span>
+      </div>
+
+      {/* Image Preview */}
+      <div className="aspect-[16/9] relative bg-neutral-100">
+        <OptimizedImage
+          src={image.url}
+          alt={image.alt_text || 'Hero image'}
+          blurDataUrl={image.blur_data_url}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+      </div>
+
+      {/* Image Info */}
+      <div className="p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-medium text-sage-600 bg-sage-50 px-2 py-1 rounded">
+            Order: {image.hero_display_order ?? 'N/A'}
+          </span>
+          <span className="text-xs text-neutral-500">Position {index + 1}</span>
+        </div>
+
+        {image.alt_text && (
+          <p className="text-sm text-neutral-600 line-clamp-2">{image.alt_text}</p>
+        )}
+
+        <div className="text-xs text-neutral-500">
+          {image.width && image.height && <span>{image.width} × {image.height}px</span>}
+        </div>
+
+        {/* Actions */}
+        <button
+          onClick={() => onRemove(image.id)}
+          className="w-full px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium"
+        >
+          Remove from Hero
+        </button>
+      </div>
+    </div>
+  );
+}
 
 /**
  * Hero Image Manager Component
@@ -11,18 +108,28 @@ import { getHeroImages } from '@/lib/db/queries';
  * 
  * Features:
  * - View all current hero images
+ * - Drag-and-drop reordering
  * - See hero_display_order
  * - Remove images from hero slideshow
  * - Refresh to see updates
- * 
- * Note: Drag-and-drop reordering will be added in Task 0002.40
- * Note: "Set as Hero" toggle in gallery editor will be added in Task 0002.39
  */
 
 export default function HeroImageManager() {
   const [heroImages, setHeroImages] = useState<Image[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Drag-and-drop sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Require 8px movement before drag starts
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   // Fetch hero images
   const fetchHeroImages = async () => {
@@ -64,6 +171,43 @@ export default function HeroImageManager() {
     } catch (err) {
       console.error('Error removing hero image:', err);
       alert('Failed to remove image from hero slideshow');
+    }
+  };
+
+  // Handle drag end - reorder hero images
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = heroImages.findIndex((img) => img.id === active.id);
+    const newIndex = heroImages.findIndex((img) => img.id === over.id);
+
+    // Optimistically update UI
+    const reorderedImages = arrayMove(heroImages, oldIndex, newIndex);
+    setHeroImages(reorderedImages);
+
+    // Update hero_display_order for all images
+    try {
+      const updatePromises = reorderedImages.map((image, index) =>
+        fetch(`/api/images/${image.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            hero_display_order: index + 1,
+          }),
+        })
+      );
+
+      await Promise.all(updatePromises);
+
+      // Refresh to get updated data from server
+      await fetchHeroImages();
+    } catch (err) {
+      console.error('Error reordering hero images:', err);
+      alert('Failed to reorder images');
+      // Revert on error
+      await fetchHeroImages();
     }
   };
 
@@ -134,63 +278,25 @@ export default function HeroImageManager() {
             <p className="text-sm text-neutral-600">
               {heroImages.length} {heroImages.length === 1 ? 'image' : 'images'} in slideshow
             </p>
-            <p className="text-xs text-neutral-500">
-              Drag-and-drop reordering coming in Task 0002.40
+            <p className="text-xs text-sage-600 font-medium">
+              ✨ Drag cards to reorder
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {heroImages.map((image, index) => (
-              <div
-                key={image.id}
-                className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-              >
-                {/* Image Preview */}
-                <div className="aspect-[16/9] relative bg-neutral-100">
-                  <OptimizedImage
-                    src={image.url}
-                    alt={image.alt_text || 'Hero image'}
-                    blurDataUrl={image.blur_data_url}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={heroImages.map((img) => img.id)} strategy={verticalListSortingStrategy}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {heroImages.map((image, index) => (
+                  <SortableHeroImage
+                    key={image.id}
+                    image={image}
+                    index={index}
+                    onRemove={handleRemoveFromHero}
                   />
-                </div>
-
-                {/* Image Info */}
-                <div className="p-4 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-sage-600 bg-sage-50 px-2 py-1 rounded">
-                      Order: {image.hero_display_order ?? 'N/A'}
-                    </span>
-                    <span className="text-xs text-neutral-500">
-                      Position {index + 1}
-                    </span>
-                  </div>
-
-                  {image.alt_text && (
-                    <p className="text-sm text-neutral-600 line-clamp-2">
-                      {image.alt_text}
-                    </p>
-                  )}
-
-                  <div className="text-xs text-neutral-500">
-                    {image.width && image.height && (
-                      <span>{image.width} × {image.height}px</span>
-                    )}
-                  </div>
-
-                  {/* Actions */}
-                  <button
-                    onClick={() => handleRemoveFromHero(image.id)}
-                    className="w-full px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium"
-                  >
-                    Remove from Hero
-                  </button>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </SortableContext>
+          </DndContext>
         </div>
       )}
 

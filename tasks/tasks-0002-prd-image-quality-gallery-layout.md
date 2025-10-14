@@ -104,7 +104,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 - [x] 0002.37 Create `getHeroImages()` query function in `lib/db/queries.ts`
 - [x] 0002.38 Create hero image management section in admin dashboard (`components/admin/HeroImageManager.tsx`)
 - [x] 0002.39 Add "Set as Hero Image" toggle in `GalleryEditor` or `ImageUploader`
-- [ ] 0002.40 Implement drag-and-drop reordering for hero images (use `@dnd-kit`)
+- [x] 0002.40 Implement drag-and-drop reordering for hero images (use `@dnd-kit`)
 - [ ] 0002.41 Update `HeroSlideshow.tsx` to fetch and display photographer's hero images (replace Unsplash placeholders)
 
 ---
