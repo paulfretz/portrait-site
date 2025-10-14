@@ -103,68 +103,12 @@ export function OptimizedImage({
   // Render with fill
   if (fill) {
     return (
-      <>
-        {isLoading && (
-          <div className="absolute inset-0 bg-neutral-100 animate-pulse" />
-        )}
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes || '100vw'}
-          className={`${className} ${objectFit === 'cover' ? 'object-cover' : `object-${objectFit}`} transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-          onLoad={handleLoadComplete}
-          onError={handleError}
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-          placeholder="blur"
-          blurDataURL={blurPlaceholder}
-        />
-      </>
-    );
-  }
-
-  // Render with explicit dimensions
-  if (width && height) {
-    return (
-      <div className={`relative ${className}`}>
-        {isLoading && (
-          <div
-            className="absolute inset-0 bg-neutral-100 animate-pulse"
-            style={{ width, height }}
-          />
-        )}
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          sizes={sizes}
-          className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-          onLoad={handleLoadComplete}
-          onError={handleError}
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-          placeholder="blur"
-          blurDataURL={blurPlaceholder}
-        />
-      </div>
-    );
-  }
-
-  // Fallback: render with CSS dimensions
-  return (
-    <div className={`relative ${className}`}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-neutral-100 animate-pulse" />
-      )}
       <Image
         src={src}
         alt={alt}
-        width={800}
-        height={600}
+        fill
         sizes={sizes || '100vw'}
-        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        className={`${className} ${objectFit === 'cover' ? 'object-cover' : `object-${objectFit}`} transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
         onLoad={handleLoadComplete}
         onError={handleError}
         priority={priority}
@@ -172,7 +116,45 @@ export function OptimizedImage({
         placeholder="blur"
         blurDataURL={blurPlaceholder}
       />
-    </div>
+    );
+  }
+
+  // Render with explicit dimensions
+  if (width && height) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        sizes={sizes}
+        className={`${className} transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        onLoad={handleLoadComplete}
+        onError={handleError}
+        priority={priority}
+        loading={priority ? 'eager' : 'lazy'}
+        placeholder="blur"
+        blurDataURL={blurPlaceholder}
+      />
+    );
+  }
+
+  // Fallback: render with CSS dimensions
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={800}
+      height={600}
+      sizes={sizes || '100vw'}
+      className={`${className} transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+      onLoad={handleLoadComplete}
+      onError={handleError}
+      priority={priority}
+      loading={priority ? 'eager' : 'lazy'}
+      placeholder="blur"
+      blurDataURL={blurPlaceholder}
+    />
   );
 }
 
