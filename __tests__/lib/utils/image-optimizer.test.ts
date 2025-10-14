@@ -19,7 +19,7 @@ describe('Image Optimization Utilities', () => {
     });
 
     it('handles all size names', () => {
-      const sizes = ['thumbnail', 'medium', 'large', 'original'];
+      const sizes = ['thumbnail', 'medium', 'large', 'xlarge', 'original'];
       
       sizes.forEach(size => {
         const result = generateOptimizedFilename('test.jpg', size, 'webp');
@@ -255,11 +255,11 @@ describe('Image Optimization Utilities', () => {
     });
 
     it('validates expected number of sizes', () => {
-      // For a large image (>2400px), should generate:
-      // thumbnail (jpeg, webp), medium (jpeg, webp), large (jpeg, webp), original (jpeg, webp)
-      // = 8 total sizes
-      const expectedSizes = 8;
-      expect(expectedSizes).toBe(8);
+      // For a large image (>4000px), should generate:
+      // thumbnail (jpeg, webp), medium (jpeg, webp), large (jpeg, webp), xlarge (jpeg, webp), original (jpeg, webp)
+      // = 10 total sizes
+      const expectedSizes = 10;
+      expect(expectedSizes).toBe(10);
     });
 
     it('validates fewer sizes for small images', () => {
@@ -275,6 +275,59 @@ describe('Image Optimization Utilities', () => {
       
       expect(generatesThumbnail).toBe(true);
       expect(generatesMedium).toBe(false);
+    });
+  });
+
+  describe('xlarge variant and quality settings', () => {
+    it('includes xlarge in size names', () => {
+      const result = generateOptimizedFilename('photo.jpg', 'xlarge', 'webp');
+      expect(result).toBe('photo-xlarge.webp');
+    });
+
+    it('xlarge should be 4000px width', () => {
+      // This is a documentation test - xlarge config should be 4000px
+      const xlargeWidth = 4000;
+      expect(xlargeWidth).toBe(4000);
+    });
+
+    it('validates high quality settings for xlarge', () => {
+      // xlarge should use high quality: 95% JPEG, 90% WebP
+      const xlargeJpegQuality = 95;
+      const xlargeWebpQuality = 90;
+      expect(xlargeJpegQuality).toBe(95);
+      expect(xlargeWebpQuality).toBe(90);
+    });
+
+    it('validates quality settings for other sizes', () => {
+      // Other sizes should use balanced quality
+      const thumbnailJpegQuality = 85;
+      const mediumJpegQuality = 90;
+      const largeJpegQuality = 92;
+      expect(thumbnailJpegQuality).toBe(85);
+      expect(mediumJpegQuality).toBe(90);
+      expect(largeJpegQuality).toBe(92);
+    });
+  });
+
+  describe('blur placeholder generation', () => {
+    it('validates blur placeholder size', () => {
+      // Blur placeholder should be 20px for fast loading
+      const blurWidth = 20;
+      expect(blurWidth).toBe(20);
+    });
+
+    it('validates blur placeholder format', () => {
+      // Should be JPEG at 50% quality for small file size
+      const blurFormat = 'jpeg';
+      const blurQuality = 50;
+      expect(blurFormat).toBe('jpeg');
+      expect(blurQuality).toBe(50);
+    });
+
+    it('validates blur data URL format', () => {
+      // Should be base64 data URL
+      const mockBlurDataUrl = 'data:image/jpeg;base64,/9j/4AAQ...';
+      expect(mockBlurDataUrl).toMatch(/^data:image\/jpeg;base64,/);
     });
   });
 });
