@@ -56,12 +56,16 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
 
   const sizes: ImageSize[] = [];
 
-  // Define size configurations
-  const sizeConfigs: Array<{ name: 'thumbnail' | 'medium' | 'large' | 'xlarge'; width: number }> = [
-    { name: 'thumbnail', width: 400 },
-    { name: 'medium', width: 1200 },
-    { name: 'large', width: 2400 },
-    { name: 'xlarge', width: 4000 }, // For high-DPI displays and professional viewing
+  // Define size configurations with quality settings
+  const sizeConfigs: Array<{ 
+    name: 'thumbnail' | 'medium' | 'large' | 'xlarge'; 
+    width: number;
+    jpegQuality: number;
+  }> = [
+    { name: 'thumbnail', width: 400, jpegQuality: 85 },
+    { name: 'medium', width: 1200, jpegQuality: 90 },
+    { name: 'large', width: 2400, jpegQuality: 95 },
+    { name: 'xlarge', width: 4000, jpegQuality: 95 }, // For high-DPI displays and professional viewing
   ];
 
   // Generate each size in both JPEG and WebP
@@ -78,10 +82,10 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
 
     const resizedMetadata = await resized.metadata();
 
-    // JPEG version
+    // JPEG version with size-appropriate quality
     const jpegBuffer = await resized
       .jpeg({
-        quality: 85,
+        quality: config.jpegQuality,
         mozjpeg: true, // Use mozjpeg for better compression
       })
       .toBuffer();
@@ -116,10 +120,10 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
     });
   }
 
-  // Original size in both formats
+  // Original size in both formats (highest quality for professional use)
   const originalJpeg = await sharp(buffer)
     .jpeg({
-      quality: 85,
+      quality: 95,
       mozjpeg: true,
     })
     .toBuffer();

@@ -49,7 +49,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 - [x] 0002.3 Add file size validation to upload API (reject >50MB with clear error message)
 - [x] 0002.4 Add image dimension validation (max 8000px width/height)
 - [x] 0002.5 Update `lib/utils/image-optimizer.ts` to add `xlarge` variant (4000px)
-- [ ] 0002.6 Increase JPEG quality settings (thumbnail: 85, medium: 90, large: 95, xlarge: 95, original: 95)
+- [x] 0002.6 Increase JPEG quality settings (thumbnail: 85, medium: 90, large: 95, xlarge: 95, original: 95)
 - [ ] 0002.7 Increase WebP quality settings (thumbnail: 80, medium: 85, large: 90, xlarge: 90, original: 90)
 - [ ] 0002.8 Update `generateOptimizedSizes()` function to include xlarge in size array
 - [ ] 0002.9 Add upload progress bar component for large files (`components/admin/UploadProgressBar.tsx`)
