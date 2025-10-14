@@ -45,7 +45,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 ## Phase 1: Image Upload & Processing (10 subtasks)
 
 - [x] 0002.1 Update Next.js body size limit to 50MB (`next.config.js`)
-- [ ] 0002.2 Update Vercel Blob upload configuration (check storage limits, configure in dashboard if needed)
+- [x] 0002.2 Update Vercel Blob upload configuration (check storage limits, configure in dashboard if needed)
 - [ ] 0002.3 Add file size validation to upload API (reject >50MB with clear error message)
 - [ ] 0002.4 Add image dimension validation (max 8000px width/height)
 - [ ] 0002.5 Update `lib/utils/image-optimizer.ts` to add `xlarge` variant (4000px)

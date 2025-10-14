@@ -145,7 +145,25 @@ NEXT_PUBLIC_ADMIN_EMAIL=admin@example.com
 3. Create a new Blob Store
 4. Copy the `BLOB_READ_WRITE_TOKEN` to your `.env.local`
 
-**Note:** Vercel Blob is used for storing high-resolution portfolio images with automatic CDN distribution.
+**Storage Limits & Upload Configuration:**
+
+This project supports uploads up to **50MB and 8000px** for professional photography:
+
+- **Vercel Blob Limits:**
+  - Free Tier: 500GB storage, 100GB bandwidth/month
+  - Upload API: Supports up to **500MB** per file on all plans
+  - **No dashboard configuration needed** for 50MB uploads
+
+- **Next.js Configuration:**  
+  - Body parser limit: **50MB** (configured in `next.config.js` ✅)
+  - This is the primary upload size control
+
+- **Serverless Function Considerations:**
+  - **Hobby plan:** 10s timeout, 1024MB memory (may timeout on large uploads)
+  - **Pro plan:** 60s timeout, 3008MB memory (recommended for production)
+  - If uploads timeout: upgrade plan or optimize image processing
+
+**Note:** Vercel Blob is used for storing high-resolution portfolio images with automatic CDN distribution. See [Vercel Blob Docs](https://vercel.com/docs/storage/vercel-blob) for details.
 
 ### 6. Set Up Resend for Email Notifications
 

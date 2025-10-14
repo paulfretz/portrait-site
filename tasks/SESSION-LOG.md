@@ -12,9 +12,9 @@
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
 **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul  
-**Progress:** 1 of 50 subtasks complete (2%)  
-**Last Completed:** Task 0002.1 - Updated Next.js body size limit to 50MB  
-**Next:** Task 0002.2 - Update Vercel Blob upload configuration (AWAITING PERMISSION)
+**Progress:** 2 of 50 subtasks complete (4%)  
+**Last Completed:** Task 0002.2 - Documented Vercel Blob configuration (no code changes needed)  
+**Next:** Task 0002.3 - Add file size validation to upload API (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** 645 passing (Unit/Integration: 319, E2E: 326 across Chromium/Firefox/WebKit)  
@@ -121,6 +121,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 **Branch:** `task-0002-image-quality-gallery-layout`
 **Commits:** (in progress)
 - **0002.1** ✅ Updated Next.js body size limit to 50MB in `next.config.js`
+- **0002.2** ✅ Documented Vercel Blob configuration in README.md (no code changes needed - Vercel Blob supports 500MB uploads by default)
 - **10.1-10.3** ✅ Test infrastructure (Jest, RTL, Playwright, GitHub Actions)
 - **10.4** ✅ GalleryGrid unit tests (22 tests)
 - **10.5** ✅ ContactForm unit tests (33 tests)
@@ -410,10 +411,10 @@ open http://localhost:3000/admin/categories
 ### 5. Current Work Context:
 **Working on:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 1)  
 **Branch:** task-0002-image-quality-gallery-layout  
-**Progress:** 1 of 50 subtasks complete (2%)  
-**Last Completed:** Task 0002.1 - Updated Next.js body size limit to 50MB  
-**Next:** Task 0002.2 - Update Vercel Blob upload configuration  
-**Remaining:** 49 subtasks across 7 phases, then Task 11.0 deployment
+**Progress:** 2 of 50 subtasks complete (4%)  
+**Last Completed:** Task 0002.2 - Documented Vercel Blob configuration  
+**Next:** Task 0002.3 - Add file size validation to upload API  
+**Remaining:** 48 subtasks across 7 phases, then Task 11.0 deployment
 
 ---
 
@@ -655,8 +656,9 @@ curl http://localhost:3000/api/galleries?category=weddings
      - Task list generated: 50 subtasks across 7 phases
    - Feature branch created: `task-0002-image-quality-gallery-layout`
    - **0002.1 COMPLETE** ✅ Next.js body size limit increased to 50MB
+   - **0002.2 COMPLETE** ✅ Vercel Blob configuration documented (supports 500MB uploads by default, no config needed)
    - Task 9.18 (Lighthouse audit) pending manual action (NON-BLOCKING)
-3. **What's Next:** Task 0002.2 - Update Vercel Blob upload configuration (check storage limits, may require dashboard config)
+3. **What's Next:** Task 0002.3 - Add file size validation to upload API (reject >50MB with clear error)
 4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0 - MANDATORY), run lint/tests/tsc checks
 5. **Key Files:** 
    - `CLAUDE.md` - Consolidated AI guide with Rule #0 (SESSION-LOG mandatory before every commit)
