@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Masonry from 'react-masonry-css';
 import { OptimizedImage } from './OptimizedImage';
 import { GalleryLightbox } from './GalleryLightbox';
 import { Image as ImageType } from '@/lib/db/types';
@@ -51,22 +52,44 @@ export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
     );
   }
 
+  // Masonry breakpoints configuration
+  const breakpointColumns = {
+    default: 3, // Desktop: 3 columns
+    1024: 2, // Tablet: 2 columns
+    768: 2, // Mobile: 2 columns
+  };
+
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      {/* Masonry Grid for Mobile (2 columns), Desktop grid for larger screens */}
+      <Masonry
+        breakpointCols={breakpointColumns}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
         {images.map((image, index) => (
           <button
             key={image.id}
             onClick={() => openLightbox(index)}
-            className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 cursor-pointer hover:shadow-lg transition-all duration-300"
+            className="group relative w-full overflow-hidden bg-gray-100 cursor-pointer hover:shadow-lg transition-all duration-300"
           >
-            <OptimizedImage
-              src={image.url}
-              alt={image.alt_text || galleryTitle}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
+            {/* Calculate aspect ratio from image dimensions */}
+            <div
+              className="relative w-full"
+              style={{
+                paddingBottom: image.height && image.width 
+                  ? `${(image.height / image.width) * 100}%` 
+                  : '75%', // Fallback to 4:3 aspect ratio if dimensions missing
+              }}
+            >
+              <OptimizedImage
+                src={image.url}
+                alt={image.alt_text || galleryTitle}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            </div>
 
             {/* Hover Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -86,7 +109,7 @@ export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
             </div>
           </button>
         ))}
-      </div>
+      </Masonry>
 
       {/* Lightbox */}
       <GalleryLightbox

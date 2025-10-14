@@ -61,10 +61,10 @@ Transform the site into a professional photography portfolio with high-resolutio
 ## Phase 2: Mobile Gallery Layout (8 subtasks)
 
 - [x] 0002.11 Install `react-masonry-css` or implement custom CSS Grid masonry
-- [ ] 0002.12 Create `MasonryGalleryGrid` component for mobile layout
-- [ ] 0002.13 Implement 2-column configuration for screens ≤768px
-- [ ] 0002.14 Set 4px gap between images (no horizontal padding, edge-to-edge)
-- [ ] 0002.15 Calculate image heights dynamically based on aspect ratios
+- [x] 0002.12 Create `MasonryGalleryGrid` component for mobile layout
+- [x] 0002.13 Implement 2-column configuration for screens ≤768px
+- [x] 0002.14 Set 4px gap between images (no horizontal padding, edge-to-edge)
+- [x] 0002.15 Calculate image heights dynamically based on aspect ratios
 - [ ] 0002.16 Ensure images fit within column width without cropping
 - [ ] 0002.17 Implement lazy loading with IntersectionObserver (verify existing implementation works)
 - [ ] 0002.18 Test masonry reflow on device rotation and window resize
