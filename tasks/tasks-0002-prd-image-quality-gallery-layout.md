@@ -115,7 +115,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 - [x] 0002.43 Generate image sitemap (`app/image-sitemap.xml/route.ts` or update `app/sitemap.ts`)
 - [x] 0002.44 Ensure all images have descriptive `alt` attributes (check in GalleryGrid, PhotoGrid, etc.)
 - [x] 0002.45 Add `fetchPriority="high"` to hero slideshow images for preloading
-- [ ] 0002.46 Run Lighthouse audit and optimize for LCP <2.5s, CLS <0.1, Performance ≥80
+- [ ] 0002.46 Run Lighthouse audit and optimize for LCP <2.5s, CLS <0.1, Performance ≥80 (⏸️ DEFERRED - Manual task)
 
 ---
 

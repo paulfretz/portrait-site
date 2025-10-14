@@ -11,10 +11,10 @@
 ## 📋 Current Status
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
-**Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 6 - SEO & Performance)  
+**Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (Phase 7 - Testing & Polish)  
 **Progress:** 45 of 51 subtasks complete (88%)  
 **Last Completed:** Task 0002.45 - Added fetchPriority="high" to first hero image  
-**Next:** Task 0002.46 - Run Lighthouse audit (FINAL TASK OF PHASE 6!) (AWAITING PERMISSION)
+**Next:** Task 0002.47 - Write unit tests for image optimizer (Phase 7 begins!) (AWAITING PERMISSION)
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 inserted before Task 11)  
 **All Tests:** ~784 passing (Unit/Integration: 319, E2E: ~465 across Chromium/Firefox/WebKit)  
@@ -219,15 +219,18 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.40** ✅ Implemented drag-and-drop reordering (@dnd-kit, SortableHeroImage)
 - **0002.41** ✅ Updated HeroSlideshow to use photographer's images (xlarge, blur placeholders)
 
-#### Phase 6: SEO & Performance 🚧 IN PROGRESS (4/5)
+#### Phase 6: SEO & Performance ⏸️ MOSTLY COMPLETE (4/5)
 - **0002.42** ✅ Enhanced structured data with high-res URLs (xlarge contentUrl, thumbnail thumbnailUrl)
 - **0002.43** ✅ Generated image sitemap (image-sitemap.xml with high-res URLs, metadata)
 - **0002.44** ✅ Verified alt attributes (fixed lightbox thumbnails, upload API generates descriptive alt)
 - **0002.45** ✅ Added fetchPriority="high" to first hero image (LCP optimization)
-- **0002.46** ⏳ Run Lighthouse audit
+- **0002.46** ⏸️ DEFERRED - Lighthouse audit (manual task, run later)
 
-#### Phase 7: Testing & Polish (0/4)
-- **0002.47-0002.50** ⏳ Unit tests, E2E tests, cross-browser testing
+#### Phase 7: Testing & Polish 🚧 IN PROGRESS (0/4)
+- **0002.47** ⏳ Write unit tests for image optimizer
+- **0002.48** ⏳ Write component tests for gallery layouts
+- **0002.49** ⏳ Write E2E tests for layouts and hero
+- **0002.50** ⏳ Cross-browser testing verification
 
 ---
 
@@ -277,14 +280,14 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 5. ✅ Resend API key configured (Task 8.10-8.11)
 
 ### Pending:
-1. **Lighthouse Audit** (Task 9.18) - NON-BLOCKING
+1. **Lighthouse Audit** (Task 9.18 + Task 0002.46) - NON-BLOCKING
    - Open Chrome DevTools on localhost:3000
    - Run Lighthouse audit (Performance, Accessibility, Best Practices, SEO)
+   - Target: LCP <2.5s, CLS <0.1, Performance ≥80
    - Report scores and any issues found
    - See `docs/lighthouse-audit.md` for detailed instructions
-2. **Testing Setup** (Task 10.0) - Add test scripts to package.json
-3. **Domain Setup** (Task 11.0) - Configure djcovenoportraits.com DNS
-4. **NEXT_PUBLIC_SITE_URL** - Update in production for SEO (sitemap, structured data)
+2. **Domain Setup** (Task 11.0) - Configure djcovenoportraits.com DNS
+3. **NEXT_PUBLIC_SITE_URL** - Update in production for SEO (sitemap, structured data)
 
 ---
 
