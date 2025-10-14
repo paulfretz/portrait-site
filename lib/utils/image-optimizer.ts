@@ -61,11 +61,12 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
     name: 'thumbnail' | 'medium' | 'large' | 'xlarge'; 
     width: number;
     jpegQuality: number;
+    webpQuality: number;
   }> = [
-    { name: 'thumbnail', width: 400, jpegQuality: 85 },
-    { name: 'medium', width: 1200, jpegQuality: 90 },
-    { name: 'large', width: 2400, jpegQuality: 95 },
-    { name: 'xlarge', width: 4000, jpegQuality: 95 }, // For high-DPI displays and professional viewing
+    { name: 'thumbnail', width: 400, jpegQuality: 85, webpQuality: 80 },
+    { name: 'medium', width: 1200, jpegQuality: 90, webpQuality: 85 },
+    { name: 'large', width: 2400, jpegQuality: 95, webpQuality: 90 },
+    { name: 'xlarge', width: 4000, jpegQuality: 95, webpQuality: 90 }, // For high-DPI displays and professional viewing
   ];
 
   // Generate each size in both JPEG and WebP
@@ -101,10 +102,10 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
       },
     });
 
-    // WebP version
+    // WebP version with size-appropriate quality
     const webpBuffer = await resized
       .webp({
-        quality: 85,
+        quality: config.webpQuality,
       })
       .toBuffer();
 
@@ -138,7 +139,7 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
 
   const originalWebp = await sharp(buffer)
     .webp({
-      quality: 85,
+      quality: 90,
     })
     .toBuffer();
 
