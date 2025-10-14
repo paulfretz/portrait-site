@@ -197,6 +197,7 @@ export function GalleryLightbox({
           <OptimizedImage
             src={currentImage.url}
             alt={currentImage.alt_text || galleryTitle}
+            blurDataUrl={currentImage.blur_data_url}
             fill
             className="object-contain"
             sizes="100vw"
@@ -239,6 +240,7 @@ export function GalleryLightbox({
               <OptimizedImage
                 src={image.url}
                 alt=""
+                blurDataUrl={image.blur_data_url}
                 fill
                 className="object-cover"
                 sizes="64px"

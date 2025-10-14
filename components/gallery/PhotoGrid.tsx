@@ -104,6 +104,7 @@ export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
                 <OptimizedImage
                   src={image.url}
                   alt={image.alt_text || galleryTitle}
+                  blurDataUrl={image.blur_data_url}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                   sizes="50vw"
@@ -158,6 +159,7 @@ export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
                 <OptimizedImage
                   src={image.url}
                   alt={image.alt_text || galleryTitle}
+                  blurDataUrl={image.blur_data_url}
                   width={box.width}
                   height={box.height}
                   className="object-cover group-hover:scale-105 transition-transform duration-300"

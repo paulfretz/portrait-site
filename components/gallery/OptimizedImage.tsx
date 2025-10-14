@@ -31,6 +31,7 @@ interface OptimizedImageProps {
   alt: string;
   width?: number | null;
   height?: number | null;
+  blurDataUrl?: string | null; // Base64 blur placeholder for progressive loading
   priority?: boolean;
   className?: string;
   sizes?: string;
@@ -44,6 +45,7 @@ export function OptimizedImage({
   alt,
   width,
   height,
+  blurDataUrl,
   priority = false,
   className = '',
   sizes,
@@ -53,6 +55,11 @@ export function OptimizedImage({
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+
+  // Use provided blur data URL or fallback to generic SVG placeholder
+  const fallbackBlurDataUrl =
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg==';
+  const blurPlaceholder = blurDataUrl || fallbackBlurDataUrl;
 
   // Handle image load complete
   const handleLoadComplete = () => {
@@ -111,7 +118,7 @@ export function OptimizedImage({
           priority={priority}
           loading={priority ? 'eager' : 'lazy'}
           placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
+          blurDataURL={blurPlaceholder}
         />
       </>
     );
@@ -139,7 +146,7 @@ export function OptimizedImage({
           priority={priority}
           loading={priority ? 'eager' : 'lazy'}
           placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
+          blurDataURL={blurPlaceholder}
         />
       </div>
     );
@@ -163,7 +170,7 @@ export function OptimizedImage({
         priority={priority}
         loading={priority ? 'eager' : 'lazy'}
         placeholder="blur"
-        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
+        blurDataURL={blurPlaceholder}
       />
     </div>
   );
