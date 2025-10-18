@@ -1,11 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // API configuration for large file uploads
-  api: {
-    bodyParser: {
-      sizeLimit: '50mb',
-    },
-  },
   images: {
     // Configure remote image patterns for Supabase Storage, Vercel Blob, and Cloudflare R2
     remotePatterns: [

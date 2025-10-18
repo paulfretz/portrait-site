@@ -8,11 +8,19 @@ import path from 'path';
  */
 dotenv.config({ path: path.resolve(__dirname, '.env.local') });
 
+// Override with test database credentials for E2E tests
+if (process.env.TEST_SUPABASE_URL && process.env.TEST_SUPABASE_ANON_KEY) {
+  process.env.NEXT_PUBLIC_SUPABASE_URL = process.env.TEST_SUPABASE_URL;
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = process.env.TEST_SUPABASE_ANON_KEY;
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './e2e',
+  /* Global setup - seeds test database before running tests */
+  globalSetup: require.resolve('./e2e/global-setup.ts'),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -101,5 +109,11 @@ export default defineConfig({
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+    env: {
+      // Pass test environment variables to the dev server
+      TEST_SUPABASE_URL: process.env.TEST_SUPABASE_URL || '',
+      TEST_SUPABASE_ANON_KEY: process.env.TEST_SUPABASE_ANON_KEY || '',
+      TEST_SUPABASE_SERVICE_ROLE_KEY: process.env.TEST_SUPABASE_SERVICE_ROLE_KEY || '',
+    },
   },
 });

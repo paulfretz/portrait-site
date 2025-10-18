@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { OptimizedImage } from '@/components/gallery/OptimizedImage';
 import { Image } from '@/lib/db/types';
-import { getHeroImages } from '@/lib/db/queries';
 import { getLightboxImageUrl } from '@/lib/utils/image-urls';
 
 /**
@@ -11,7 +10,7 @@ import { getLightboxImageUrl } from '@/lib/utils/image-urls';
  * Full-screen slideshow with automatic transitions and manual controls
  *
  * Features:
- * - Fetches photographer's hero images from database
+ * - Displays photographer's hero images (passed as props from server)
  * - Automatic slideshow with configurable interval
  * - Manual navigation (prev/next arrows)
  * - Pause/play toggle
@@ -23,31 +22,15 @@ import { getLightboxImageUrl } from '@/lib/utils/image-urls';
  *
  * @component
  */
-export function HeroSlideshow() {
+
+interface HeroSlideshowProps {
+  heroImages: Image[];
+}
+
+export function HeroSlideshow({ heroImages }: HeroSlideshowProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [heroImages, setHeroImages] = useState<Image[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  // Fetch hero images from database
-  useEffect(() => {
-    const fetchHeroImages = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const images = await getHeroImages();
-        setHeroImages(images);
-      } catch (err) {
-        console.error('Error fetching hero images:', err);
-        setError('Failed to load hero images');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchHeroImages();
-  }, []);
 
   // Use hero images if available, otherwise show empty state
   const slides = heroImages.length > 0 ? heroImages : [];
@@ -110,30 +93,6 @@ export function HeroSlideshow() {
   const handleImageLoad = () => {
     setIsLoading(false);
   };
-
-  // Show loading state
-  if (isLoading) {
-    return (
-      <div className="relative h-screen w-full overflow-hidden bg-neutral-900 flex items-center justify-center">
-        <div className="text-center text-white">
-          <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-lg">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Show error state
-  if (error) {
-    return (
-      <div className="relative h-screen w-full overflow-hidden bg-neutral-900 flex items-center justify-center">
-        <div className="text-center text-white px-4">
-          <p className="text-xl mb-4">Failed to load hero images</p>
-          <p className="text-sm opacity-75">{error}</p>
-        </div>
-      </div>
-    );
-  }
 
   // Show empty state if no hero images
   if (slides.length === 0) {
