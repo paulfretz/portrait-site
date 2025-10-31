@@ -15,12 +15,12 @@
 
 ## Tasks
 
-- [ ] 1.0 Define grid image sizing strategy
-  - [ ] 1.1 Measure real rendered tile widths across breakpoints (masonry 2-col mobile, justified desktop)
-  - [ ] 1.2 Set `sizes` attribute in `PhotoGrid`/`OptimizedImage` to match measured widths
-  - [ ] 1.3 Ensure width candidates map to existing variants (e.g., ~800/1200/1600/2400)
-  - [ ] 1.4 Prefer ≥2x DPR selection; allow 1.75x fallback for tiny tiles
-  - [ ] 1.5 Verify no CSS upscaling (naturalWidth ≥ clientWidth × DPR)
+- [x] 1.0 Define grid image sizing strategy
+  - [x] 1.1 Measure real rendered tile widths across breakpoints (masonry 2-col mobile, justified desktop)
+  - [x] 1.2 Set `sizes` attribute in `PhotoGrid`/`OptimizedImage` to match measured widths
+  - [x] 1.3 Ensure width candidates map to existing variants (e.g., ~800/1200/1600/2400)
+  - [x] 1.4 Prefer ≥2x DPR selection; allow 1.75x fallback for tiny tiles
+  - [x] 1.5 Verify no CSS upscaling (naturalWidth ≥ clientWidth × DPR)
 
 - [x] 2.0 Implement DPR-aware selection in `OptimizedImage`
   - [x] 2.1 Add helper to build AVIF/WebP/JPEG srcsets per variant with width descriptors

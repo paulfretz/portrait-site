@@ -49,6 +49,11 @@
 ### **Rule #2: Git Branching Strategy**
 - Each parent task gets its own feature branch: `task-X.0-short-description`
 - Example: `task-10.0-testing-suite`
+- **Before starting a new parent task (CRITICAL):**
+  1. **MUST read `tasks/SESSION-LOG.md` completely** - understand current state, completed work, technical decisions, pending items
+  2. **MUST read `PROJECT_CONTEXT.md` completely** - understand architecture, conventions, tech stack
+  3. **MUST read `STATUS.md` completely** - see quick status snapshot and what's next
+  4. This ensures continuity and prevents missing critical context
 - When starting a new parent task:
   1. Create and checkout new branch from `main`
   2. Work on all subtasks in this branch
@@ -58,7 +63,11 @@
   2. Push branch to origin
   3. Create Pull Request (PR) to `main`
   4. Wait for user to review and merge PR
-  5. Then mark parent task as `[x]`
+  5. **After PR merged, BEFORE marking parent task `[x]`:**
+     - **UPDATE `tasks/SESSION-LOG.md`** - ALL 13 sections (see "Parent Task Completion Protocol" in process-task-list.md)
+     - **UPDATE `PROJECT_CONTEXT.md`** - Project overview, tech considerations, architecture decisions
+     - **UPDATE `STATUS.md`** - Overall progress, current task, recent accomplishments
+  6. Then mark parent task as `[x]`
 
 ### **Rule #3: Completion Protocol (PRE-COMMIT CHECKLIST)**
 After finishing a sub-task, follow this EXACT sequence:
@@ -72,6 +81,7 @@ After finishing a sub-task, follow this EXACT sequence:
 3. ✅ **Run TypeScript** (`npx tsc --noEmit`) and fix any errors - **MUST PASS** before Step 4
 4. ✅ **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (see Rule #4) - **MANDATORY (Rule #0)**
 5. ✅ **Mark task [x]** in task list file
+5a. ✅ **CHECK PARENT TASK** - If ALL subtasks under a parent are now `[x]`, mark parent task `[x]` too!
 6. ✅ **Update TODO list** using todo_write tool
 7. ✅ **Stage changes** (`git add`)
 8. ✅ **Commit** with descriptive conventional commit message
@@ -88,7 +98,13 @@ If all subtasks under a parent task are `[x]`:
 3. Clean up temporary files
 4. Commit with conventional commit format
 5. Push feature branch to origin
-6. Wait for user to merge PR before marking parent `[x]`
+6. Wait for user to merge PR
+7. **After PR merged, BEFORE marking parent `[x]`:**
+   - Update SESSION-LOG.md (all 13 sections)
+   - Update PROJECT_CONTEXT.md
+   - Update STATUS.md
+   - See "Parent Task Completion Protocol" in `.cursor/rules/process-task-list.md` for details
+8. Then mark parent `[x]`
 
 ### **Rule #4: Session Log Maintenance (CRITICAL)**
 **After EVERY sub-task, verify and update ALL 13 sections:**
