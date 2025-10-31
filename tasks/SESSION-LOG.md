@@ -11,9 +11,14 @@
 ## 📋 Current Status
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
-**Current Task:** Task 3.0 - Implement lightbox viewport-fit scaling and navigation polish (PRD 0003)  
-**Progress:** Task 2.0 complete (4/4 subtasks), Task 1.0 complete (5/5 subtasks)  
+**Current Task:** Task 4.0 - Provide high-res multi-format srcsets for lightbox (PRD 0003)  
+**Progress:** Task 3.0 complete (4/4 subtasks), Task 2.0 complete (4/4 subtasks), Task 1.0 complete (5/5 subtasks)  
 **Last Completed:** 
+- ✅ Task 3.0 - Lightbox viewport-fit scaling and navigation polish (complete)
+  - ✅ Task 3.1 - Computed max display rect = viewport minus 12px border, preserved AR, no overflow
+  - ✅ Task 3.2 - Enhanced keyboard navigation (ESC, arrows) with preventDefault, larger touch targets
+  - ✅ Task 3.3 - Improved swipe support with vertical scroll prevention, 48px mobile tap targets
+  - ✅ Task 3.4 - Added focus trapping, ARIA roles (dialog, modal), screen reader support
 - ✅ Task 2.0 - DPR-aware selection in OptimizedImage (complete)
   - ✅ Task 2.1 - Added AVIF/WebP/JPEG srcset helpers with width descriptors
   - ✅ Task 2.2 - Verified accurate sizes from grid, conditional blurDataURL support
@@ -24,7 +29,7 @@
   - ✅ Task 1.3 - Aligned deviceSizes with variants (400, 1200, 2400, 4000)
   - ✅ Task 1.4 - Verified ≥2x DPR selection configuration
   - ✅ Task 1.5 - Verified no CSS upscaling
-**Next:** Task 3.0 - Lightbox viewport-fit scaling with 12px border
+**Next:** Task 4.0 - High-res multi-format srcsets (AVIF/WebP/JPEG) for lightbox
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 complete)  
 **Test Status (Oct 14, 2025, 7:45pm):**
@@ -154,6 +159,12 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **2.2** ✅ Verified accurate `sizes` passed from grid, added conditional `blurDataURL` validation (only passed when valid base64)
 - **2.3** ✅ Updated test mocks to filter out Next.js-specific props (`blurDataURL`, `placeholder`, `fill`, etc.) before rendering plain `<img>`
 - **2.4** ✅ Added comprehensive unit tests (`__tests__/lib/utils/image-urls.test.ts`) - 25 tests passing, covers all srcset/sizes scenarios
+
+#### Task 3.0 - Implement lightbox viewport-fit scaling and navigation polish ✅ COMPLETE (4/4)
+- **3.1** ✅ Computed max display rect = viewport minus 12px border (24px total), preserved aspect ratio with `object-contain`, no overflow
+- **3.2** ✅ Enhanced keyboard navigation with `preventDefault()`, input/textarea check, larger touch targets (44px min, 48px on mobile)
+- **3.3** ✅ Improved swipe support - tracks X/Y coordinates, prevents vertical scroll during horizontal swipe, 48px mobile tap targets, edge-positioned buttons
+- **3.4** ✅ Focus trapping implementation - saves/restores focus, Tab cycling within lightbox, ARIA roles (`dialog`, `aria-modal`, `aria-labelledby`, `aria-describedby`), screen reader announcements, focus ring styles
 
 ### Task 0002.0 - Image Quality & Gallery Layout Overhaul 🚀 **IN PROGRESS**
 **PRD:** `0002-prd-image-quality-gallery-layout.md` (437 lines)
@@ -301,6 +312,12 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
   - Precise `sizes` attributes matching rendered CSS dimensions
   - Conditional `blurDataURL` (only when valid base64 data URL)
   - `deviceSizes` aligned with variants (400, 1200, 2400, 4000) for proper 2x DPR selection
+- **Lightbox Accessibility** (PRD 0003, Task 3.0):
+  - Focus trapping with Tab/Shift+Tab cycling
+  - ARIA dialog roles (`role="dialog"`, `aria-modal="true"`)
+  - Screen reader announcements with hidden title/description
+  - Focus restoration when closing
+  - Enhanced keyboard navigation with preventDefault
 
 ### Inline Editing
 - **InlineEditor** - Simple text fields (h1, h2, p, span)
@@ -438,7 +455,10 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - `__tests__/auth/auth-flow.test.tsx` (299 lines, 29 tests)
 - `__tests__/lib/utils/image-optimizer.test.ts` (281 lines, 35 tests)
 - `__tests__/lib/utils/validation.test.ts` (396 lines, 38 tests)
-- `__tests__/lib/utils/image-urls.test.ts` (282 lines, 25 tests) - **NEW (PRD 0003)**
+- `__tests__/lib/utils/image-urls.test.ts` (282 lines, 25 tests) - **NEW (PRD 0003, Task 2.4)**
+
+### Image Quality & Lightbox (PRD 0003)
+- `components/gallery/GalleryLightbox.tsx` - Enhanced with viewport-fit scaling, focus trapping, ARIA roles, swipe support (377 lines)
 - `e2e/example.spec.ts` (example E2E test)
 - `e2e/public-site.spec.ts` (280 lines, 28 tests × 3 browsers = 56 E2E tests)
 - `e2e/gallery-viewing.spec.ts` (572 lines, 9 tests × 3 browsers = 27 E2E tests)
@@ -951,21 +971,21 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 3.0 - Implement lightbox viewport-fit scaling and navigation polish (PRD 0003)
+1. **Current Task:** Task 4.0 - Provide high-res multi-format srcsets (AVIF/WebP/JPEG) for lightbox (PRD 0003)
 2. **What's Done:** 
    - Tasks 1.0-10.0 complete (100%), all merged to main
    - Task 0002.0 - Image Quality & Gallery Layout Overhaul: 50/51 subtasks complete (98%)
    - **NEW PRD 0003:** Image Crispness & Lightbox (continuation of Task 0002)
      - Task 1.0 ✅ Complete: Grid image sizing strategy (5/5 subtasks)
      - Task 2.0 ✅ Complete: DPR-aware selection in OptimizedImage (4/4 subtasks)
-       - Enhanced srcset helpers with AVIF/WebP/JPEG support
-       - Conditional blurDataURL validation
-       - Test mock updates to prevent DOM props leakage
-       - Comprehensive unit tests (25 tests passing)
+     - Task 3.0 ✅ Complete: Lightbox viewport-fit scaling and navigation polish (4/4 subtasks)
+       - Viewport-fit scaling with 12px border (no overflow, preserved AR)
+       - Enhanced keyboard navigation (ESC, arrows) with preventDefault
+       - Swipe support with vertical scroll prevention, 48px mobile tap targets
+       - Focus trapping, ARIA dialog roles, screen reader support
    - Branch: `task-0002-image-quality-gallery-layout`
 3. **What's Next:**
-   - Task 3.0: Lightbox viewport-fit scaling (12px border, no overflow, navigation polish)
-   - Task 4.0: High-res multi-format srcsets for lightbox (AVIF/WebP/JPEG)
+   - Task 4.0: High-res multi-format srcsets for lightbox (AVIF/WebP/JPEG, xlarge/original)
    - Task 5.0: E2E crispness verification (naturalWidth ≥ clientWidth × DPR)
    - Task 6.0: Documentation updates
 4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0), **ALL TESTS MUST PASS** (Rule #0.5 TDD), run lint/tests/tsc checks
@@ -975,18 +995,8 @@ curl http://localhost:3000/api/galleries?category=weddings
    - `next.config.js` - Aligned deviceSizes with variants (400, 1200, 2400, 4000)
    - `components/gallery/PhotoGrid.tsx` - Precise sizes attributes verified
    - `__tests__/lib/utils/image-urls.test.ts` - NEW: 25 tests for srcset/sizes
-   - `__tests__/components/GalleryLightbox.test.tsx` - Updated mock to filter DOM props
+   - `__tests__/components/GalleryLightbox.test.tsx` - Updated mock to filter DOM props, fixed keyboard instructions test
    - `__tests__/components/GalleryGrid.test.tsx` - Updated mock to filter DOM props
-   - **0002.4 COMPLETE** ✅ Added 8000px dimension validation using sharp library with detailed error messages
-   - **0002.5 COMPLETE** ✅ Added xlarge (4000px) size variant to image optimizer
-   - **0002.6 COMPLETE** ✅ Increased JPEG quality: thumbnail 85, medium 90, large/xlarge/original 95
-   - **0002.7 COMPLETE** ✅ Increased WebP quality: thumbnail 80, medium 85, large/xlarge 90, original 90
-   - **0002.8 COMPLETE** ✅ Verified xlarge included in sizeConfigs (already done in 0002.5)
-   - **0002.9 COMPLETE** ✅ Created UploadProgressBar component (155 lines) with progress %, time estimates, status indicators
-   - **0002.10 COMPLETE** ✅ Integrated UploadProgressBar into ImageUploader, updated to 50MB limit
-   - **0002.10a COMPLETE** ✅ Updated cover images to use large (2400px Q95) variants - created image-urls.ts utility
-   - **✅ PHASE 1 COMPLETE!** All 11 upload & processing subtasks done (added 0002.10a for cover image quality)
-   - **0002.11 COMPLETE** ✅ Installed react-masonry-css library (Phase 2 begins!)
    - **0002.12-0002.15 COMPLETE** ✅ Masonry layout: 2-col mobile, 3-col desktop, 4px/8px gaps, dynamic heights, edge-to-edge
    - **0002.16 COMPLETE** ✅ Verified images fit within columns using w-full and proportional height (already implemented)
    - **0002.17-0002.18 COMPLETE** ✅ Verified lazy loading (Next.js loading="lazy") and masonry reflow (automatic via react-masonry-css)

@@ -28,11 +28,11 @@
   - [x] 2.3 Guard DOM props leakage in tests (avoid passing non-Next props to plain `img`)
   - [x] 2.4 Add unit tests for srcset/sizes construction
 
-- [ ] 3.0 Implement lightbox viewport-fit scaling and navigation polish
-  - [ ] 3.1 Compute max display rect = viewport minus 12px border; preserve AR, no overflow
-  - [ ] 3.2 Ensure arrows (click/keyboard) and ESC close work on desktop and mobile
-  - [ ] 3.3 Add swipe support or larger tap targets on mobile
-  - [ ] 3.4 Manage focus trapping and aria roles for accessibility
+- [x] 3.0 Implement lightbox viewport-fit scaling and navigation polish
+  - [x] 3.1 Compute max display rect = viewport minus 12px border; preserve AR, no overflow
+  - [x] 3.2 Ensure arrows (click/keyboard) and ESC close work on desktop and mobile
+  - [x] 3.3 Add swipe support or larger tap targets on mobile
+  - [x] 3.4 Manage focus trapping and aria roles for accessibility
 
 - [ ] 4.0 Provide high-res multi-format srcsets (AVIF/WebP/JPEG) for lightbox
   - [ ] 4.1 Serve xlarge (~4000px) or original when smaller; include 1x/2x width candidates

@@ -144,7 +144,8 @@ describe('GalleryLightbox', () => {
 
     it('renders keyboard instructions on desktop', () => {
       render(<GalleryLightbox {...defaultProps} />);
-      expect(screen.getByText(/use arrow keys to navigate/i)).toBeInTheDocument();
+      // There may be multiple instances (screen reader description + visible instructions)
+      expect(screen.getAllByText(/use arrow keys to navigate/i).length).toBeGreaterThan(0);
     });
 
     it('renders thumbnail strip for galleries with 2-20 images', () => {
