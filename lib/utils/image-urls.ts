@@ -4,7 +4,7 @@
  */
 
 export type ImageVariant = 'thumbnail' | 'medium' | 'large' | 'xlarge' | 'original';
-export type ImageFormat = 'jpeg' | 'webp';
+export type ImageFormat = 'jpeg' | 'webp' | 'avif';
 
 /**
  * Get a specific variant URL from the original stored URL
@@ -70,18 +70,18 @@ export function getThumbnailUrl(originalUrl: string | null): string | null {
 }
 
 /**
- * Generate srcset attribute for responsive images
- * Creates a srcset with multiple size variants for the browser to choose from
+ * Generate srcset attribute for responsive images with multi-format support
+ * Creates a srcset with multiple size variants in AVIF → WebP → JPEG order
  * 
  * @param originalUrl - The stored URL from the database
- * @param format - Image format (defaults to 'webp')
- * @returns srcset string for use in <img> or Next.js Image
+ * @param includeAvif - Whether to include AVIF format (defaults to false until pipeline supports it)
+ * @returns srcset string for use in <img> or Next.js Image with format priority
  *
  * @example
  * generateSrcSet('https://blob.../photo-original.jpeg')
  * // Returns: 'https://.../photo-thumbnail.webp 400w, https://.../photo-medium.webp 1200w, ...'
  */
-export function generateSrcSet(originalUrl: string, format: ImageFormat = 'webp'): string {
+export function generateSrcSet(originalUrl: string, includeAvif: boolean = false): string {
   if (!originalUrl) return '';
 
   const variants: Array<{ name: ImageVariant; width: number }> = [
@@ -91,8 +91,59 @@ export function generateSrcSet(originalUrl: string, format: ImageFormat = 'webp'
     { name: 'xlarge', width: 4000 },
   ];
 
-  return variants
-    .map(({ name, width }) => `${getImageVariantUrl(originalUrl, name, format)} ${width}w`)
-    .join(', ');
+  // Format priority: AVIF → WebP → JPEG
+  const formats: ImageFormat[] = includeAvif 
+    ? ['avif', 'webp', 'jpeg'] 
+    : ['webp', 'jpeg'];
+
+  const srcsetParts: string[] = [];
+
+  for (const format of formats) {
+    for (const variant of variants) {
+      const url = getImageVariantUrl(originalUrl, variant.name, format);
+      srcsetParts.push(`${url} ${variant.width}w`);
+    }
+  }
+
+  return srcsetParts.join(', ');
+}
+
+/**
+ * Generate multi-format srcset for lightbox (AVIF → WebP → JPEG)
+ * Creates optimized srcsets with format priority for high-DPI displays
+ * 
+ * @param originalUrl - The stored URL from the database
+ * @param includeAvif - Whether to include AVIF format (defaults to false until pipeline supports it)
+ * @returns srcset string with AVIF, WebP, and JPEG formats (browser chooses best)
+ *
+ * @example
+ * generateLightboxSrcSet('https://blob.../photo-original.jpeg')
+ * // Returns: 'https://.../photo-xlarge.avif 4000w, https://.../photo-xlarge.webp 4000w, ...'
+ */
+export function generateLightboxSrcSet(originalUrl: string, includeAvif: boolean = false): string {
+  if (!originalUrl) return '';
+
+  // For lightbox, prioritize xlarge and original for high-DPI displays
+  const variants: Array<{ name: ImageVariant; width: number }> = [
+    { name: 'large', width: 2400 },
+    { name: 'xlarge', width: 4000 },
+    { name: 'original', width: 4000 }, // Use xlarge width as descriptor for original
+  ];
+
+  // Format priority: AVIF → WebP → JPEG
+  const formats: ImageFormat[] = includeAvif 
+    ? ['avif', 'webp', 'jpeg'] 
+    : ['webp', 'jpeg'];
+
+  const srcsetParts: string[] = [];
+
+  for (const format of formats) {
+    for (const variant of variants) {
+      const url = getImageVariantUrl(originalUrl, variant.name, format);
+      srcsetParts.push(`${url} ${variant.width}w`);
+    }
+  }
+
+  return srcsetParts.join(', ');
 }
 

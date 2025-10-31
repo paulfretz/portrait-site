@@ -66,10 +66,16 @@ export function OptimizedImage({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  // Use provided blur data URL or fallback to generic SVG placeholder
-  const fallbackBlurDataUrl =
-    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg==';
-  const blurPlaceholder = blurDataUrl || fallbackBlurDataUrl;
+  // Validate blur data URL - only use if it's a valid base64 data URL
+  const isValidBlurDataUrl = (url: string | null | undefined): boolean => {
+    if (!url) return false;
+    // Check if it's a valid base64 data URL format
+    return /^data:image\/(jpeg|jpg|png|webp|svg\+xml);base64,/.test(url);
+  };
+
+  // Use provided blur data URL only if valid, otherwise no blur placeholder
+  const hasValidBlur = isValidBlurDataUrl(blurDataUrl);
+  const blurPlaceholder = hasValidBlur ? blurDataUrl! : undefined;
 
   // Handle image load complete
   const handleLoadComplete = () => {
@@ -124,8 +130,7 @@ export function OptimizedImage({
         priority={priority}
         fetchPriority={fetchPriority}
         loading={priority ? 'eager' : 'lazy'}
-        placeholder="blur"
-        blurDataURL={blurPlaceholder}
+        {...(hasValidBlur && blurPlaceholder ? { placeholder: 'blur' as const, blurDataURL: blurPlaceholder } : {})}
       />
     );
   }
@@ -145,8 +150,7 @@ export function OptimizedImage({
         priority={priority}
         fetchPriority={fetchPriority}
         loading={priority ? 'eager' : 'lazy'}
-        placeholder="blur"
-        blurDataURL={blurPlaceholder}
+        {...(hasValidBlur && blurPlaceholder ? { placeholder: 'blur' as const, blurDataURL: blurPlaceholder } : {})}
       />
     );
   }
@@ -165,8 +169,7 @@ export function OptimizedImage({
       priority={priority}
       fetchPriority={fetchPriority}
       loading={priority ? 'eager' : 'lazy'}
-      placeholder="blur"
-      blurDataURL={blurPlaceholder}
+      {...(hasValidBlur && blurPlaceholder ? { placeholder: 'blur' as const, blurDataURL: blurPlaceholder } : {})}
     />
   );
 }

@@ -11,16 +11,20 @@
 ## 📋 Current Status
 
 **Current Branch:** `task-0002-image-quality-gallery-layout`  
-**Current Task:** Task 0002.50 - E2E Test Suite Complete ✅  
-**Progress:** 51 of 51 subtasks complete (100%)  
+**Current Task:** Task 3.0 - Implement lightbox viewport-fit scaling and navigation polish (PRD 0003)  
+**Progress:** Task 2.0 complete (4/4 subtasks), Task 1.0 complete (5/5 subtasks)  
 **Last Completed:** 
-- ✅ Fixed all major E2E test failures - achieved 96.5% pass rate!
-- ✅ Fixed CSS selector syntax errors in gallery-viewing.spec.ts
-- ✅ Added WebKit navigation retry logic across all test files
-- ✅ Fixed lightbox selector issues in gallery-layouts.spec.ts
-- ✅ Improved image selector robustness in image quality tests
-- ✅ All test categories now passing: Contact (82), Gallery Viewing (38), Public Site (64), Gallery Layouts (52), Admin Auth (24), Inline Editing (24), Gallery Management (12)
-**Next:** Final cleanup and production deployment preparation
+- ✅ Task 2.0 - DPR-aware selection in OptimizedImage (complete)
+  - ✅ Task 2.1 - Added AVIF/WebP/JPEG srcset helpers with width descriptors
+  - ✅ Task 2.2 - Verified accurate sizes from grid, conditional blurDataURL support
+  - ✅ Task 2.3 - Guarded DOM props leakage in test mocks
+  - ✅ Task 2.4 - Added comprehensive unit tests for srcset/sizes (25 tests passing)
+- ✅ Task 1.0 - Grid image sizing strategy (complete)
+  - ✅ Task 1.1-1.2 - Measured tile widths, set precise sizes attributes
+  - ✅ Task 1.3 - Aligned deviceSizes with variants (400, 1200, 2400, 4000)
+  - ✅ Task 1.4 - Verified ≥2x DPR selection configuration
+  - ✅ Task 1.5 - Verified no CSS upscaling
+**Next:** Task 3.0 - Lightbox viewport-fit scaling with 12px border
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done, NEW Task 0002 complete)  
 **Test Status (Oct 14, 2025, 7:45pm):**
@@ -30,6 +34,11 @@
 - **Automated Seeding:** ✅ WORKING PERFECTLY! (7 cats, 9 galleries, 13 images, 5 inquiries, 4 page content)
 - **Remaining Failures:** Only 18 minor failures remaining (mostly WebKit-specific edge cases)
 **Coverage:** 80%+ on critical paths
+
+### Pre-Commit Checks (Oct 30, 2025)
+- Lint: completed with Prettier warnings only (no errors)
+- Unit/Integration Tests: 341/341 passing ✅
+- TypeScript: `npx tsc --noEmit` passed ✅
 
 **NEW PRD:** High-priority image quality overhaul before production deployment
 - 50MB uploads, 8000px max resolution
@@ -125,6 +134,26 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 ### Task 10.0 - Testing Suite ✅ **MERGED TO MAIN!**
 **PR #1:** https://github.com/paulfretz/portrait-site/pull/1 (27 commits squashed, +8,456 additions)
 **Merge Commit:** 55a169c
+
+### Task 0003.0 - Image Crispness & Lightbox (PRD 0003) 🚀 **IN PROGRESS**
+**PRD:** `tasks/0003-prd-image-crispness-and-lightbox.md`  
+**Task List:** `tasks/tasks-0003-prd-image-crispness-and-lightbox.md`  
+**Branch:** `task-0002-image-quality-gallery-layout` (continuation of Task 0002)
+**Goal:** Deliver professional-grade image clarity in grid and full-viewport lightbox
+
+#### Task 1.0 - Define grid image sizing strategy ✅ COMPLETE (5/5)
+- **1.1-1.2** ✅ Measured real rendered tile widths, set precise `sizes` attributes:
+  - Mobile masonry: `calc(50vw - 4px)` (2 columns, 4px gap)
+  - Desktop justified: `800px` estimate (conservative for varying box widths)
+- **1.3** ✅ Aligned Next.js `deviceSizes` with variants (400, 1200, 2400, 4000)
+- **1.4** ✅ Verified ≥2x DPR selection configuration works correctly
+- **1.5** ✅ Verified no CSS upscaling - images never forced beyond intrinsic size
+
+#### Task 2.0 - Implement DPR-aware selection in OptimizedImage ✅ COMPLETE (4/4)
+- **2.1** ✅ Enhanced `generateSrcSet()` and `generateLightboxSrcSet()` with AVIF/WebP/JPEG multi-format support
+- **2.2** ✅ Verified accurate `sizes` passed from grid, added conditional `blurDataURL` validation (only passed when valid base64)
+- **2.3** ✅ Updated test mocks to filter out Next.js-specific props (`blurDataURL`, `placeholder`, `fill`, etc.) before rendering plain `<img>`
+- **2.4** ✅ Added comprehensive unit tests (`__tests__/lib/utils/image-urls.test.ts`) - 25 tests passing, covers all srcset/sizes scenarios
 
 ### Task 0002.0 - Image Quality & Gallery Layout Overhaul 🚀 **IN PROGRESS**
 **PRD:** `0002-prd-image-quality-gallery-layout.md` (437 lines)
@@ -267,6 +296,11 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **Blur Placeholders** - 20px JPEG base64 data URLs for progressive loading (Task 0002.27)
 - **Next.js Image** - Lazy loading, blur placeholders, responsive srcsets
 - **High-Res Variants** - xlarge (4000px) at 95% JPEG quality for professional photography display
+- **DPR-Aware Selection** (PRD 0003, Task 2.0):
+  - Multi-format srcsets (AVIF → WebP → JPEG priority) with width descriptors
+  - Precise `sizes` attributes matching rendered CSS dimensions
+  - Conditional `blurDataURL` (only when valid base64 data URL)
+  - `deviceSizes` aligned with variants (400, 1200, 2400, 4000) for proper 2x DPR selection
 
 ### Inline Editing
 - **InlineEditor** - Simple text fields (h1, h2, p, span)
@@ -404,6 +438,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - `__tests__/auth/auth-flow.test.tsx` (299 lines, 29 tests)
 - `__tests__/lib/utils/image-optimizer.test.ts` (281 lines, 35 tests)
 - `__tests__/lib/utils/validation.test.ts` (396 lines, 38 tests)
+- `__tests__/lib/utils/image-urls.test.ts` (282 lines, 25 tests) - **NEW (PRD 0003)**
 - `e2e/example.spec.ts` (example E2E test)
 - `e2e/public-site.spec.ts` (280 lines, 28 tests × 3 browsers = 56 E2E tests)
 - `e2e/gallery-viewing.spec.ts` (572 lines, 9 tests × 3 browsers = 27 E2E tests)
@@ -429,6 +464,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - `CLAUDE.md` (393 lines, consolidated AI development guide)
 - `.cursor/rules/process-task-list.md` (updated with lint/test/build checks)
 - `.cursor/rules/session-log-checklist.md` (13-section verification)
+- `PROJECT_CONTEXT.md` (root; consolidated project context following template)
 
 ---
 
@@ -883,6 +919,11 @@ curl http://localhost:3000/api/galleries?category=weddings
 - Created: `scripts/seed-test-db.sh` (65 lines) - Shell script helper
 - Created: `e2e/KNOWN-TEST-ISSUES.md` (119 lines) - Documentation of remaining failures
 
+**WebKit Test Optimizations (Oct 30, 2025):**
+- Modified: `e2e/public-site.spec.ts` - Added WebKit-safe helpers (navigation with domcontentloaded + waits, `.first()` to avoid strict mode, force clicks), stabilized selectors and timing
+- Modified: `e2e/gallery-viewing.spec.ts` - Added same WebKit-safe helpers and beforeEach navigation wrapper
+- Created: `PROJECT_CONTEXT.md` at repo root following `.cursor/rules/project-context-template.md`
+
 **Task 7.1-7.14 (Previous Session):**
 - Created: `app/admin/page.tsx` (admin dashboard with real stats)
 - Created: `lib/admin/edit-mode-context.tsx` (edit mode state)
@@ -910,24 +951,32 @@ curl http://localhost:3000/api/galleries?category=weddings
 
 **If context window resets, start here:**
 
-1. **Current Task:** Task 0002.0 - Image Quality & Gallery Layout Overhaul (HIGH PRIORITY - Phase 1: Upload & Processing)
+1. **Current Task:** Task 3.0 - Implement lightbox viewport-fit scaling and navigation polish (PRD 0003)
 2. **What's Done:** 
    - Tasks 1.0-10.0 complete (100%), all merged to main
-   - Task 10.0: 24/24 subtasks complete, PR #1 merged! 🎉
-     - ✅ 645 tests passing (319 unit/integration + 326 E2E)
-     - ✅ 80%+ coverage on critical paths
-     - ✅ Real authenticated E2E tests
-     - ✅ Supabase CLI with local Docker
-     - ✅ GitHub Actions CI/CD with isolated test database
-   - NEW PRD 0002 created: Image Quality & Gallery Layout Overhaul
-     - 50MB uploads up to 8000px
-     - Mobile masonry + Desktop justified layouts
-     - Hero slideshow upgrade
-     - Task list generated: 50 subtasks across 7 phases
-   - Feature branch created: `task-0002-image-quality-gallery-layout`
-   - **0002.1 COMPLETE** ✅ Next.js body size limit increased to 50MB
-   - **0002.2 COMPLETE** ✅ Vercel Blob configuration documented (supports 500MB uploads by default, no config needed)
-   - **0002.3 COMPLETE** ✅ Added 50MB file size validation to upload API with helpful error messages
+   - Task 0002.0 - Image Quality & Gallery Layout Overhaul: 50/51 subtasks complete (98%)
+   - **NEW PRD 0003:** Image Crispness & Lightbox (continuation of Task 0002)
+     - Task 1.0 ✅ Complete: Grid image sizing strategy (5/5 subtasks)
+     - Task 2.0 ✅ Complete: DPR-aware selection in OptimizedImage (4/4 subtasks)
+       - Enhanced srcset helpers with AVIF/WebP/JPEG support
+       - Conditional blurDataURL validation
+       - Test mock updates to prevent DOM props leakage
+       - Comprehensive unit tests (25 tests passing)
+   - Branch: `task-0002-image-quality-gallery-layout`
+3. **What's Next:**
+   - Task 3.0: Lightbox viewport-fit scaling (12px border, no overflow, navigation polish)
+   - Task 4.0: High-res multi-format srcsets for lightbox (AVIF/WebP/JPEG)
+   - Task 5.0: E2E crispness verification (naturalWidth ≥ clientWidth × DPR)
+   - Task 6.0: Documentation updates
+4. **Process:** ONE subtask at a time, wait for "y" approval, **UPDATE SESSION-LOG.md BEFORE COMMIT** (Rule #0), **ALL TESTS MUST PASS** (Rule #0.5 TDD), run lint/tests/tsc checks
+5. **Key Files Modified (PRD 0003, Task 2.0):**
+   - `lib/utils/image-urls.ts` - Enhanced with AVIF support, multi-format srcsets
+   - `components/gallery/OptimizedImage.tsx` - Conditional blurDataURL validation
+   - `next.config.js` - Aligned deviceSizes with variants (400, 1200, 2400, 4000)
+   - `components/gallery/PhotoGrid.tsx` - Precise sizes attributes verified
+   - `__tests__/lib/utils/image-urls.test.ts` - NEW: 25 tests for srcset/sizes
+   - `__tests__/components/GalleryLightbox.test.tsx` - Updated mock to filter DOM props
+   - `__tests__/components/GalleryGrid.test.tsx` - Updated mock to filter DOM props
    - **0002.4 COMPLETE** ✅ Added 8000px dimension validation using sharp library with detailed error messages
    - **0002.5 COMPLETE** ✅ Added xlarge (4000px) size variant to image optimizer
    - **0002.6 COMPLETE** ✅ Increased JPEG quality: thumbnail 85, medium 90, large/xlarge/original 95
