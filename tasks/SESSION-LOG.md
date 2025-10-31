@@ -997,7 +997,7 @@ curl http://localhost:3000/api/galleries?category=weddings
    - `__tests__/lib/utils/image-urls.test.ts` - NEW: 25 tests for srcset/sizes
    - `__tests__/components/GalleryLightbox.test.tsx` - Updated mock to filter DOM props, fixed keyboard instructions test
    - `__tests__/components/GalleryGrid.test.tsx` - Updated mock to filter DOM props
-   - **0002.12-0002.15 COMPLETE** ✅ Masonry layout: 2-col mobile, 3-col desktop, 4px/8px gaps, dynamic heights, edge-to-edge
+   - `components/gallery/GalleryLightbox.tsx` - Enhanced with viewport-fit scaling, focus trapping, ARIA roles, swipe support (PRD 0003, Task 3.0)
    - **0002.16 COMPLETE** ✅ Verified images fit within columns using w-full and proportional height (already implemented)
    - **0002.17-0002.18 COMPLETE** ✅ Verified lazy loading (Next.js loading="lazy") and masonry reflow (automatic via react-masonry-css)
    - **✅ PHASE 2 COMPLETE (8/8 subtasks)** - Mobile masonry layout with 2 columns, 4px gaps, natural aspect ratios!
