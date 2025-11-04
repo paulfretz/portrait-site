@@ -136,8 +136,8 @@ describe('GalleryLightbox', () => {
       render(<GalleryLightbox {...defaultProps} images={imagesWithoutAlt} />);
       
       await waitFor(() => {
-        const images = screen.getAllByTestId('optimized-image');
-        const mainImage = images.find(img => img.getAttribute('alt') === 'Test Gallery');
+        // Main lightbox image now uses native img with srcset (not OptimizedImage)
+        const mainImage = document.querySelector('img[srcset][alt="Test Gallery"]');
         expect(mainImage).toBeInTheDocument();
       });
     });
@@ -435,7 +435,19 @@ describe('GalleryLightbox', () => {
     });
 
     it('hides loading spinner after image loads', async () => {
-      render(<GalleryLightbox {...defaultProps} />);
+      const { container } = render(<GalleryLightbox {...defaultProps} />);
+      
+      // Find the main lightbox image by srcset attribute (not thumbnails)
+      const mainImage = await waitFor(() => {
+        const img = container.querySelector('img[srcset]') as HTMLImageElement;
+        if (!img) {
+          throw new Error('Main lightbox image not found');
+        }
+        return img;
+      });
+      
+      // Manually trigger load event since native img needs it in tests
+      fireEvent.load(mainImage);
       
       await waitFor(() => {
         const spinner = document.querySelector('.animate-spin');
@@ -444,7 +456,18 @@ describe('GalleryLightbox', () => {
     });
 
     it('shows loading spinner when navigating to next image', async () => {
-      render(<GalleryLightbox {...defaultProps} />);
+      const { container } = render(<GalleryLightbox {...defaultProps} />);
+      
+      // Find and trigger load for initial image
+      const initialImage = await waitFor(() => {
+        const img = container.querySelector('img[srcset]') as HTMLImageElement;
+        if (!img) {
+          throw new Error('Initial lightbox image not found');
+        }
+        return img;
+      });
+      
+      fireEvent.load(initialImage);
       
       // Wait for initial load
       await waitFor(() => {
@@ -457,6 +480,22 @@ describe('GalleryLightbox', () => {
       
       // Loading spinner should appear again
       expect(document.querySelector('.animate-spin')).toBeInTheDocument();
+      
+      // Find and trigger load for new image
+      const newImage = await waitFor(() => {
+        const img = container.querySelector('img[srcset]') as HTMLImageElement;
+        if (!img) {
+          throw new Error('New lightbox image not found');
+        }
+        return img;
+      });
+      
+      fireEvent.load(newImage);
+      
+      // Spinner should disappear after new image loads
+      await waitFor(() => {
+        expect(document.querySelector('.animate-spin')).not.toBeInTheDocument();
+      });
     });
   });
 

@@ -8,8 +8,8 @@ import { test, expect } from '@playwright/test';
  * they run without the authenticated session from auth.setup.ts
  */
 
-// Override to use NO authentication for these tests
-test.use({ storageState: { cookies: [], origins: [] } });
+// These tests run in unauthenticated projects (chromium-unauth, firefox-unauth, webkit-unauth)
+// No storageState is set at project level, so we get clean browser sessions
 
 test.describe('Unauthenticated Admin Access', () => {
   test('login page loads successfully', async ({ page }) => {

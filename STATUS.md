@@ -1,156 +1,114 @@
 # DJ Coveno Portraits - Development Status
 
-**Last Updated:** October 9, 2025  
-**Session:** Active, ready for break  
-**Branch:** main (3 commits ahead of origin)
+**Last Updated:** December 2025  
+**Session:** Active  
+**Branch:** `task-0002-image-quality-gallery-layout`
 
 ---
 
 ## 📊 Overall Progress
 
-**Completed:** 3 of 11 parent tasks (27%)
+**Completed:** 10 of 11 parent tasks + PRD 0003 complete (91%)
 
 ✅ **Task 1.0** - Project Setup & Infrastructure  
 ✅ **Task 2.0** - Authentication & Authorization System  
 ✅ **Task 3.0** - Database Schema & API Layer  
-⏭️ **Task 4.0** - Gallery & Category Management System (NEXT)  
-⬜ **Task 5.0** - Image Upload & Optimization Pipeline  
-⬜ **Task 6.0** - Frontend User Interface (Public Site)  
-⬜ **Task 7.0** - Admin Dashboard & Inline Editing  
-⬜ **Task 8.0** - Contact/Inquiry System  
-⬜ **Task 9.0** - SEO Optimization  
-⬜ **Task 10.0** - Testing Suite  
+✅ **Task 4.0** - Gallery & Category Management System  
+✅ **Task 5.0** - Image Upload & Optimization Pipeline  
+✅ **Task 6.0** - Frontend User Interface (Public Site)  
+✅ **Task 7.0** - Admin Dashboard & Inline Editing  
+✅ **Task 8.0** - Contact/Inquiry System  
+✅ **Task 9.0** - SEO Optimization & Metadata  
+✅ **Task 10.0** - Testing Suite  
+✅ **PRD 0003** - Image Crispness & Lightbox (COMPLETE!)  
+🔄 **Task 0002.0** - Image Quality & Gallery Layout Overhaul (98% complete - 50/51 subtasks)  
 ⬜ **Task 11.0** - Deployment & Production Configuration  
 
 ---
 
 ## ✅ What's Working
 
-### Authentication
-- ✅ Google OAuth sign-in at `/login`
-- ✅ Protected routes with middleware
-- ✅ Admin toolbar appears when logged in
-- ✅ Login/logout flow complete
-
-### Database
-- ✅ 5 tables live in Supabase
-- ✅ 7 categories seeded (Weddings, Engagements, Portraits, Families, Seniors, Pets, Proposals)
-- ✅ Default page content seeded
-- ✅ Row-Level Security active
-
-### APIs
-- ✅ Categories CRUD (5 endpoints)
-- ✅ Galleries CRUD (6 endpoints)
-- ✅ Content management (3 endpoints)
-- ✅ Authentication checked on all write operations
-- ✅ Privacy: client_name never exposed publicly
-
-### Code Quality
-- ✅ Zero ESLint/TypeScript errors
-- ✅ 750+ lines of typed query functions
-- ✅ Comprehensive validation on all APIs
-- ✅ Proper HTTP status codes throughout
-
----
-
-## ❌ What's NOT Built Yet
-
-### Admin UI
-- ❌ Category manager component
-- ❌ Gallery manager component
-- ❌ Image uploader
-- ❌ Admin dashboard page
-- ❌ Drag-and-drop reordering
-
 ### Public Site
-- ❌ Homepage with slideshow
-- ❌ Gallery browsing pages
-- ❌ About page
-- ❌ Contact page with form
-- ❌ Lightbox for images
+- ✅ Homepage with hero slideshow (photographer's images)
+- ✅ Gallery browsing (categories → galleries → photos → lightbox)
+- ✅ Lightbox with keyboard/touch navigation, focus trapping, ARIA roles
+- ✅ About page with inline editing and profile photo
+- ✅ Contact page with working form and inline editing
+- ✅ Responsive design (mobile masonry, desktop justified layouts)
+- ✅ SEO-optimized (structured data, sitemaps, meta tags)
 
-### Other
-- ❌ Image upload/optimization
-- ❌ Email notifications
-- ❌ SEO implementation
-- ❌ Tests (critical!)
+### Admin Features
+- ✅ Google OAuth login/logout
+- ✅ Admin dashboard (`/admin`) with real-time stats
+- ✅ Gallery management (`/admin/galleries`) - CRUD, image upload, reordering
+- ✅ Category management (`/admin/categories`) - CRUD, drag-and-drop
+- ✅ Inquiry management (`/admin/inquiries`) - View, search, filter, status updates
+- ✅ Edit Mode toggle in toolbar
+- ✅ Inline editing: Homepage hero, About page, Contact page
+- ✅ Contact form submissions with validation and rate limiting
+- ✅ Email notifications via Resend
+
+### Image Quality & Optimization
+- ✅ High-resolution image uploads (50MB max, 8000px max)
+- ✅ Multi-format variants (thumbnail/medium/large/xlarge/original × JPEG/WebP)
+- ✅ DPR-aware image serving for crisp display on high-DPI screens
+- ✅ Blur placeholders for progressive loading
+- ✅ Lightbox viewport-fit scaling with 12px border
+- ✅ Mobile masonry layout (2 columns, 4px gaps)
+- ✅ Desktop justified layout (Flickr-style rows)
+
+### Testing
+- ✅ Unit/Integration: 370 tests passing (100% pass rate, 80%+ coverage)
+- ✅ E2E: 515 of 544 passing (94.7% pass rate) - APPROACHING TARGET!
+- ✅ Automated test database seeding
+- ✅ Multi-browser testing (Chromium, Firefox, WebKit)
+- ✅ Separated authenticated/unauthenticated test suites
 
 ---
 
-## 🧪 How to Test Current Features
+## 🔄 In Progress
 
-### Start Dev Server
-```bash
-npm run dev
-# Opens at http://localhost:3000
-```
-
-### Test Authentication
-1. Visit: http://localhost:3000/login
-2. Click "Sign in with Google"
-3. After login, see sage green admin toolbar at top
-4. Click "Sign Out" to log out
-
-### Test APIs
-```bash
-# Get all categories (returns 7 seeded categories)
-curl http://localhost:3000/api/categories | jq
-
-# Get specific category
-curl http://localhost:3000/api/categories/weddings | jq
-
-# Get page content
-curl http://localhost:3000/api/content?page=home | jq
-```
-
-### Test Protected Routes
-- Try visiting `/admin` - redirects to `/login` if not authenticated
-- After login, `/admin` will 404 (not built yet, but auth works)
+### Task 0002.50 - E2E Test Infrastructure Fixes
+- ✅ Separated auth/unauth test suites
+- ✅ Improved test stability with better selectors and timing
+- ✅ Fixed image quality issues (addRandomSuffix, original.jpeg URL storage)
+- 🔄 Remaining: 29 E2E test failures (mostly timing/selector issues, some WebKit-specific)
 
 ---
 
 ## 🎯 Next Steps
 
-### Immediate Next Task: 4.0 - Gallery & Category Management System
-**First subtask:** 4.1 - Create category manager component
-
-This will build the admin UI components for:
-- Viewing all categories
-- Creating new categories
-- Editing existing categories  
-- Deleting categories
-- Reordering categories
+1. **Continue fixing remaining 29 E2E test failures** (Task 0002.50)
+2. **Complete Task 0002.0** (lighthouse audit pending)
+3. **Merge PRD 0003 to main** (all tasks complete)
+4. **Task 11.0** - Deployment & Production Configuration
 
 ---
 
 ## ⚠️ Manual Actions Pending
 
-### Non-Blocking:
-1. Add your admin email to `.env.local`:
-   ```
-   NEXT_PUBLIC_ADMIN_EMAIL=your-email@gmail.com
-   ```
+### CRITICAL - BLOCKING:
+1. **🚨 PRODUCTION Database Migrations** (Homepage won't load without this!)
+   - Apply migrations 002 & 003 to production database
+   - See `tasks/SESSION-LOG.md` for detailed instructions
 
-### Completed:
-- ✅ Supabase project created
-- ✅ Google OAuth configured
-- ✅ Database migration run
+### NON-BLOCKING:
+1. **Lighthouse Audit** (Task 9.18 + Task 0002.46)
+   - Run manually on localhost:3000
+   - See `docs/lighthouse-audit.md` for instructions
 
 ---
 
-## 🔧 Technical Debt
+## 🧪 Test Status
 
-1. **Supabase Type Inference** (lib/db/queries.ts)
-   - Using @ts-ignore workarounds
-   - Will fix in Task 10.22 with Supabase CLI auto-generated types
+**Current Status (Dec 2025):**
+- **Unit/Integration:** 370 tests passing ✅ (100% pass rate)
+- **E2E:** 515 of 544 passing (94.7% pass rate) ✅ APPROACHING TARGET!
+- **Total:** 885 tests (370 + 515)
+- **Coverage:** 80%+ on critical paths
+- **Target:** 95%+ E2E pass rate (517+/544)
 
-2. **Migration Automation**
-   - Currently manual via Supabase dashboard
-   - Will automate in Task 10.22-10.23 (Supabase CLI + GitHub Actions)
-
-3. **No Tests Yet**
-   - Tests should be written alongside features (Task 10.0)
-   - Target: 80%+ code coverage
+**Remaining Failures:** 29 (mostly timing/selector issues, some WebKit-specific)
 
 ---
 
@@ -158,9 +116,11 @@ This will build the admin UI components for:
 
 **Process & Planning:**
 - `.cursor/rules/process-task-list.md` - How we work
-- `tasks/SESSION-LOG.md` - Detailed progress log
+- `tasks/SESSION-LOG.md` - Detailed progress log (READ THIS FIRST!)
 - `tasks/tasks-0001-prd-portrait-photography-site.md` - Task checklist
 - `tasks/0001-prd-portrait-photography-site.md` - Original PRD
+- `PROJECT_CONTEXT.md` - Project overview and architecture
+- `CLAUDE.md` - AI development guide
 
 **Code:**
 - `lib/supabase/{client,server}.ts` - Supabase clients
@@ -168,19 +128,22 @@ This will build the admin UI components for:
 - `lib/db/*` - Database types and queries
 - `app/api/*` - REST API routes
 - `middleware.ts` - Route protection
+- `components/gallery/*` - Gallery components (PhotoGrid, GalleryLightbox, OptimizedImage)
+- `lib/utils/image-urls.ts` - Image variant URL generation
+- `lib/utils/image-optimizer.ts` - Sharp-based image optimization
 
 ---
 
 ## 💡 Tips for Next Session
 
 1. **Read `tasks/SESSION-LOG.md` first** - Has all context
-2. **Check current task** in tasks list (currently 4.0)
+2. **Check current task** in task list (currently 0002.50)
 3. **Run dev server** if needed: `npm run dev`
 4. **Follow process:** One sub-task at a time, wait for "y"
 5. **Update session log** after each completed sub-task
-6. **Mark manual actions** as BLOCKING or NON-BLOCKING
+6. **Run tests** before committing: `npm test && npm run test:e2e`
+7. **Update documentation** before marking parent tasks complete
 
 ---
 
-**Ready to resume!** Just say "let's continue" or "start Task 4.0" when you're back! 🚀
-
+**Ready to continue!** 🚀

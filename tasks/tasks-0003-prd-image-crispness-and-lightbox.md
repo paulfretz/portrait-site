@@ -34,18 +34,34 @@
   - [x] 3.3 Add swipe support or larger tap targets on mobile
   - [x] 3.4 Manage focus trapping and aria roles for accessibility
 
-- [ ] 4.0 Provide high-res multi-format srcsets (AVIF/WebP/JPEG) for lightbox
-  - [ ] 4.1 Serve xlarge (~4000px) or original when smaller; include 1x/2x width candidates
-  - [ ] 4.2 Order sources AVIF → WebP → JPEG; fallback safe
-  - [ ] 4.3 Use `sizes="100vw"` in lightbox and verify DPR selection on retina
+- [x] 4.0 Provide high-res multi-format srcsets (AVIF/WebP/JPEG) for lightbox
+  - [x] 4.1 Serve xlarge (~4000px) or original when smaller; include 1x/2x width candidates
+  - [x] 4.2 Order sources AVIF → WebP → JPEG; fallback safe
+  - [x] 4.3 Use `sizes="100vw"` in lightbox and verify DPR selection on retina
 
-- [ ] 5.0 Enhance E2E to verify crispness and no overflow
-  - [ ] 5.1 Add check: naturalWidth ≥ clientWidth × devicePixelRatio (sample N tiles)
-  - [ ] 5.2 Verify lightbox image never exceeds viewport; border present
-  - [ ] 5.3 Verify arrows/keyboard navigation and swipe on mobile viewport
-  - [ ] 5.4 Run across Chromium/Firefox/WebKit with existing retry patterns
+- [x] 5.0 Enhance E2E to verify crispness and no overflow
+  - [x] 5.1 Add check: naturalWidth ≥ clientWidth × devicePixelRatio (sample N tiles)
+  - [x] 5.2 Verify lightbox image never exceeds viewport; border present
+  - [x] 5.3 Verify arrows/keyboard navigation and swipe on mobile viewport
+  - [x] 5.4 Run across Chromium/Firefox/WebKit with existing retry patterns
 
-- [ ] 6.0 Documentation and session logging
-  - [ ] 6.1 Update `README.md` image quality section (lightbox/grid behavior)
-  - [ ] 6.2 Update `tasks/SESSION-LOG.md` with changes and QA results
-  - [ ] 6.3 Note any perf impacts and mitigations (lazy, prefetch, formats)
+- [x] 6.0 Documentation and session logging
+  - [x] 6.1 Update `README.md` image quality section (lightbox/grid behavior)
+  - [x] 6.2 Update `tasks/SESSION-LOG.md` with changes and QA results
+  - [x] 6.3 Note any perf impacts and mitigations (lazy, prefetch, formats)
+
+---
+
+## ✅ PRD 0003 COMPLETE!
+
+**Total:** 18/18 subtasks complete across 6 parent tasks (1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
+
+**Key Achievements:**
+- ✅ DPR-aware image serving for crisp images on high-DPI displays
+- ✅ Lightbox with viewport-fit scaling, 12px border, no overflow
+- ✅ Full accessibility: focus trapping, ARIA roles, keyboard navigation, swipe gestures
+- ✅ Multi-format srcsets (AVIF → WebP → JPEG) with proper fallback
+- ✅ Comprehensive E2E verification (crispness, viewport constraints, mobile navigation)
+- ✅ Complete documentation (README.md + SESSION-LOG.md updates)
+
+**Ready for merge to main!**

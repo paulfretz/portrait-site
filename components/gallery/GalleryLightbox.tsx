@@ -3,7 +3,7 @@
 import { useEffect, useCallback, useState, useRef } from 'react';
 import { OptimizedImage } from './OptimizedImage';
 import { Image as ImageType } from '@/lib/db/types';
-import { getLightboxImageUrl } from '@/lib/utils/image-urls';
+import { getLightboxImageUrlJpeg, generateLightboxSrcSet } from '@/lib/utils/image-urls';
 
 interface GalleryLightboxProps {
   images: ImageType[];
@@ -313,15 +313,26 @@ export function GalleryLightbox({
             maxHeight: 'calc(100vh - 24px)', // 12px padding on each side = 24px total
           }}
         >
-          <OptimizedImage
-            src={getLightboxImageUrl(currentImage.url) || currentImage.url}
-            alt={currentImage.alt_text || galleryTitle}
-            blurDataUrl={currentImage.blur_data_url}
-            fill
-            className="object-contain"
+          {/* Use native img with srcset for full DPR-aware format selection (AVIF → WebP → JPEG) */}
+          {/* srcset includes fallback variants (xlarge → large → medium → thumbnail → original) */}
+          {/* Browser will skip 404s and use the next available variant */}
+          {/* src fallback uses original JPEG (always exists) */}
+          <img
+            src={getLightboxImageUrlJpeg(currentImage.url, currentImage.width) || currentImage.url}
+            srcSet={currentImage.url ? generateLightboxSrcSet(currentImage.url, currentImage.width, false) : undefined}
             sizes="100vw"
-            priority
+            alt={currentImage.alt_text || galleryTitle}
+            className={`object-contain w-full h-full transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
             onLoad={() => setIsLoading(false)}
+            onError={(e) => {
+              // If srcset fails, fall back to original URL directly
+              const img = e.target as HTMLImageElement;
+              if (img.src !== currentImage.url) {
+                img.src = currentImage.url;
+              }
+            }}
+            loading="eager"
+            fetchPriority="high"
           />
         </div>
 

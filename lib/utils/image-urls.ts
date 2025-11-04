@@ -28,34 +28,86 @@ export function getImageVariantUrl(
 ): string {
   if (!originalUrl) return originalUrl;
 
-  // Replace -original.jpeg with the desired variant and format
-  return originalUrl
-    .replace(/-original\.(jpeg|jpg|png|webp)$/i, `-${variant}.${format}`)
-    .replace(/-original\.jpeg$/i, `-${variant}.${format}`);
+  // Handle both -original and -thumbnail URLs (for backward compatibility)
+  // First try to replace -original
+  if (/-original\.(jpeg|jpg|png|webp)/i.test(originalUrl)) {
+    return originalUrl.replace(/-original\.(jpeg|jpg|png|webp)/i, `-${variant}.${format}`);
+  }
+  
+  // If original URL has -thumbnail (legacy format), replace it
+  if (/-thumbnail\.(jpeg|jpg|png|webp)/i.test(originalUrl)) {
+    return originalUrl.replace(/-thumbnail\.(jpeg|jpg|png|webp)/i, `-${variant}.${format}`);
+  }
+  
+  // If no pattern matches, return original URL (shouldn't happen, but safe fallback)
+  return originalUrl;
 }
 
 /**
  * Get the best cover image URL for display in gallery grids
  * Uses 'large' size with WebP format for optimal quality and performance
+ * Falls back to smaller variants if large doesn't exist (for backward compatibility)
  * 
  * @param originalUrl - The stored URL from the database
- * @returns High-quality cover image URL (large-webp)
+ * @returns High-quality cover image URL (prefers large-webp, falls back gracefully)
  */
 export function getCoverImageUrl(originalUrl: string | null): string | null {
   if (!originalUrl) return null;
+  
+  // Return large.webp as preferred
+  // If it doesn't exist (404), Next.js Image component will fall back to the src attribute
+  // For existing images with only thumbnails, we should update GalleryGrid to use srcset
+  // For now, this ensures we try the best quality first
   return getImageVariantUrl(originalUrl, 'large', 'webp');
 }
 
 /**
  * Get the best lightbox image URL for full-screen viewing
- * Uses 'xlarge' size with WebP format for high-DPI displays
+ * Serves xlarge (~4000px) or original when smaller (avoids upscaling)
+ * Uses WebP format for optimal compression
  * 
  * @param originalUrl - The stored URL from the database
- * @returns Highest quality image URL (xlarge-webp)
+ * @param imageWidth - The width of the original image (null if unknown)
+ * @returns Highest quality image URL (xlarge-webp or original-webp when smaller)
  */
-export function getLightboxImageUrl(originalUrl: string | null): string | null {
+export function getLightboxImageUrl(
+  originalUrl: string | null, 
+  imageWidth: number | null = null
+): string | null {
   if (!originalUrl) return null;
+  
+  // If we know the image width and it's smaller than 4000px, use original
+  // Otherwise use xlarge (which is capped at 4000px)
+  // This ensures we don't upscale and always serve the highest quality available
+  if (imageWidth && imageWidth > 0 && imageWidth < 4000) {
+    return getImageVariantUrl(originalUrl, 'original', 'webp');
+  }
+  
+  // Default to xlarge for high-res displays
   return getImageVariantUrl(originalUrl, 'xlarge', 'webp');
+}
+
+/**
+ * Get JPEG fallback URL for lightbox (universal browser support)
+ * Used as the `src` attribute fallback when using srcset
+ * Serves xlarge (~4000px) or original when smaller
+ * Falls back to smaller variants if preferred sizes don't exist
+ * 
+ * @param originalUrl - The stored URL from the database
+ * @param imageWidth - The width of the original image (null if unknown)
+ * @returns JPEG fallback URL with fallback chain (xlarge → large → medium → thumbnail → original)
+ */
+export function getLightboxImageUrlJpeg(
+  originalUrl: string | null,
+  imageWidth: number | null = null
+): string | null {
+  if (!originalUrl) return null;
+  
+  // For the src fallback, use original JPEG (always exists)
+  // The srcset will try variants in order (xlarge → large → medium → thumbnail → original)
+  // Browser will skip 404s and use the next available variant from srcset
+  // This src is just a universal fallback
+  return getImageVariantUrl(originalUrl, 'original', 'jpeg');
 }
 
 /**
@@ -109,25 +161,55 @@ export function generateSrcSet(originalUrl: string, includeAvif: boolean = false
 }
 
 /**
+ * Get the width descriptor for original image
+ * Uses the image's actual width if available, otherwise estimates based on common photography sizes
+ * 
+ * @param imageWidth - The width of the original image (null if unknown)
+ * @returns Width descriptor (defaults to 8000px for high-res photography)
+ */
+function getOriginalWidthDescriptor(imageWidth: number | null): number {
+  // If we know the actual width, use it
+  if (imageWidth && imageWidth > 0) {
+    return imageWidth;
+  }
+  // Default to 8000px for high-res photography (matches PRD 0003 requirement)
+  return 8000;
+}
+
+/**
  * Generate multi-format srcset for lightbox (AVIF → WebP → JPEG)
  * Creates optimized srcsets with format priority for high-DPI displays
+ * Serves xlarge (~4000px) or original when smaller; includes 1x/2x width candidates
  * 
  * @param originalUrl - The stored URL from the database
+ * @param imageWidth - The width of the original image (null if unknown)
  * @param includeAvif - Whether to include AVIF format (defaults to false until pipeline supports it)
  * @returns srcset string with AVIF, WebP, and JPEG formats (browser chooses best)
  *
  * @example
- * generateLightboxSrcSet('https://blob.../photo-original.jpeg')
- * // Returns: 'https://.../photo-xlarge.avif 4000w, https://.../photo-xlarge.webp 4000w, ...'
+ * generateLightboxSrcSet('https://blob.../photo-original.jpeg', 6000)
+ * // Returns: 'https://.../photo-xlarge.avif 4000w, https://.../photo-original.avif 6000w, ...'
  */
-export function generateLightboxSrcSet(originalUrl: string, includeAvif: boolean = false): string {
+export function generateLightboxSrcSet(
+  originalUrl: string, 
+  imageWidth: number | null = null,
+  includeAvif: boolean = false
+): string {
   if (!originalUrl) return '';
 
-  // For lightbox, prioritize xlarge and original for high-DPI displays
+  const originalWidth = getOriginalWidthDescriptor(imageWidth);
+  
+  // For lightbox, prefer xlarge (~4000px) and original
+  // BUT: Include fallback variants for existing images that only have thumbnails
+  // Browser will skip 404s and use the next available variant
+  // Order: xlarge → large → medium → thumbnail → original
   const variants: Array<{ name: ImageVariant; width: number }> = [
-    { name: 'large', width: 2400 },
     { name: 'xlarge', width: 4000 },
-    { name: 'original', width: 4000 }, // Use xlarge width as descriptor for original
+    { name: 'large', width: 2400 },
+    { name: 'medium', width: 1200 },
+    { name: 'thumbnail', width: 400 },
+    // Always include original as final fallback (at actual width)
+    { name: 'original' as ImageVariant, width: originalWidth },
   ];
 
   // Format priority: AVIF → WebP → JPEG

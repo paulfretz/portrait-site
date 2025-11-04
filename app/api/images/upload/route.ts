@@ -171,22 +171,33 @@ export async function POST(request: NextRequest) {
         const optimized = await optimizeImage(buffer);
 
         // Upload all optimized versions to Vercel Blob
-        const uploadPromises = optimized.sizes.map(async (size) => {
+        // Use timestamp to prevent collisions instead of random suffix
+        const timestamp = Date.now();
+        const uploadPromises = optimized.sizes.map(async (size, index) => {
           const filename = generateOptimizedFilename(file.name, size.name, size.format);
-          const path = `galleries/${galleryId}/${Date.now()}-${filename}`;
+          const path = `galleries/${galleryId}/${timestamp}-${filename}`;
           
-          return await put(path, size.buffer, {
+          const blob = await put(path, size.buffer, {
             access: 'public',
-            addRandomSuffix: true,
+            addRandomSuffix: false, // Remove random suffix to allow variant URL generation
           });
+          
+          // Return both the blob and metadata to track which is original
+          return { blob, size, index };
         });
 
-        const uploadedBlobs = await Promise.all(uploadPromises);
+        const uploadResults = await Promise.all(uploadPromises);
 
-        // Use the original JPEG as the main URL (last uploaded)
-        const originalJpegBlob = uploadedBlobs.find((blob) => 
-          blob.pathname.includes('-original.jpeg')
-        ) || uploadedBlobs[0];
+        // Find the original JPEG blob by matching size metadata
+        const originalJpegResult = uploadResults.find((result) => 
+          result.size.name === 'original' && result.size.format === 'jpeg'
+        );
+        
+        if (!originalJpegResult) {
+          throw new Error('Failed to find original JPEG after upload');
+        }
+
+        const originalJpegBlob = originalJpegResult.blob;
 
         // Generate alt text from gallery title and location
         const altText =

@@ -54,6 +54,7 @@ export default defineConfig({
       testMatch: /auth\.setup\.ts/,
     },
 
+    // Authenticated projects (default - most tests need auth)
     {
       name: 'chromium',
       use: { 
@@ -62,6 +63,8 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       dependencies: ['setup'],
+      // Exclude unauthenticated test files
+      testIgnore: /admin-auth-unauthenticated\.spec\.ts/,
     },
 
     {
@@ -71,6 +74,7 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       dependencies: ['setup'],
+      testIgnore: /admin-auth-unauthenticated\.spec\.ts/,
     },
 
     {
@@ -80,6 +84,34 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       dependencies: ['setup'],
+      testIgnore: /admin-auth-unauthenticated\.spec\.ts/,
+    },
+
+    // Unauthenticated projects (no auth, no setup dependency)
+    // These run admin-auth-unauthenticated.spec.ts with clean browser sessions
+    {
+      name: 'chromium-unauth',
+      use: { 
+        ...devices['Desktop Chrome'],
+        // No storageState = clean browser session
+      },
+      testMatch: /admin-auth-unauthenticated\.spec\.ts/,
+    },
+
+    {
+      name: 'firefox-unauth',
+      use: { 
+        ...devices['Desktop Firefox'],
+      },
+      testMatch: /admin-auth-unauthenticated\.spec\.ts/,
+    },
+
+    {
+      name: 'webkit-unauth',
+      use: { 
+        ...devices['Desktop Safari'],
+      },
+      testMatch: /admin-auth-unauthenticated\.spec\.ts/,
     },
 
     /* Test against mobile viewports. */

@@ -107,7 +107,7 @@ export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
                   blurDataUrl={image.blur_data_url}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="50vw"
+                  sizes="(max-width: 767px) calc(50vw - 4px), 33vw"
                 />
               </div>
 
@@ -163,7 +163,7 @@ export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
                   width={box.width}
                   height={box.height}
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(min-width: 768px) 33vw"
+                  sizes="(min-width: 768px) 800px, 33vw"
                 />
 
                 {/* Hover Overlay */}

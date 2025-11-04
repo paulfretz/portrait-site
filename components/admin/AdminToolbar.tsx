@@ -45,7 +45,7 @@ export function AdminToolbar() {
   };
 
   return (
-    <div className="bg-sage-400 border-b border-sage-500 shadow-sm">
+    <div data-testid="admin-toolbar" className="bg-sage-400 border-b border-sage-500 shadow-sm">
       <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           {/* Left side - Admin indicator */}
