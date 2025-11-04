@@ -122,7 +122,7 @@ setup('authenticate as admin', async ({ page }) => {
     // Verify we can access admin routes
     console.log('🔍 Verifying admin access...');
     await page.goto('/admin');
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(500);
 
     // Check if we're authenticated
     const currentUrl = page.url();

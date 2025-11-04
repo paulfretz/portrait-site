@@ -138,6 +138,9 @@ export interface Image {
   alt_text: string | null;
   width: number | null;
   height: number | null;
+  blur_data_url: string | null; // Base64 blur placeholder for progressive loading
+  is_hero_image: boolean; // Marks image as part of homepage hero slideshow
+  hero_display_order: number | null; // Display order in hero slideshow (NULL for non-hero images)
   display_order: number;
   created_at: string;
   updated_at: string;
@@ -150,6 +153,9 @@ export interface ImageInsert {
   alt_text?: string | null;
   width?: number | null;
   height?: number | null;
+  blur_data_url?: string | null;
+  is_hero_image?: boolean;
+  hero_display_order?: number | null;
   display_order?: number;
   created_at?: string;
   updated_at?: string;
@@ -162,6 +168,9 @@ export interface ImageUpdate {
   alt_text?: string | null;
   width?: number | null;
   height?: number | null;
+  blur_data_url?: string | null;
+  is_hero_image?: boolean;
+  hero_display_order?: number | null;
   display_order?: number;
   updated_at?: string;
 }

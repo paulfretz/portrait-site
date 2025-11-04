@@ -44,9 +44,30 @@ jest.mock('next/image', () => ({
 
 // Mock OptimizedImage component
 jest.mock('@/components/gallery/OptimizedImage', () => ({
-  OptimizedImage: ({ src, alt, className }: any) => (
-    <img src={src} alt={alt} className={className} data-testid="optimized-image" />
-  ),
+  OptimizedImage: (props: any) => {
+    // Filter out Next.js-specific props that aren't valid DOM attributes
+    const { 
+      src, 
+      alt, 
+      className,
+      // Next.js Image-specific props - filter these out
+      blurDataURL,
+      blurDataUrl,
+      placeholder,
+      fill,
+      sizes,
+      priority,
+      fetchPriority,
+      objectFit,
+      width,
+      height,
+      onLoad,
+      ...rest
+    } = props;
+    
+    // Only pass valid DOM attributes to plain img
+    return <img src={src} alt={alt} className={className} data-testid="optimized-image" />;
+  },
 }));
 
 describe('GalleryGrid', () => {

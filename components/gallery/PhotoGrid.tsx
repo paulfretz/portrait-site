@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Masonry from 'react-masonry-css';
 import { OptimizedImage } from './OptimizedImage';
 import { GalleryLightbox } from './GalleryLightbox';
 import { Image as ImageType } from '@/lib/db/types';
+import { useJustifiedLayout } from '@/lib/hooks/useJustifiedLayout';
 
 interface PhotoGridProps {
   images: ImageType[];
@@ -13,6 +15,24 @@ interface PhotoGridProps {
 export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(true);
+  const [containerWidth, setContainerWidth] = useState(1200);
+
+  // Detect screen size
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      setContainerWidth(window.innerWidth);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // Calculate justified layout for desktop
+  const justifiedLayout = useJustifiedLayout(images, containerWidth, 320, 8);
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
@@ -51,42 +71,122 @@ export function PhotoGrid({ images, galleryTitle }: PhotoGridProps) {
     );
   }
 
+  // Masonry breakpoints configuration (for mobile)
+  const breakpointColumns = {
+    default: 2, // Mobile/Tablet: 2 columns
+    768: 2,
+  };
+
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        {images.map((image, index) => (
-          <button
-            key={image.id}
-            onClick={() => openLightbox(index)}
-            className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 cursor-pointer hover:shadow-lg transition-all duration-300"
-          >
-            <OptimizedImage
-              src={image.url}
-              alt={image.alt_text || galleryTitle}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <svg
-                className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+      {/* Mobile: Masonry Layout (2 columns) */}
+      {isMobile && (
+        <Masonry
+          breakpointCols={breakpointColumns}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {images.map((image, index) => (
+            <button
+              key={image.id}
+              onClick={() => openLightbox(index)}
+              className="group relative w-full overflow-hidden bg-gray-100 cursor-pointer hover:shadow-lg transition-all duration-300"
+            >
+              {/* Calculate aspect ratio from image dimensions */}
+              <div
+                className="relative w-full"
+                style={{
+                  paddingBottom: image.height && image.width 
+                    ? `${(image.height / image.width) * 100}%` 
+                    : '75%',
+                }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                <OptimizedImage
+                  src={image.url}
+                  alt={image.alt_text || galleryTitle}
+                  blurDataUrl={image.blur_data_url}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 767px) calc(50vw - 4px), 33vw"
                 />
-              </svg>
-            </div>
-          </button>
-        ))}
-      </div>
+              </div>
+
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <svg
+                  className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                  />
+                </svg>
+              </div>
+            </button>
+          ))}
+        </Masonry>
+      )}
+
+      {/* Desktop: Justified Row Layout */}
+      {!isMobile && justifiedLayout && (
+        <div
+          className="relative"
+          style={{
+            height: justifiedLayout.containerHeight,
+          }}
+        >
+          {images.map((image, index) => {
+            const box = justifiedLayout.boxes[index];
+            if (!box) return null;
+
+            return (
+              <button
+                key={image.id}
+                onClick={() => openLightbox(index)}
+                className="group absolute overflow-hidden bg-gray-100 cursor-pointer hover:shadow-lg transition-all duration-300"
+                style={{
+                  top: box.top,
+                  left: box.left,
+                  width: box.width,
+                  height: box.height,
+                }}
+              >
+                <OptimizedImage
+                  src={image.url}
+                  alt={image.alt_text || galleryTitle}
+                  blurDataUrl={image.blur_data_url}
+                  width={box.width}
+                  height={box.height}
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(min-width: 768px) 800px, 33vw"
+                />
+
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <svg
+                    className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                    />
+                  </svg>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Lightbox */}
       <GalleryLightbox

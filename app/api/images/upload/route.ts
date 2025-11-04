@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { put } from '@vercel/blob';
+import sharp from 'sharp';
 import { createClient } from '@/lib/supabase/server';
 import { createImage } from '@/lib/db/queries';
 import type { ImageInsert } from '@/lib/db/types';
@@ -13,15 +14,16 @@ import { optimizeImage, generateOptimizedFilename } from '@/lib/utils/image-opti
  *
  * Request:
  * - Content-Type: multipart/form-data
- * - Files: images[] (JPEG/PNG/WebP/HEIC, max 10MB each)
+ * - Files: images[] (JPEG/PNG/WebP/HEIC, max 50MB each, up to 8000px)
  * - Fields:
  *   - gallery_id: string (required)
  *   - alt_text_override?: string (optional, for single image)
  *
  * Response:
  * - 200: { success: true, images: Image[] }
- * - 400: { success: false, error: string }
+ * - 400: { success: false, error: string } (invalid file type, size >50MB, or missing gallery_id)
  * - 401: { success: false, error: 'Unauthorized' }
+ * - 404: { success: false, error: 'Gallery not found' }
  * - 500: { success: false, error: string }
  */
 export async function POST(request: NextRequest) {
@@ -92,7 +94,7 @@ export async function POST(request: NextRequest) {
 
     // Validate file types and sizes
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic'];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 50 * 1024 * 1024; // 50MB (for high-resolution professional photography)
 
     for (const file of files) {
       if (!allowedTypes.includes(file.type)) {
@@ -106,10 +108,50 @@ export async function POST(request: NextRequest) {
       }
 
       if (file.size > maxSize) {
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
         return NextResponse.json(
           {
             success: false,
-            error: `File ${file.name} is too large. Maximum size: 10MB`,
+            error: `File "${file.name}" is too large (${fileSizeMB}MB). Maximum size: 50MB`,
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Validate image dimensions (max 8000px width or height)
+    const maxDimension = 8000; // 8000px for professional high-res photography
+    
+    for (const file of files) {
+      try {
+        const buffer = await file.arrayBuffer();
+        const metadata = await sharp(Buffer.from(buffer)).metadata();
+        
+        if (!metadata.width || !metadata.height) {
+          return NextResponse.json(
+            {
+              success: false,
+              error: `Could not read dimensions of "${file.name}". File may be corrupted.`,
+            },
+            { status: 400 }
+          );
+        }
+
+        if (metadata.width > maxDimension || metadata.height > maxDimension) {
+          return NextResponse.json(
+            {
+              success: false,
+              error: `Image "${file.name}" dimensions (${metadata.width}×${metadata.height}px) exceed maximum (${maxDimension}px). Please resize before uploading.`,
+            },
+            { status: 400 }
+          );
+        }
+      } catch (error) {
+        console.error('Error reading image dimensions:', error);
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Failed to process "${file.name}". Please ensure it's a valid image file.`,
           },
           { status: 400 }
         );
@@ -129,35 +171,47 @@ export async function POST(request: NextRequest) {
         const optimized = await optimizeImage(buffer);
 
         // Upload all optimized versions to Vercel Blob
-        const uploadPromises = optimized.sizes.map(async (size) => {
+        // Use timestamp to prevent collisions instead of random suffix
+        const timestamp = Date.now();
+        const uploadPromises = optimized.sizes.map(async (size, index) => {
           const filename = generateOptimizedFilename(file.name, size.name, size.format);
-          const path = `galleries/${galleryId}/${Date.now()}-${filename}`;
+          const path = `galleries/${galleryId}/${timestamp}-${filename}`;
           
-          return await put(path, size.buffer, {
+          const blob = await put(path, size.buffer, {
             access: 'public',
-            addRandomSuffix: true,
+            addRandomSuffix: false, // Remove random suffix to allow variant URL generation
           });
+          
+          // Return both the blob and metadata to track which is original
+          return { blob, size, index };
         });
 
-        const uploadedBlobs = await Promise.all(uploadPromises);
+        const uploadResults = await Promise.all(uploadPromises);
 
-        // Use the original JPEG as the main URL (last uploaded)
-        const originalJpegBlob = uploadedBlobs.find((blob) => 
-          blob.pathname.includes('-original.jpeg')
-        ) || uploadedBlobs[0];
+        // Find the original JPEG blob by matching size metadata
+        const originalJpegResult = uploadResults.find((result) => 
+          result.size.name === 'original' && result.size.format === 'jpeg'
+        );
+        
+        if (!originalJpegResult) {
+          throw new Error('Failed to find original JPEG after upload');
+        }
+
+        const originalJpegBlob = originalJpegResult.blob;
 
         // Generate alt text from gallery title and location
         const altText =
           altTextOverride ||
           `${gallery.title}${gallery.location ? ` in ${gallery.location}` : ''}`;
 
-        // Save to database with actual dimensions
+        // Save to database with actual dimensions and blur placeholder
         const imageData: ImageInsert = {
           gallery_id: galleryId,
           url: originalJpegBlob.url,
           alt_text: altText,
           width: optimized.originalDimensions.width,
           height: optimized.originalDimensions.height,
+          blur_data_url: optimized.blurDataUrl, // Base64 blur placeholder
           display_order: 0, // Will be updated when reordering is implemented
         };
 

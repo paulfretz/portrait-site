@@ -4,12 +4,42 @@ import { mockImage } from '../utils/test-utils';
 
 // Mock OptimizedImage component
 jest.mock('@/components/gallery/OptimizedImage', () => ({
-  OptimizedImage: ({ src, alt, onLoad, className }: any) => {
+  OptimizedImage: (props: any) => {
+    // Filter out Next.js-specific props that aren't valid DOM attributes
+    const { 
+      src, 
+      alt, 
+      onLoad, 
+      className,
+      // Next.js Image-specific props - filter these out
+      blurDataURL,
+      blurDataUrl,
+      placeholder,
+      fill,
+      sizes,
+      priority,
+      fetchPriority,
+      objectFit,
+      width,
+      height,
+      ...rest
+    } = props;
+    
+    // Only pass valid DOM attributes to plain img
+    const domProps = {
+      src,
+      alt,
+      className,
+      'data-testid': 'optimized-image',
+      onLoad,
+    };
+    
     // Simulate image load
     if (onLoad) {
       setTimeout(() => onLoad(), 0);
     }
-    return <img src={src} alt={alt} className={className} data-testid="optimized-image" />;
+    
+    return <img {...domProps} />;
   },
 }));
 
@@ -106,15 +136,16 @@ describe('GalleryLightbox', () => {
       render(<GalleryLightbox {...defaultProps} images={imagesWithoutAlt} />);
       
       await waitFor(() => {
-        const images = screen.getAllByTestId('optimized-image');
-        const mainImage = images.find(img => img.getAttribute('alt') === 'Test Gallery');
+        // Main lightbox image now uses native img with srcset (not OptimizedImage)
+        const mainImage = document.querySelector('img[srcset][alt="Test Gallery"]');
         expect(mainImage).toBeInTheDocument();
       });
     });
 
     it('renders keyboard instructions on desktop', () => {
       render(<GalleryLightbox {...defaultProps} />);
-      expect(screen.getByText(/use arrow keys to navigate/i)).toBeInTheDocument();
+      // There may be multiple instances (screen reader description + visible instructions)
+      expect(screen.getAllByText(/use arrow keys to navigate/i).length).toBeGreaterThan(0);
     });
 
     it('renders thumbnail strip for galleries with 2-20 images', () => {
@@ -404,7 +435,19 @@ describe('GalleryLightbox', () => {
     });
 
     it('hides loading spinner after image loads', async () => {
-      render(<GalleryLightbox {...defaultProps} />);
+      const { container } = render(<GalleryLightbox {...defaultProps} />);
+      
+      // Find the main lightbox image by srcset attribute (not thumbnails)
+      const mainImage = await waitFor(() => {
+        const img = container.querySelector('img[srcset]') as HTMLImageElement;
+        if (!img) {
+          throw new Error('Main lightbox image not found');
+        }
+        return img;
+      });
+      
+      // Manually trigger load event since native img needs it in tests
+      fireEvent.load(mainImage);
       
       await waitFor(() => {
         const spinner = document.querySelector('.animate-spin');
@@ -413,7 +456,18 @@ describe('GalleryLightbox', () => {
     });
 
     it('shows loading spinner when navigating to next image', async () => {
-      render(<GalleryLightbox {...defaultProps} />);
+      const { container } = render(<GalleryLightbox {...defaultProps} />);
+      
+      // Find and trigger load for initial image
+      const initialImage = await waitFor(() => {
+        const img = container.querySelector('img[srcset]') as HTMLImageElement;
+        if (!img) {
+          throw new Error('Initial lightbox image not found');
+        }
+        return img;
+      });
+      
+      fireEvent.load(initialImage);
       
       // Wait for initial load
       await waitFor(() => {
@@ -426,6 +480,22 @@ describe('GalleryLightbox', () => {
       
       // Loading spinner should appear again
       expect(document.querySelector('.animate-spin')).toBeInTheDocument();
+      
+      // Find and trigger load for new image
+      const newImage = await waitFor(() => {
+        const img = container.querySelector('img[srcset]') as HTMLImageElement;
+        if (!img) {
+          throw new Error('New lightbox image not found');
+        }
+        return img;
+      });
+      
+      fireEvent.load(newImage);
+      
+      // Spinner should disappear after new image loads
+      await waitFor(() => {
+        expect(document.querySelector('.animate-spin')).not.toBeInTheDocument();
+      });
     });
   });
 

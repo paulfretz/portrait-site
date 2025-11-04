@@ -17,6 +17,29 @@
 - If you skip this, you are breaking the entire workflow
 - **NO EXCEPTIONS - This rule applies to EVERY single commit**
 
+### **Rule #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS + COVERAGE**
+**Before proceeding to the next task, ALL tests must pass AND coverage must be maintained!**
+
+- After implementing ANY change, run the full test suite
+- If tests fail:
+  - Fix the tests if they're outdated
+  - Fix the code if it's the issue (use industry-standard solutions)
+  - **DO NOT proceed to next task until ALL tests pass**
+- **Code Coverage Requirements:**
+  - Run `npm run test:coverage` periodically (especially for new components/utilities)
+  - **Critical components (user-facing, business logic):** Target 80%+ coverage
+  - **Utility functions:** Target 80%+ coverage
+  - **Server components / API routes:** E2E coverage may be sufficient
+  - **If coverage drops significantly:** Add tests before proceeding
+- This applies to: Unit tests, Integration tests, E2E tests, TypeScript, Linter, Coverage
+- **"Even if tests or code fail" clause:**
+  - If test fails due to outdated expectations → fix the test
+  - If code fails due to poor implementation → fix the code using industry-standard solutions
+  - If coverage is low on critical code → write tests before proceeding
+  - NEVER skip tests or proceed with failing tests
+  - NEVER use hacks or workarounds to make tests pass
+  - Quality over speed - do it right the first time
+
 ### **Rule #1: One Sub-Task at a Time**
 - **NEVER** start the next sub-task until you ask the user for permission
 - After completing a sub-task: **STOP** and ask "May I proceed with Task X.X?"
@@ -26,6 +49,11 @@
 ### **Rule #2: Git Branching Strategy**
 - Each parent task gets its own feature branch: `task-X.0-short-description`
 - Example: `task-10.0-testing-suite`
+- **Before starting a new parent task (CRITICAL):**
+  1. **MUST read `tasks/SESSION-LOG.md` completely** - understand current state, completed work, technical decisions, pending items
+  2. **MUST read `PROJECT_CONTEXT.md` completely** - understand architecture, conventions, tech stack
+  3. **MUST read `STATUS.md` completely** - see quick status snapshot and what's next
+  4. This ensures continuity and prevents missing critical context
 - When starting a new parent task:
   1. Create and checkout new branch from `main`
   2. Work on all subtasks in this branch
@@ -35,24 +63,34 @@
   2. Push branch to origin
   3. Create Pull Request (PR) to `main`
   4. Wait for user to review and merge PR
-  5. Then mark parent task as `[x]`
+  5. **After PR merged, BEFORE marking parent task `[x]`:**
+     - **UPDATE `tasks/SESSION-LOG.md`** - ALL 13 sections (see "Parent Task Completion Protocol" in process-task-list.md)
+     - **UPDATE `PROJECT_CONTEXT.md`** - Project overview, tech considerations, architecture decisions
+     - **UPDATE `STATUS.md`** - Overall progress, current task, recent accomplishments
+  6. Then mark parent task as `[x]`
 
 ### **Rule #3: Completion Protocol (PRE-COMMIT CHECKLIST)**
 After finishing a sub-task, follow this EXACT sequence:
 
 **🚨 PRE-COMMIT CHECKLIST (MANDATORY - DO NOT SKIP ANY STEP):**
-1. ✅ **Run linter** (`npm run lint`) and fix any errors
-2. ✅ **Run all tests** (`npm test`) and ensure they all pass
-3. ✅ **Run TypeScript** (`npx tsc --noEmit`) and fix any errors
-4. ✅ **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (see Rule #4)
-5. ✅ **Mark task [x]** in `tasks/tasks-0001-prd-portrait-photography-site.md`
+1. ✅ **Run linter** (`npm run lint`) and fix any errors - **MUST PASS** before Step 2
+2. ✅ **Run all tests** (`npm test`) and ensure they all pass - **MUST PASS** before Step 3
+   - **TDD Rule #0.5**: If tests fail, STOP and fix them (or the code) before continuing
+   - Fix tests if outdated, fix code using industry-standard solutions if broken
+   - NEVER proceed with failing tests - Quality over speed!
+3. ✅ **Run TypeScript** (`npx tsc --noEmit`) and fix any errors - **MUST PASS** before Step 4
+4. ✅ **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (see Rule #4) - **MANDATORY (Rule #0)**
+5. ✅ **Mark task [x]** in task list file
+5a. ✅ **CHECK PARENT TASK** - If ALL subtasks under a parent are now `[x]`, mark parent task `[x]` too!
 6. ✅ **Update TODO list** using todo_write tool
 7. ✅ **Stage changes** (`git add`)
 8. ✅ **Commit** with descriptive conventional commit message
 9. ✅ **STOP** and ask user: "May I proceed with Task X.X?"
 10. ⏸️ **WAIT** for user approval before continuing
 
-**If you skip Step 4 (SESSION-LOG update), you are violating Rule #0!**
+**Critical Violations:**
+- **If you skip Step 4 (SESSION-LOG update), you are violating Rule #0!**
+- **If you proceed with failing tests in Step 2, you are violating Rule #0.5 (TDD)!**
 
 If all subtasks under a parent task are `[x]`:
 1. Run full test suite (`npm test`)
@@ -60,7 +98,13 @@ If all subtasks under a parent task are `[x]`:
 3. Clean up temporary files
 4. Commit with conventional commit format
 5. Push feature branch to origin
-6. Wait for user to merge PR before marking parent `[x]`
+6. Wait for user to merge PR
+7. **After PR merged, BEFORE marking parent `[x]`:**
+   - Update SESSION-LOG.md (all 13 sections)
+   - Update PROJECT_CONTEXT.md
+   - Update STATUS.md
+   - See "Parent Task Completion Protocol" in `.cursor/rules/process-task-list.md` for details
+8. Then mark parent `[x]`
 
 ### **Rule #4: Session Log Maintenance (CRITICAL)**
 **After EVERY sub-task, verify and update ALL 13 sections:**

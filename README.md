@@ -47,8 +47,11 @@ This full-featured photography portfolio site serves as both a showcase and busi
 - [React Testing Library](https://testing-library.com/) - Component testing
 - [Playwright](https://playwright.dev/) - E2E testing
 
-**Image Storage:**
-- Vercel Blob Storage or Cloudflare R2
+**Image Storage & Optimization:**
+- [Vercel Blob Storage](https://vercel.com/docs/storage/vercel-blob) - High-performance image storage with CDN
+- [Sharp](https://sharp.pixelplumbing.com/) - Server-side image processing and optimization
+- Multi-format support: AVIF, WebP, JPEG with automatic format selection
+- DPR-aware image serving for high-DPI displays (retina, 2x, 3x screens)
 
 **Email:**
 - SendGrid or Resend for inquiry notifications
@@ -145,9 +148,92 @@ NEXT_PUBLIC_ADMIN_EMAIL=admin@example.com
 3. Create a new Blob Store
 4. Copy the `BLOB_READ_WRITE_TOKEN` to your `.env.local`
 
-**Note:** Vercel Blob is used for storing high-resolution portfolio images with automatic CDN distribution.
+**Storage Limits & Upload Configuration:**
 
-### 6. Set Up Resend for Email Notifications
+This project supports uploads up to **50MB and 8000px** for professional photography:
+
+- **Vercel Blob Limits:**
+  - Free Tier: 500GB storage, 100GB bandwidth/month
+  - Upload API: Supports up to **500MB** per file on all plans
+  - **No dashboard configuration needed** for 50MB uploads
+
+- **Next.js Configuration:**  
+  - Body parser limit: **50MB** (configured in `next.config.js` ✅)
+  - This is the primary upload size control
+
+- **Serverless Function Considerations:**
+  - **Hobby plan:** 10s timeout, 1024MB memory (may timeout on large uploads)
+  - **Pro plan:** 60s timeout, 3008MB memory (recommended for production)
+  - If uploads timeout: upgrade plan or optimize image processing
+
+**Note:** Vercel Blob is used for storing high-resolution portfolio images with automatic CDN distribution. See [Vercel Blob Docs](https://vercel.com/docs/storage/vercel-blob) for details.
+
+## 🖼️ Image Quality & Optimization
+
+This site implements professional-grade image optimization to ensure crisp, high-quality photos on all devices, including high-DPI displays.
+
+### Image Variants & Formats
+
+Each uploaded image generates multiple optimized variants:
+
+- **Thumbnail** (400px) - For admin previews and small displays
+- **Medium** (1200px) - For gallery grids on desktop
+- **Large** (2400px) - For gallery cover images and featured displays
+- **XLarge** (4000px @ 95% JPEG quality) - For professional-quality full-screen viewing
+- **Original** - Stored at full resolution (up to 8000px) for future use
+
+**Format Priority:** AVIF → WebP → JPEG (browser automatically selects best supported format)
+
+### DPR-Aware Image Serving
+
+The site automatically serves high-resolution images for high-DPI displays (retina, 2x, 3x screens):
+
+- **Gallery Grid Images:** Use precise `sizes` attributes matching rendered CSS dimensions
+- **Lightbox Images:** Use `sizes="100vw"` with multi-format srcsets (AVIF/WebP/JPEG)
+- **Browser Selection:** Automatically selects appropriate variant based on device pixel ratio (DPR)
+- **Crispness Verification:** E2E tests verify `naturalWidth ≥ clientWidth × devicePixelRatio` for quality assurance
+
+### Lightbox Behavior
+
+The lightbox (full-screen image viewer) includes:
+
+- **Viewport-Fit Scaling:** Images scale to fit viewport with 12px border (never overflow)
+- **High-Resolution Sources:** Serves xlarge (4000px) or original variants for maximum quality
+- **Multi-Format Srcsets:** AVIF → WebP → JPEG fallback chain for optimal compression
+- **Accessibility:** Full keyboard navigation (arrows, Escape), focus trapping, ARIA roles, screen reader support
+- **Mobile Optimizations:** Swipe gestures, 48px tap targets, edge-positioned navigation buttons
+
+### Gallery Layouts
+
+**Mobile (≤767px):**
+- **Masonry Layout:** 2-column grid with 4px gaps
+- Dynamic heights maintain natural aspect ratios
+- Images fit within columns without upscaling
+
+**Desktop (≥768px):**
+- **Justified Layout:** Flickr-style rows with equal-height images
+- 8px gaps between images
+- Rows scale to fill available width
+
+### Performance Optimizations
+
+- **Lazy Loading:** Images load as they enter viewport (except first image)
+- **Blur Placeholders:** 20px base64 data URLs for progressive loading
+- **Format Selection:** Browser automatically selects best format (AVIF > WebP > JPEG)
+- **Responsive Images:** Multiple sizes prevent unnecessary large downloads on mobile
+- **CDN Distribution:** Vercel Blob provides global CDN for fast image delivery
+
+### Technical Implementation
+
+- **Image Processing:** Sharp generates all variants during upload
+- **URL Generation:** `lib/utils/image-urls.ts` handles variant URL construction
+- **Component:** `OptimizedImage` wrapper ensures consistent optimization across site
+- **Lightbox:** Uses native `<img>` with `srcset` for full DPR control (Task 0003)
+- **E2E Verification:** Comprehensive tests verify crispness, viewport constraints, and navigation
+
+For detailed technical documentation, see `tasks/0003-prd-image-crispness-and-lightbox.md`.
+
+### 7. Set Up Resend for Email Notifications
 
 1. Create a free account at [resend.com](https://resend.com)
 2. Go to API Keys section
@@ -161,7 +247,7 @@ NEXT_PUBLIC_ADMIN_EMAIL=admin@example.com
 - For production, verify your domain in Resend to send from `inquiries@djcovenoportraits.com`
 - For development, you can use Resend's test domain
 
-### 7. Run Development Server
+### 8. Run Development Server
 
 ```bash
 npm run dev

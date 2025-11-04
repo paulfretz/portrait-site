@@ -7,16 +7,24 @@ import { useState } from 'react';
  *
  * Features:
  * - Lazy loading (loads when in viewport)
- * - Blur placeholder while loading
- * - Automatic srcset generation
- * - Responsive sizing
- * - Error handling with fallback
+ * - Blur placeholder while loading (20px JPEG base64)
+ * - Automatic srcset generation (Next.js handles multiple sizes)
+ * - Automatic WebP/AVIF format serving (Next.js detects browser support)
+ * - Responsive sizing with `sizes` prop
+ * - Smooth 500ms fade-in transition
+ * - Error handling with fallback UI
+ *
+ * Image Format Priority (Next.js automatic):
+ * 1. AVIF (best compression, modern browsers)
+ * 2. WebP (good compression, wide support)
+ * 3. JPEG (fallback for older browsers)
  *
  * Usage:
  * ```tsx
  * <OptimizedImage
  *   src={image.url}
  *   alt={image.alt_text}
+ *   blurDataUrl={image.blur_data_url}
  *   width={image.width}
  *   height={image.height}
  *   priority={false}
@@ -31,7 +39,9 @@ interface OptimizedImageProps {
   alt: string;
   width?: number | null;
   height?: number | null;
+  blurDataUrl?: string | null; // Base64 blur placeholder for progressive loading
   priority?: boolean;
+  fetchPriority?: 'high' | 'low' | 'auto'; // Fetch priority hint for browser
   className?: string;
   sizes?: string;
   fill?: boolean;
@@ -44,7 +54,9 @@ export function OptimizedImage({
   alt,
   width,
   height,
+  blurDataUrl,
   priority = false,
+  fetchPriority,
   className = '',
   sizes,
   fill = false,
@@ -53,6 +65,17 @@ export function OptimizedImage({
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+
+  // Validate blur data URL - only use if it's a valid base64 data URL
+  const isValidBlurDataUrl = (url: string | null | undefined): boolean => {
+    if (!url) return false;
+    // Check if it's a valid base64 data URL format
+    return /^data:image\/(jpeg|jpg|png|webp|svg\+xml);base64,/.test(url);
+  };
+
+  // Use provided blur data URL only if valid, otherwise no blur placeholder
+  const hasValidBlur = isValidBlurDataUrl(blurDataUrl);
+  const blurPlaceholder = hasValidBlur ? blurDataUrl! : undefined;
 
   // Handle image load complete
   const handleLoadComplete = () => {
@@ -96,76 +119,58 @@ export function OptimizedImage({
   // Render with fill
   if (fill) {
     return (
-      <>
-        {isLoading && (
-          <div className="absolute inset-0 bg-neutral-100 animate-pulse" />
-        )}
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes || '100vw'}
-          className={`${className} ${objectFit === 'cover' ? 'object-cover' : `object-${objectFit}`} transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-          onLoad={handleLoadComplete}
-          onError={handleError}
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
-        />
-      </>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes || '100vw'}
+        className={`${className} ${objectFit === 'cover' ? 'object-cover' : `object-${objectFit}`} transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        onLoad={handleLoadComplete}
+        onError={handleError}
+        priority={priority}
+        fetchPriority={fetchPriority}
+        loading={priority ? 'eager' : 'lazy'}
+        {...(hasValidBlur && blurPlaceholder ? { placeholder: 'blur' as const, blurDataURL: blurPlaceholder } : {})}
+      />
     );
   }
 
   // Render with explicit dimensions
   if (width && height) {
     return (
-      <div className={`relative ${className}`}>
-        {isLoading && (
-          <div
-            className="absolute inset-0 bg-neutral-100 animate-pulse"
-            style={{ width, height }}
-          />
-        )}
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          sizes={sizes}
-          className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-          onLoad={handleLoadComplete}
-          onError={handleError}
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
-        />
-      </div>
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        sizes={sizes}
+        className={`${className} transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        onLoad={handleLoadComplete}
+        onError={handleError}
+        priority={priority}
+        fetchPriority={fetchPriority}
+        loading={priority ? 'eager' : 'lazy'}
+        {...(hasValidBlur && blurPlaceholder ? { placeholder: 'blur' as const, blurDataURL: blurPlaceholder } : {})}
+      />
     );
   }
 
   // Fallback: render with CSS dimensions
   return (
-    <div className={`relative ${className}`}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-neutral-100 animate-pulse" />
-      )}
-      <Image
-        src={src}
-        alt={alt}
-        width={800}
-        height={600}
-        sizes={sizes || '100vw'}
-        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-        onLoad={handleLoadComplete}
-        onError={handleError}
-        priority={priority}
-        loading={priority ? 'eager' : 'lazy'}
-        placeholder="blur"
-        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
-      />
-    </div>
+    <Image
+      src={src}
+      alt={alt}
+      width={800}
+      height={600}
+      sizes={sizes || '100vw'}
+      className={`${className} transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+      onLoad={handleLoadComplete}
+      onError={handleError}
+      priority={priority}
+      fetchPriority={fetchPriority}
+      loading={priority ? 'eager' : 'lazy'}
+      {...(hasValidBlur && blurPlaceholder ? { placeholder: 'blur' as const, blurDataURL: blurPlaceholder } : {})}
+    />
   );
 }
 

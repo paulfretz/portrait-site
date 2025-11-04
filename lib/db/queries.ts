@@ -618,6 +618,23 @@ export async function reorderImages(
   }
 }
 
+/**
+ * Get all hero images for homepage slideshow
+ * Returns images marked as hero images, ordered by hero_display_order
+ */
+export async function getHeroImages(): Promise<Image[]> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('images')
+    .select('*')
+    .eq('is_hero_image', true)
+    .order('hero_display_order', { ascending: true, nullsFirst: false });
+
+  if (error) throw error;
+  return data || [];
+}
+
 // ============================================================================
 // INQUIRIES
 // ============================================================================

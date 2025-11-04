@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { HeroSlideshow } from '@/components/home/HeroSlideshow';
 import { HomeHeroContent } from '@/components/home/HomeHeroContent';
-import { getPageContents } from '@/lib/db/queries';
+import { getPageContents, getHeroImages } from '@/lib/db/queries';
 import { generatePageTitle, generateMetaDescription, generateOpenGraphTags, generateTwitterCardTags, generateCanonicalUrl } from '@/lib/utils/seo';
 import { generateOrganizationSchema, generateWebSiteSchema, renderStructuredData } from '@/lib/seo/structured-data';
 
@@ -41,13 +41,24 @@ export const metadata: Metadata = {
  * @component
  */
 export default async function Home() {
-  // Fetch homepage content from database
-  const content = await getPageContents('homepage');
+  // Fetch homepage content and hero images from database
+  let content: Awaited<ReturnType<typeof getPageContents>> = [];
+  let heroImages: Awaited<ReturnType<typeof getHeroImages>> = [];
   
-  const headline = content.find((c) => c.section === 'hero-headline')?.content || "Capturing Life's Beautiful Moments";
-  const subheadline = content.find((c) => c.section === 'hero-subheadline')?.content || "Professional portrait photography in Montana. Specializing in weddings, engagements, families, and personal portraits throughout the Big Sky State.";
-  const ctaPrimary = content.find((c) => c.section === 'cta-primary')?.content || 'View Galleries';
-  const ctaSecondary = content.find((c) => c.section === 'cta-secondary')?.content || 'Get In Touch';
+  try {
+    [content, heroImages] = await Promise.all([
+      getPageContents('home'),
+      getHeroImages(),
+    ]);
+  } catch (error) {
+    console.error('Error fetching homepage data:', error);
+    // Use defaults if database fetch fails
+  }
+  
+  const headline = content.find((c) => c.section === 'hero_headline')?.content || "Capturing Life's Beautiful Moments";
+  const subheadline = content.find((c) => c.section === 'hero_tagline')?.content || "Professional portrait photography in Montana. Specializing in weddings, engagements, families, and personal portraits throughout the Big Sky State.";
+  const ctaPrimary = content.find((c) => c.section === 'cta_primary')?.content || 'View Galleries';
+  const ctaSecondary = content.find((c) => c.section === 'cta_secondary')?.content || 'Get In Touch';
 
   // Generate structured data for homepage
   const organizationSchema = generateOrganizationSchema({
@@ -72,7 +83,7 @@ export default async function Home() {
 
       <div className="relative">
         {/* Hero Slideshow */}
-        <HeroSlideshow />
+        <HeroSlideshow heroImages={heroImages} />
 
         {/* Content below slideshow */}
         <HomeHeroContent

@@ -13,6 +13,7 @@
  */
 
 import { GalleryPublic, Image, Category } from '@/lib/db/types';
+import { getLightboxImageUrl, getThumbnailUrl } from '@/lib/utils/image-urls';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://djcoveno.com';
 const BUSINESS_NAME = 'DJ Coveno Portraits';
@@ -152,18 +153,22 @@ export function generateImageObjectSchema(
 ): object {
   const { image, gallery, category } = options;
 
+  // Use high-res xlarge variant (4000px) for contentUrl, thumbnail for thumbnailUrl
+  const highResUrl = getLightboxImageUrl(image.url) || image.url;
+  const thumbUrl = getThumbnailUrl(image.url) || image.url;
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ImageObject',
     '@id': `${SITE_URL}/images/${image.id}`,
-    contentUrl: image.url,
-    thumbnailUrl: image.url,
+    contentUrl: highResUrl, // High-res xlarge variant (4000px WebP)
+    thumbnailUrl: thumbUrl, // Thumbnail variant (400px WebP)
     name: image.alt_text || `${gallery?.title || 'Gallery'} - Image ${image.display_order}`,
     description: image.alt_text,
     uploadDate: image.created_at,
     width: image.width ? `${image.width}px` : undefined,
     height: image.height ? `${image.height}px` : undefined,
-    encodingFormat: 'image/jpeg',
+    encodingFormat: 'image/webp', // WebP for modern browsers
     author: {
       '@type': 'Person',
       name: PHOTOGRAPHER_NAME,
@@ -244,9 +249,10 @@ export function generateImageGallerySchema(
     image: images
       ? images.map((img) => ({
           '@type': 'ImageObject',
-          contentUrl: img.url,
-          thumbnailUrl: img.url,
+          contentUrl: getLightboxImageUrl(img.url) || img.url, // High-res xlarge variant
+          thumbnailUrl: getThumbnailUrl(img.url) || img.url, // Thumbnail variant
           name: img.alt_text,
+          encodingFormat: 'image/webp',
         }))
       : undefined,
     associatedMedia: gallery.cover_image_id

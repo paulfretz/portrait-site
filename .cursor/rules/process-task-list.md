@@ -18,6 +18,46 @@ Before running `git commit` on ANY sub-task:
 
 ---
 
+## 🚨 RULE #0.5: TEST-DRIVEN DEVELOPMENT (TDD) - ALL TESTS MUST PASS + COVERAGE
+
+**Before proceeding to the next task, ALL tests must pass AND coverage must be maintained!**
+
+1. After implementing ANY change, run the full test suite
+2. **If tests fail:**
+   - Fix the tests if they're outdated
+   - Fix the code if it's the issue (use industry-standard solutions)
+   - DO NOT proceed to next task until ALL tests pass
+3. **Code Coverage Requirements:**
+   - Run `npm run test:coverage` periodically (especially for new components)
+   - **Critical components (user-facing, business logic):** Target 80%+ coverage
+   - **Utility functions:** Target 80%+ coverage
+   - **Server components / API routes:** May have lower coverage (covered by E2E tests)
+   - **If coverage drops significantly:** Add tests before proceeding
+   - See `docs/test-coverage.md` for detailed strategy
+4. **This applies to:**
+   - Unit tests (`npm test`)
+   - Integration tests (included in `npm test`)
+   - E2E tests (`npm run test:e2e`) when relevant
+   - TypeScript compilation (`npx tsc --noEmit`)
+   - Linter (`npm run lint`)
+   - Code coverage (`npm run test:coverage`)
+
+**"Even if tests or code fail" clause:**
+- If a test fails due to outdated expectations → fix the test
+- If code fails due to poor implementation → fix the code using industry-standard solutions
+- If coverage is low on critical code → write tests before proceeding
+- NEVER skip tests or proceed with failing tests
+- NEVER use hacks or workarounds to make tests pass
+- Quality over speed - do it right the first time
+
+**Coverage Guidelines:**
+- New utility functions: Write tests immediately (aim for 80%+)
+- New client components: Write tests for critical paths (aim for 80%+)
+- Server components: E2E tests may be sufficient (lower unit test coverage acceptable)
+- API routes: Integration tests + E2E tests (lower unit test coverage acceptable)
+
+---
+
 ## Task Implementation
 
 - **One sub-task at a time:** Do **NOT** start the next sub‑task until you ask the user for permission and they say "yes" or "y"
@@ -36,17 +76,23 @@ Before running `git commit` on ANY sub-task:
     5. Then mark parent task as `[x]`
 - **Completion protocol:**
   1. When you finish a **sub‑task**, follow this EXACT sequence:
-     - **Step 1**: Run linter (`npm run lint` or equivalent) and fix any errors
-     - **Step 2**: Run all tests (`npm test`) and ensure they all pass
-     - **Step 3**: Verify TypeScript compiles (`npx tsc --noEmit` or equivalent)
+     - **Step 1**: Run linter (`npm run lint`) and fix any errors - **MUST PASS** before Step 2
+     - **Step 2**: Run all tests (`npm test`) and ensure they all pass - **MUST PASS** before Step 3
+       - **TDD Rule #0.5**: If tests fail, you MUST fix them (or the code) before continuing
+       - Fix tests if outdated, fix code using industry-standard solutions if broken
+       - NEVER proceed with failing tests - Quality over speed!
+     - **Step 3**: Verify TypeScript compiles (`npx tsc --noEmit`) and fix any errors - **MUST PASS** before Step 4
      - **Step 4**: **UPDATE SESSION-LOG.md** - Verify ALL 13 sections (MANDATORY, see "Section-by-Section Verification" below)
      - **Step 5**: Mark it as completed by changing `[ ]` to `[x]` in task list
+     - **Step 5a**: **CHECK PARENT TASK** - If ALL subtasks under a parent are now `[x]`, mark the parent task as `[x]` too!
      - **Step 6**: Update TODO list using todo_write tool
      - **Step 7**: Stage changes (`git add`)
      - **Step 8**: Commit with descriptive conventional commit message
      - **Step 9**: STOP and ask user for permission to continue
      - **Step 10**: WAIT for user approval before proceeding
-     - **⚠️ CRITICAL**: If you skip Step 4 (SESSION-LOG update), you are breaking the workflow!
+     - **⚠️ CRITICAL**: If you skip Step 4 (SESSION-LOG update), you are breaking Rule #0!
+     - **⚠️ CRITICAL**: If you proceed with failing tests in Step 2, you are breaking Rule #0.5 (TDD)!
+     - **⚠️ CRITICAL**: If you skip Step 5a (parent task check), parent tasks won't be marked complete!
   2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
   - **First**: Run the full test suite (`pytest`, `npm test`, `bin/rails test`, etc.)
   - **Only if all tests pass**: Stage changes (`git add .`)
@@ -59,8 +105,15 @@ Before running `git commit` on ANY sub-task:
     - **Formats the message as a single-line command using `-m` flags**
   - **Push**: Push the feature branch to origin (`git push -u origin task-X.0-description`)
   - **Create PR**: Provide PR title and description for user to create
-  - **Wait**: Wait for user to review and merge the PR before marking parent task `[x]`
+  - **Wait**: Wait for user to review and merge the PR
+  - **After PR merged and before marking parent task `[x]`**: **UPDATE ALL DOCUMENTATION** (see "Parent Task Completion Protocol" below)
+  - **Then**: Mark parent task as `[x]`
   3. Once PR is merged and parent task is marked `[x]`, checkout `main` and pull latest changes before starting next parent task.
+  4. **🚨 CRITICAL: Before starting ANY new parent task:**
+     - **MUST read `tasks/SESSION-LOG.md` completely** to understand current project state
+     - **MUST read `PROJECT_CONTEXT.md`** to understand overall architecture and conventions
+     - **MUST read `STATUS.md`** to see quick status snapshot
+     - This ensures continuity and prevents missing critical context
 
 - Stop after each sub‑task and wait for the user's go‑ahead.
 
@@ -153,30 +206,79 @@ When updating the session log, systematically verify and update EACH section:
 
 **This ensures the session log is always 100% current and ready for a context window handoff.**
 
+## 🚨 PARENT TASK COMPLETION PROTOCOL
+
+**When ALL subtasks of a parent task are complete AND PR is merged, BEFORE marking parent task `[x]`:**
+
+### Step 1: Update SESSION-LOG.md (ALL 13 Sections)
+Systematically verify and update EVERY section in `tasks/SESSION-LOG.md`:
+
+1. **Current Status** - Update current task, progress %, branch name, last completed parent task
+2. **PRD Context** - Verify still accurate, update if project goals changed
+3. **Completed Tasks Summary** - Add completed parent task with all subtasks listed
+4. **Technical Decisions** - Document any architecture/library choices from this parent task
+5. **Manual Actions Required** - Move completed actions, add new ones if any
+6. **Key Files Created** - Add all files created/modified in this parent task, organized by category
+7. **Technical Debt** - Add any new workarounds or deferred items
+8. **What's Working Right Now** - Update functionality lists with new features
+9. **Quick Start** - Update if environment, commands, or key files changed
+10. **Commit History** - Add the parent task completion commit
+11. **Remaining Tasks** - Update progress counts, mark parent task complete in task lists
+12. **Known Issues** - Remove resolved issues, add new ones discovered
+13. **Context for Next Session** - Update with next parent task to work on
+
+**Validation**: Ask yourself - "If context window resets RIGHT NOW, could someone continue seamlessly?" If any answer is NO, update that section!
+
+### Step 2: Update PROJECT_CONTEXT.md
+Update `PROJECT_CONTEXT.md` (root of repo) to reflect:
+- Current status in "Project Overview"
+- Any new architecture decisions in "Technical Considerations"
+- New dependencies or tools in relevant sections
+- Updated "Auto-Discovery Hints" if file structure changed
+
+### Step 3: Update STATUS.md
+Update `STATUS.md` to reflect:
+- Overall progress percentage
+- Current branch and task
+- Recent accomplishments
+- What's next
+
+**These updates MUST happen before marking parent task `[x]` and before starting the next parent task.**
+
 ## AI Instructions
 
 When working with task lists, the AI must:
 
-1. Regularly update the task list file after finishing any significant work.
-2. Follow the completion protocol:
+1. **Before starting ANY new parent task (CRITICAL):**
+   - **MUST read `tasks/SESSION-LOG.md` completely** to understand current project state, completed work, technical decisions, and pending items
+   - **MUST read `PROJECT_CONTEXT.md`** to understand overall architecture, conventions, and tech stack
+   - **MUST read `STATUS.md`** to see quick status snapshot and what's next
+   - This prevents missing critical context and ensures continuity
+2. Regularly update the task list file after finishing any significant work.
+3. Follow the completion protocol:
    - Mark each finished **sub‑task** `[x]`.
-   - Mark the **parent task** `[x]` once **all** its subtasks are `[x]`.
-3. Add newly discovered tasks.
-4. Keep "Relevant Files" accurate and up to date.
-5. Before starting work, check which sub‑task is next.
-6. After implementing a sub‑task, update the file and then pause for user approval.
-7. **Maintain the session log:**
-   - Update after each completed sub-task
+   - Mark the **parent task** `[x]` only after **ALL** documentation is updated (see "Parent Task Completion Protocol" above)
+4. Add newly discovered tasks.
+5. Keep "Relevant Files" accurate and up to date.
+6. Before starting work, check which sub‑task is next.
+7. After implementing a sub‑task, update the file and then pause for user approval.
+8. **Maintain the session log:**
+   - Update after each completed sub-task (ALL 13 sections)
    - Document technical decisions as they're made
    - Add cleanup items when identified
    - Keep PRD context visible
    - Ensure new context windows can quickly resume work
    - **CRITICAL:** After each subtask, verify and update ALL 13 sections systematically (see "Section-by-Section Verification" above)
    - Don't just update one section - check every section for accuracy and completeness
-8. **Track manual actions required:**
+9. **When parent task completes:**
+   - Follow "Parent Task Completion Protocol" above
+   - Update SESSION-LOG.md (all 13 sections), PROJECT_CONTEXT.md, and STATUS.md
+   - ONLY THEN mark parent task `[x]`
+   - BEFORE starting next parent task, read all three documentation files again
+10. **Track manual actions required:**
    - Maintain "Manual Actions Required" section in session log
    - Move completed actions to "Completed Manual Actions"
-9. **Notify user of manual actions required:**
+11. **Notify user of manual actions required:**
    - Clearly call out when user needs to manually configure something
    - Provide exact steps and examples for manual changes
    - Common manual actions include:

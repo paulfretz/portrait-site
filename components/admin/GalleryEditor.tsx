@@ -170,6 +170,44 @@ export function GalleryEditor({ galleryId }: GalleryEditorProps) {
     }
   };
 
+  // Toggle hero image status
+  const handleToggleHeroImage = async (imageId: string, currentStatus: boolean) => {
+    try {
+      // Get current hero images count
+      const heroImages = images.filter((img) => img.is_hero_image);
+      const nextDisplayOrder = heroImages.length + 1;
+
+      const response = await fetch(`/api/images/${imageId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          is_hero_image: !currentStatus,
+          hero_display_order: !currentStatus ? nextDisplayOrder : null,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update hero image status');
+      }
+
+      // Update local state
+      setImages((prev) =>
+        prev.map((img) =>
+          img.id === imageId
+            ? {
+                ...img,
+                is_hero_image: !currentStatus,
+                hero_display_order: !currentStatus ? nextDisplayOrder : null,
+              }
+            : img
+        )
+      );
+    } catch (err) {
+      console.error('Error toggling hero image:', err);
+      alert('Failed to update hero image status');
+    }
+  };
+
   // Get category name
   const getCategoryName = (categoryId: string | null) => {
     if (!categoryId) return 'Uncategorized';
@@ -321,6 +359,22 @@ export function GalleryEditor({ galleryId }: GalleryEditorProps) {
                         Set as Cover
                       </button>
                     )}
+
+                    {/* Toggle hero image button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleHeroImage(image.id, image.is_hero_image);
+                      }}
+                      className={`px-3 py-1.5 text-xs border rounded transition-colors ${
+                        image.is_hero_image
+                          ? 'text-amber-700 bg-amber-50 border-amber-300 hover:bg-amber-100'
+                          : 'text-neutral-600 hover:text-amber-700 hover:bg-amber-50 border-neutral-300 hover:border-amber-300'
+                      }`}
+                      title={image.is_hero_image ? 'Remove from hero slideshow' : 'Add to hero slideshow'}
+                    >
+                      {image.is_hero_image ? '⭐ Hero' : 'Set as Hero'}
+                    </button>
 
                     {/* Delete button */}
                     <button

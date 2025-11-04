@@ -130,6 +130,9 @@ export const mockImage = {
   alt_text: 'Test image alt text',
   width: 1920,
   height: 1080,
+  blur_data_url: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcBAgYF/8QAJhAAAgEDAwMEAwAAAAAAAAAAAQIDAAQRBRIhBjFBBxMiURQjYf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCvp3qDqLU+oLHTNWvTdWs7hGjkZQVIJBBwB7Yz+V9S9Q6l0zqKfTdOvGt7S3YLHEpAVRnAA+BXO6M/t1P/2Q==', // Tiny blur placeholder
+  is_hero_image: false,
+  hero_display_order: null,
   display_order: 1,
   created_at: '2024-01-01T00:00:00Z',
   updated_at: '2024-01-01T00:00:00Z',

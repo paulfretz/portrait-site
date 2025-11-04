@@ -8,15 +8,16 @@ import sharp from 'sharp';
  * - Thumbnail: 400px width
  * - Medium: 1200px width
  * - Large: 2400px width
+ * - XLarge: 4000px width (for high-DPI displays and professional viewing)
  * - Original: unchanged
  *
  * Formats:
- * - JPEG (quality 85)
+ * - JPEG (quality 85-95 depending on size)
  * - WebP (for modern browsers)
  */
 
 export interface ImageSize {
-  name: 'thumbnail' | 'medium' | 'large' | 'original';
+  name: 'thumbnail' | 'medium' | 'large' | 'xlarge' | 'original';
   width: number | null; // null = original size
   buffer: Buffer;
   format: 'jpeg' | 'webp';
@@ -32,6 +33,7 @@ export interface OptimizedImageSet {
     width: number;
     height: number;
   };
+  blurDataUrl: string; // Base64 blur placeholder for progressive loading
 }
 
 /**
@@ -55,11 +57,17 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
 
   const sizes: ImageSize[] = [];
 
-  // Define size configurations
-  const sizeConfigs: Array<{ name: 'thumbnail' | 'medium' | 'large'; width: number }> = [
-    { name: 'thumbnail', width: 400 },
-    { name: 'medium', width: 1200 },
-    { name: 'large', width: 2400 },
+  // Define size configurations with quality settings
+  const sizeConfigs: Array<{ 
+    name: 'thumbnail' | 'medium' | 'large' | 'xlarge'; 
+    width: number;
+    jpegQuality: number;
+    webpQuality: number;
+  }> = [
+    { name: 'thumbnail', width: 400, jpegQuality: 85, webpQuality: 80 },
+    { name: 'medium', width: 1200, jpegQuality: 90, webpQuality: 85 },
+    { name: 'large', width: 2400, jpegQuality: 95, webpQuality: 90 },
+    { name: 'xlarge', width: 4000, jpegQuality: 95, webpQuality: 90 }, // For high-DPI displays and professional viewing
   ];
 
   // Generate each size in both JPEG and WebP
@@ -76,10 +84,10 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
 
     const resizedMetadata = await resized.metadata();
 
-    // JPEG version
+    // JPEG version with size-appropriate quality
     const jpegBuffer = await resized
       .jpeg({
-        quality: 85,
+        quality: config.jpegQuality,
         mozjpeg: true, // Use mozjpeg for better compression
       })
       .toBuffer();
@@ -95,10 +103,10 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
       },
     });
 
-    // WebP version
+    // WebP version with size-appropriate quality
     const webpBuffer = await resized
       .webp({
-        quality: 85,
+        quality: config.webpQuality,
       })
       .toBuffer();
 
@@ -114,10 +122,10 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
     });
   }
 
-  // Original size in both formats
+  // Original size in both formats (highest quality for professional use)
   const originalJpeg = await sharp(buffer)
     .jpeg({
-      quality: 85,
+      quality: 95,
       mozjpeg: true,
     })
     .toBuffer();
@@ -132,7 +140,7 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
 
   const originalWebp = await sharp(buffer)
     .webp({
-      quality: 85,
+      quality: 90,
     })
     .toBuffer();
 
@@ -144,9 +152,18 @@ export async function optimizeImage(buffer: Buffer): Promise<OptimizedImageSet> 
     dimensions: originalDimensions,
   });
 
+  // Generate blur placeholder (tiny 20px image for progressive loading)
+  const blurBuffer = await sharp(buffer)
+    .resize(20, null, { fit: 'inside' })
+    .jpeg({ quality: 50 })
+    .toBuffer();
+  
+  const blurDataUrl = `data:image/jpeg;base64,${blurBuffer.toString('base64')}`;
+
   return {
     sizes,
     originalDimensions,
+    blurDataUrl,
   };
 }
 

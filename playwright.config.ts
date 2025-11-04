@@ -8,11 +8,19 @@ import path from 'path';
  */
 dotenv.config({ path: path.resolve(__dirname, '.env.local') });
 
+// Override with test database credentials for E2E tests
+if (process.env.TEST_SUPABASE_URL && process.env.TEST_SUPABASE_ANON_KEY) {
+  process.env.NEXT_PUBLIC_SUPABASE_URL = process.env.TEST_SUPABASE_URL;
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = process.env.TEST_SUPABASE_ANON_KEY;
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './e2e',
+  /* Global setup - seeds test database before running tests */
+  globalSetup: require.resolve('./e2e/global-setup.ts'),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -46,6 +54,7 @@ export default defineConfig({
       testMatch: /auth\.setup\.ts/,
     },
 
+    // Authenticated projects (default - most tests need auth)
     {
       name: 'chromium',
       use: { 
@@ -54,6 +63,8 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       dependencies: ['setup'],
+      // Exclude unauthenticated test files
+      testIgnore: /admin-auth-unauthenticated\.spec\.ts/,
     },
 
     {
@@ -63,6 +74,7 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       dependencies: ['setup'],
+      testIgnore: /admin-auth-unauthenticated\.spec\.ts/,
     },
 
     {
@@ -72,6 +84,34 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       dependencies: ['setup'],
+      testIgnore: /admin-auth-unauthenticated\.spec\.ts/,
+    },
+
+    // Unauthenticated projects (no auth, no setup dependency)
+    // These run admin-auth-unauthenticated.spec.ts with clean browser sessions
+    {
+      name: 'chromium-unauth',
+      use: { 
+        ...devices['Desktop Chrome'],
+        // No storageState = clean browser session
+      },
+      testMatch: /admin-auth-unauthenticated\.spec\.ts/,
+    },
+
+    {
+      name: 'firefox-unauth',
+      use: { 
+        ...devices['Desktop Firefox'],
+      },
+      testMatch: /admin-auth-unauthenticated\.spec\.ts/,
+    },
+
+    {
+      name: 'webkit-unauth',
+      use: { 
+        ...devices['Desktop Safari'],
+      },
+      testMatch: /admin-auth-unauthenticated\.spec\.ts/,
     },
 
     /* Test against mobile viewports. */
@@ -101,5 +141,11 @@ export default defineConfig({
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+    env: {
+      // Pass test environment variables to the dev server
+      TEST_SUPABASE_URL: process.env.TEST_SUPABASE_URL || '',
+      TEST_SUPABASE_ANON_KEY: process.env.TEST_SUPABASE_ANON_KEY || '',
+      TEST_SUPABASE_SERVICE_ROLE_KEY: process.env.TEST_SUPABASE_SERVICE_ROLE_KEY || '',
+    },
   },
 });
