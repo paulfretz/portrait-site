@@ -103,11 +103,11 @@ export function getLightboxImageUrlJpeg(
 ): string | null {
   if (!originalUrl) return null;
   
-  // For the src fallback, use original JPEG (always exists)
-  // The srcset will try variants in order (xlarge → large → medium → thumbnail → original)
-  // Browser will skip 404s and use the next available variant from srcset
-  // This src is just a universal fallback
-  return getImageVariantUrl(originalUrl, 'original', 'jpeg');
+  // Prefer xlarge JPEG when the source image is large enough to avoid downloading the full original
+  const shouldUseOriginal = imageWidth && imageWidth > 0 && imageWidth < 4000;
+  const preferredVariant: ImageVariant = shouldUseOriginal ? 'original' : 'xlarge';
+
+  return getImageVariantUrl(originalUrl, preferredVariant, 'jpeg');
 }
 
 /**

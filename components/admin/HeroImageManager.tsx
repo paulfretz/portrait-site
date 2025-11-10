@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { OptimizedImage } from '@/components/gallery/OptimizedImage';
 import { Image } from '@/lib/db/types';
 import { getHeroImages } from '@/lib/db/queries';
+import { getImageVariantUrl } from '@/lib/utils/image-urls';
 import {
   DndContext,
   closestCenter,
@@ -64,7 +65,7 @@ function SortableHeroImage({ image, index, onRemove }: SortableHeroImageProps) {
       {/* Image Preview */}
       <div className="aspect-[16/9] relative bg-neutral-100">
         <OptimizedImage
-          src={image.url}
+          src={getImageVariantUrl(image.url, 'large', 'webp')}
           alt={image.alt_text || 'Hero image'}
           blurDataUrl={image.blur_data_url}
           fill

@@ -94,7 +94,7 @@ portrait-site/
 - **Compliance Requirements**: Handle PII (inquiries) with care; email delivery compliance; SEO best practices
 
 ### Key Features
-- Galleries & Categories: CRUD, drag-and-drop ordering, cover images, mobile masonry + desktop justified layouts
+- Galleries & Categories: CRUD, drag-and-drop ordering, cover images, mobile masonry + desktop justified layouts centered within a `max-w-7xl` gallery wrapper
 - Image Upload & Optimization: Vercel Blob storage, sharp-based variants (thumbnail/medium/large/xlarge/original), WebP/AVIF, blur placeholders
 - Authentication & Admin: Google OAuth via Supabase, protected routes via middleware, admin toolbar, inline editing
 

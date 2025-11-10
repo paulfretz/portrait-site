@@ -8,36 +8,26 @@
 /* Masonry Layout Styles */
 .my-masonry-grid {
   display: flex;
-  margin-left: -4px; /* gutter size offset (mobile) */
-  width: auto;
+  gap: 4px;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
   .my-masonry-grid {
-    margin-left: -8px; /* gutter size offset (desktop) */
+    gap: 8px;
   }
 }
 
 .my-masonry-grid_column {
-  padding-left: 4px; /* gutter size (mobile) */
-  background-clip: padding-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 @media (min-width: 768px) {
   .my-masonry-grid_column {
-    padding-left: 8px; /* gutter size (desktop) */
-  }
-}
-
-.my-masonry-grid_column > div,
-.my-masonry-grid_column > button {
-  margin-bottom: 4px; /* space between items (mobile) */
-}
-
-@media (min-width: 768px) {
-  .my-masonry-grid_column > div,
-  .my-masonry-grid_column > button {
-    margin-bottom: 8px; /* space between items (desktop) */
+    gap: 8px;
   }
 }
 

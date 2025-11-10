@@ -88,28 +88,32 @@ export default async function GalleryPage({ params }: GalleryPageProps) {
         <div className="min-h-screen bg-white">
           {/* Breadcrumb Navigation */}
           <nav className="bg-gradient-to-br from-sage-50 to-sage-100 py-4 border-b border-sage-200">
-            <div className="container mx-auto px-4">
-              <div className="flex items-center text-sm text-gray-600">
-                <Link href="/galleries" className="hover:text-sage-700 transition-colors">
-                  Galleries
-                </Link>
-                <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-                <Link href={`/galleries/${category}`} className="hover:text-sage-700 transition-colors">
-                  {categoryData.name}
-                </Link>
-                <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-                <span className="text-gray-900 font-medium">{gallery.title}</span>
-              </div>
+            <div className="mx-auto w-full max-w-7xl px-4">
+              <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+                <li>
+                  <Link href="/galleries" className="hover:text-sage-700 transition-colors">
+                    Galleries
+                  </Link>
+                </li>
+                <li>
+                  <span className="text-gray-400">/</span>
+                </li>
+                <li>
+                  <Link href={`/galleries/${category}`} className="hover:text-sage-700 transition-colors">
+                    {categoryData.name}
+                  </Link>
+                </li>
+                <li>
+                  <span className="text-gray-400">/</span>
+                </li>
+                <li className="text-gray-900 font-medium">{gallery.title}</li>
+              </ol>
             </div>
           </nav>
 
         {/* Gallery Header */}
         <section className="py-12 md:py-16">
-          <div className="container mx-auto px-4">
+          <div className="mx-auto w-full max-w-7xl px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-6">
                 {gallery.title}
@@ -183,14 +187,14 @@ export default async function GalleryPage({ params }: GalleryPageProps) {
 
         {/* Photo Grid */}
         <section className="pb-16 md:pb-24">
-          <div className="container mx-auto px-4">
+          <div className="mx-auto w-full max-w-7xl px-4">
             <PhotoGrid images={images} galleryTitle={gallery.title} />
           </div>
         </section>
 
           {/* Back to Category Link */}
           <section className="pb-16">
-            <div className="container mx-auto px-4 text-center">
+            <div className="mx-auto w-full max-w-7xl px-4 text-center">
               <Link
                 href={`/galleries/${category}`}
                 className="inline-flex items-center text-sage-700 hover:text-sage-800 font-medium transition-colors"
