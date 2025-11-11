@@ -5,6 +5,7 @@ import Link from 'next/link';
 import type { Gallery, Image, Category } from '@/lib/db/types';
 import { ImageUploader } from './ImageUploader';
 import { SortableList } from './SortableList';
+import { getThumbnailUrl } from '@/lib/utils/image-urls';
 
 /**
  * Gallery Editor Component
@@ -52,12 +53,16 @@ export function GalleryEditor({ galleryId }: GalleryEditorProps) {
         throw new Error('Failed to fetch gallery');
       }
       const galleryData = await galleryResponse.json();
-      setGallery(galleryData);
+      const galleryRecord = galleryData?.data ?? galleryData;
+      setGallery(galleryRecord);
 
       // Fetch images for this gallery
       const imagesResponse = await fetch(`/api/galleries/${galleryId}/images`);
       if (imagesResponse.ok) {
-        const imagesData = await imagesResponse.json();
+        const imagesPayload = await imagesResponse.json();
+        const imagesData = Array.isArray(imagesPayload)
+          ? imagesPayload
+          : imagesPayload?.data ?? [];
         setImages(imagesData);
       }
     } catch (err) {
@@ -72,8 +77,11 @@ export function GalleryEditor({ galleryId }: GalleryEditorProps) {
     try {
       const response = await fetch('/api/categories');
       if (response.ok) {
-        const data = await response.json();
-        setCategories(data);
+        const payload = await response.json();
+        const categoryList = Array.isArray(payload)
+          ? payload
+          : payload?.data ?? [];
+        setCategories(categoryList);
       }
     } catch (err) {
       console.error('Error fetching categories:', err);
@@ -326,7 +334,7 @@ export function GalleryEditor({ galleryId }: GalleryEditorProps) {
                   {/* Image preview */}
                   <div className="relative w-24 h-24 flex-shrink-0 bg-neutral-100 rounded overflow-hidden">
                     <img
-                      src={image.url}
+                      src={getThumbnailUrl(image.url) ?? image.url}
                       alt={image.alt_text || 'Gallery image'}
                       className="w-full h-full object-cover"
                     />

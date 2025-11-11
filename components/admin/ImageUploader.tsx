@@ -35,6 +35,7 @@ interface ImageUploaderProps {
 }
 
 interface FileWithPreview {
+  id: string;
   file: File;
   preview: string;
   progress: number;
@@ -74,6 +75,7 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
       const error = validateFile(file);
 
       newFiles.push({
+        id: typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
         file,
         preview: URL.createObjectURL(file),
         progress: 0,
@@ -123,16 +125,23 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
   };
 
   // Remove file from list
-  const removeFile = (index: number) => {
+  const removeFile = (id: string) => {
     setFiles((prev) => {
-      const newFiles = [...prev];
-      URL.revokeObjectURL(newFiles[index].preview);
-      newFiles.splice(index, 1);
-      return newFiles;
+      const fileToRemove = prev.find((f) => f.id === id);
+      if (fileToRemove) {
+        URL.revokeObjectURL(fileToRemove.preview);
+      }
+      return prev.filter((f) => f.id !== id);
     });
   };
 
   // Upload files
+  const updateFileState = (id: string, updates: Partial<FileWithPreview>) => {
+    setFiles((prev) =>
+      prev.map((file) => (file.id === id ? { ...file, ...updates } : file))
+    );
+  };
+
   const uploadFiles = async () => {
     const filesToUpload = files.filter((f) => f.status === 'pending');
 
@@ -140,60 +149,90 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
 
     setIsUploading(true);
 
+    const uploadedImages: Image[] = [];
+
     try {
-      const formData = new FormData();
-      formData.append('gallery_id', galleryId);
+      for (const fileWithPreview of filesToUpload) {
+        updateFileState(fileWithPreview.id, { status: 'uploading', progress: 0, error: undefined });
 
-      filesToUpload.forEach((fileWithPreview) => {
+        const formData = new FormData();
+        formData.append('gallery_id', galleryId);
         formData.append('images', fileWithPreview.file);
-      });
 
-      // Update status to uploading
-      setFiles((prev) =>
-        prev.map((f) => (f.status === 'pending' ? { ...f, status: 'uploading' as const } : f))
-      );
+        const requestResult = await new Promise<{ images?: Image[] }>((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', '/api/images/upload');
 
-      const response = await fetch('/api/images/upload', {
-        method: 'POST',
-        body: formData,
-      });
+          xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+              const percentage = Math.round((event.loaded / event.total) * 100);
+              updateFileState(fileWithPreview.id, {
+                progress: percentage,
+                status: percentage >= 100 ? 'processing' : 'uploading',
+              });
+            }
+          };
 
-      const data = await response.json();
+          xhr.onload = () => {
+            try {
+              const responseData = xhr.responseText ? JSON.parse(xhr.responseText) : {};
+              if (xhr.status >= 200 && xhr.status < 300) {
+                updateFileState(fileWithPreview.id, { progress: 100, status: 'complete' });
+                resolve(responseData);
+              } else {
+                const message = responseData.error || `Upload failed with status ${xhr.status}`;
+                reject(new Error(message));
+              }
+            } catch (parseError) {
+              reject(new Error('Failed to parse upload response'));
+            }
+          };
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
+          xhr.onerror = () => {
+            reject(new Error('Network error during upload'));
+          };
+
+          xhr.send(formData);
+        });
+
+        if (requestResult.images && requestResult.images.length > 0) {
+          uploadedImages.push(...requestResult.images);
+        }
       }
 
-      // Mark all uploaded files as complete
-      setFiles((prev) =>
-        prev.map((f) => (f.status === 'uploading' ? { ...f, status: 'complete' as const, progress: 100 } : f))
-      );
-
-      // Call success callback
-      if (onUploadComplete && data.images) {
-        onUploadComplete(data.images);
+      if (onUploadComplete && uploadedImages.length > 0) {
+        onUploadComplete(uploadedImages);
       }
 
-      // Clear files after a short delay to show success state
+      // Keep completed uploads visible briefly before clearing
       setTimeout(() => {
-        setFiles([]);
+        setFiles((prev) => {
+          const remaining: FileWithPreview[] = [];
+          prev.forEach((file) => {
+            if (file.status === 'complete') {
+              URL.revokeObjectURL(file.preview);
+            } else {
+              remaining.push(file);
+            }
+          });
+          return remaining;
+        });
       }, 2000);
     } catch (err) {
       console.error('Upload error:', err);
-
-      // Mark all uploading files as error
       const errorMessage = err instanceof Error ? err.message : 'Upload failed';
-      setFiles((prev) =>
-        prev.map((f) =>
-          f.status === 'uploading'
-            ? { ...f, status: 'error' as const, error: errorMessage }
-            : f
-        )
-      );
 
       if (onUploadError) {
         onUploadError(errorMessage);
       }
+
+      setFiles((prev) =>
+        prev.map((file) =>
+          file.status === 'uploading' || file.status === 'processing'
+            ? { ...file, status: 'error', error: errorMessage }
+            : file
+        )
+      );
     } finally {
       setIsUploading(false);
     }
@@ -270,8 +309,8 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
           </div>
 
           <div className="space-y-3">
-            {files.map((fileWithPreview, index) => (
-              <div key={index} className="relative">
+            {files.map((fileWithPreview) => (
+              <div key={fileWithPreview.id} className="relative">
                 {/* Use UploadProgressBar for uploading/processing/complete/error states */}
                 {(fileWithPreview.status === 'uploading' ||
                   fileWithPreview.status === 'processing' ||
@@ -312,7 +351,7 @@ export function ImageUploader({ galleryId, onUploadComplete, onUploadError }: Im
                     {/* Remove button */}
                     {!isUploading && (
                       <button
-                        onClick={() => removeFile(index)}
+                        onClick={() => removeFile(fileWithPreview.id)}
                         className="flex-shrink-0 text-neutral-400 hover:text-red-500 transition-colors"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

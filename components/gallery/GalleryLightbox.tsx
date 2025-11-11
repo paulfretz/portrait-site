@@ -290,7 +290,10 @@ export function GalleryLightbox({
       {/* Main image container */}
       <div
         className="relative w-full h-full flex items-center justify-center"
-        style={{ padding: '12px' }}
+        style={{
+          padding: '12px',
+          paddingBottom: images.length > 1 ? '140px' : '12px',
+        }}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -336,49 +339,53 @@ export function GalleryLightbox({
           />
         </div>
 
-        {/* Image caption */}
-        {currentImage.alt_text && (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-center">
-            <p className="text-white text-sm md:text-base">{currentImage.alt_text}</p>
-          </div>
-        )}
+        {/* Remove caption overlay */}
       </div>
 
-      {/* Keyboard instructions (desktop only) */}
-      <div className="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-xs text-center">
-        <p>Use arrow keys to navigate • ESC to close</p>
-      </div>
-
-      {/* Thumbnail strip (optional, for larger galleries) */}
       {images.length > 1 && images.length <= 20 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 overflow-x-auto max-w-[90vw] pb-2 scrollbar-hide" role="toolbar" aria-label="Image thumbnails">
-          {images.map((image, index) => (
-            <button
-              key={image.id}
-              onClick={(e) => {
-                e.stopPropagation();
-                setCurrentIndex(index);
-                setIsLoading(true);
-              }}
-              className={`relative flex-shrink-0 w-16 h-16 rounded overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-sage-300 focus:ring-offset-2 focus:ring-offset-black ${
-                index === currentIndex
-                  ? 'ring-2 ring-sage-300 opacity-100'
-                  : 'opacity-50 hover:opacity-75'
-              }`}
-              aria-label={`View image ${index + 1}${index === currentIndex ? ' (current)' : ''}`}
-              aria-current={index === currentIndex ? 'true' : 'false'}
-              type="button"
+        <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-full pointer-events-none">
+          {/* Thumbnail strip */}
+          <div className="mx-auto flex justify-center px-4">
+            <div
+              className="pointer-events-auto flex gap-2 overflow-x-auto pb-2 scrollbar-hide rounded-t-2xl bg-black/70 backdrop-blur px-4 py-3 max-w-[90vw]"
+              role="toolbar"
+              aria-label="Image thumbnails"
             >
-              <OptimizedImage
-                src={image.url}
-                alt={image.alt_text || `${galleryTitle} - Image ${index + 1}`}
-                blurDataUrl={image.blur_data_url}
-                fill
-                className="object-cover"
-                sizes="64px"
-              />
-            </button>
-          ))}
+              {images.slice(0, 20).map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentIndex(index);
+                    setIsLoading(true);
+                  }}
+                className={`relative flex-shrink-0 w-16 h-16 rounded overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-sage-300 focus:ring-offset-2 focus:ring-offset-black ${
+                    index === currentIndex
+                      ? 'ring-2 ring-sage-300 opacity-100'
+                      : 'opacity-70 hover:opacity-100'
+                  }`}
+                  aria-label={`View image ${index + 1}${index === currentIndex ? ' (current)' : ''}`}
+                  aria-current={index === currentIndex ? 'true' : 'false'}
+                  type="button"
+                >
+                  <OptimizedImage
+                    src={image.url}
+                    alt={image.alt_text || `${galleryTitle} - Image ${index + 1}`}
+                    blurDataUrl={image.blur_data_url}
+                    fill
+                    className="object-cover"
+                    sizes="64px"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+          {/* Keyboard instructions */}
+          <div className="hidden md:flex justify-center pointer-events-none mb-4 mt-3">
+            <div className="rounded-full bg-black/70 backdrop-blur px-4 py-2 text-white/80 text-xs">
+              Use arrow keys to navigate • ESC to close
+            </div>
+          </div>
         </div>
       )}
     </div>

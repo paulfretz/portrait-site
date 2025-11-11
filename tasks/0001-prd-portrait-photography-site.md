@@ -8,6 +8,8 @@ This PRD outlines the requirements for a full-featured portrait photography webs
 
 **Solution:** A modern, mobile-responsive photography portfolio site with full-screen gallery displays, comprehensive admin capabilities, Google authentication, and aggressive SEO optimization for Montana-based photography services.
 
+> **Status Update (Nov 2025):** Core site requirements have been delivered. Remaining launch-readiness items (performance audits, deployment hardening, owner documentation) are deferred to **PRD 0004 – Environment & Release Hardening**.
+
 ## Goals
 
 1. Create a visually stunning, mobile-responsive portfolio site that prioritizes photo presentation

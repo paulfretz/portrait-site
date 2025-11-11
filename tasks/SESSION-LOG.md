@@ -25,6 +25,11 @@
   - ✅ Separated authenticated and unauthenticated test suites in Playwright config
   - ✅ Fixed auth state conflicts (created separate projects for auth/unauth tests)
   - ✅ Improved test stability with better selectors, timing, and WebKit handling
+- ✅ Playwright guardrail added: `e2e/global-setup.ts` now aborts if TEST_SUPABASE_URL matches production or the test service role key is missing
+- ✅ Created PRD 0004 – Environment & Release Hardening (consolidates remaining launch-readiness tasks from PRDs 0001–0003)
+- ✅ Gallery detail layout refinements:
+  - ✅ Expanded gallery detail containers and `PhotoGrid` to `max-w-7xl` for consistent centering under page titles
+  - ✅ Updated masonry CSS to use flex gaps with `width: fit-content` for perfectly centered grids on all breakpoints
 **Next:** Continue fixing remaining 29 E2E test failures
 
 **Overall Progress:** 10 of 11 parent tasks complete (Task 1-10 done), **PRD 0003 COMPLETE!** (18/18 subtasks), Task 0002.50 in progress  
@@ -295,7 +300,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.45** ✅ Added fetchPriority="high" to first hero image (LCP optimization)
 - **0002.46** ⏸️ DEFERRED - Lighthouse audit (manual task, run later)
 
-#### Phase 7: Testing & Polish 🚧 IN PROGRESS (3.5/4)
+#### Phase 7: Testing & Polish 🚧 IN PROGRESS (3.5/5)
 - **0002.47** ✅ Wrote unit tests for xlarge variant, quality settings, blur placeholders (7 new tests)
 - **0002.48** ✅ Wrote component tests for PhotoGrid (15 tests: masonry, justified, responsive)
 - **0002.49** ✅ Wrote E2E tests for gallery layouts and hero (17 tests × 3 browsers = 51 tests)
@@ -309,8 +314,9 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
   - ✅ Separated authenticated and unauthenticated test suites in Playwright config
   - ✅ Fixed auth state conflicts (created separate projects for auth/unauth tests)
   - ✅ Improved test stability with better selectors, timing, WebKit handling
-  - ✅ Fixed image quality issues: removed addRandomSuffix, fixed original.jpeg URL storage
-  - 🔄 IN PROGRESS: 515/544 E2E tests passing (94.7%), 29 failures remain (mostly timing/selector issues)
+- ✅ Fixed image quality issues: removed addRandomSuffix, fixed original.jpeg URL storage
+- 🔄 IN PROGRESS: 515/544 E2E tests passing (94.7%), 29 failures remain (mostly timing/selector issues)
+- 🔄 NEW: 0002.51 Add nightly GitHub workflow to detect and clean orphaned storage blobs (production safeguard)
 
 ---
 
@@ -358,6 +364,9 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
   - Viewport constraint verification: images never exceed viewport with 12px border
   - Mobile navigation tests: arrows, keyboard, swipe gestures on mobile viewport
   - Multi-browser testing: Chromium, Firefox, WebKit with retry patterns
+- **Gallery Layout Width & Centering (Jan 2026)**:
+  - Set gallery detail wrappers and `PhotoGrid` to `max-w-7xl` (≈80rem) so headers, metadata, and image grids share the same centered width on large screens
+  - Updated masonry grid CSS to rely on flex gaps plus `width: fit-content` for perfectly centered columns without negative margins on mobile/desktop
 
 ### Inline Editing
 - **InlineEditor** - Simple text fields (h1, h2, p, span)
@@ -993,6 +1002,10 @@ curl http://localhost:3000/api/galleries?category=weddings
 - Created: `PROJECT_CONTEXT.md` at repo root following `.cursor/rules/project-context-template.md`
 
 **Task 7.1-7.14 (Previous Session):**
+- **Gallery Detail Layout Refinements (Jan 2026):**
+- Modified: `app/galleries/[category]/[slug]/page.tsx` - Increased breadcrumb/header/grid/back-link wrappers to `max-w-7xl` for consistent centered layout
+- Modified: `components/gallery/PhotoGrid.tsx` - Allowed grid container to expand to `max-w-7xl`, centered justified layout using measured width
+- Modified: `app/globals.css` - Updated masonry CSS to use flex gaps and `width: fit-content` for centered columns without manual negative margins
 - Created: `app/admin/page.tsx` (admin dashboard with real stats)
 - Created: `lib/admin/edit-mode-context.tsx` (edit mode state)
 - Created: `components/admin/InlineEditor.tsx` (text editing)

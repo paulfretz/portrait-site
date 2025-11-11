@@ -11,6 +11,9 @@ import { mockImage } from '../utils/test-utils';
 
 // Mock the image-urls utility
 jest.mock('@/lib/utils/image-urls', () => ({
+  getImageVariantUrl: jest.fn((url: string, variant: string, format: string) =>
+    url.replace('.jpeg', `-${variant}.${format}`)
+  ),
   getLightboxImageUrl: jest.fn((url) => url.replace('.jpeg', '-xlarge.webp')),
   getThumbnailUrl: jest.fn((url) => url.replace('.jpeg', '-thumbnail.webp')),
 }));

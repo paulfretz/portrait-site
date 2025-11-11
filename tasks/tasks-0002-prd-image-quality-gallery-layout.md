@@ -32,7 +32,7 @@ Transform the site into a professional photography portfolio with high-resolutio
 - **Phase 4 (Display Quality):** 7/7 subtasks ✅ COMPLETE
 - **Phase 5 (Hero Slideshow):** 8/8 subtasks ✅ COMPLETE
 - **Phase 6 (SEO & Performance):** 4/5 subtasks (Lighthouse audit deferred)
-- **Phase 7 (Testing & Polish):** 4/4 subtasks ✅ COMPLETE
+- **Phase 7 (Testing & Polish):** 4/5 subtasks (1 pending)
 
 ---
 
@@ -115,11 +115,11 @@ Transform the site into a professional photography portfolio with high-resolutio
 - [x] 0002.43 Generate image sitemap (`app/image-sitemap.xml/route.ts` or update `app/sitemap.ts`)
 - [x] 0002.44 Ensure all images have descriptive `alt` attributes (check in GalleryGrid, PhotoGrid, etc.)
 - [x] 0002.45 Add `fetchPriority="high"` to hero slideshow images for preloading
-- [ ] 0002.46 Run Lighthouse audit and optimize for LCP <2.5s, CLS <0.1, Performance ≥80 (⏸️ DEFERRED - Manual task)
+- [ ] 0002.46 Run Lighthouse audit and optimize for LCP <2.5s, CLS <0.1, Performance ≥80 *(Deferred to PRD 0004 - Environment & Release Hardening)*
 
 ---
 
-## Phase 7: Testing & Polish (4 subtasks)
+## Phase 7: Testing & Polish (5 subtasks)
 
 - [x] 0002.47 Write unit tests for image optimizer with new xlarge variant and quality settings
 - [x] 0002.48 Write component tests for `MasonryGalleryGrid` and `JustifiedGalleryGrid`
@@ -133,6 +133,7 @@ Transform the site into a professional photography portfolio with high-resolutio
   - ✅ 515/544 E2E tests passing (94.7% pass rate) - APPROACHING TARGET!
   - ✅ 370/370 unit/integration tests passing (100%)
   - 🔄 29 E2E failures remain (mostly timing/selector issues, some WebKit-specific)
+- [ ] 0002.51 Add nightly GitHub workflow to detect and clean up orphaned storage blobs *(Moved to PRD 0004 - Environment & Release Hardening)*
 
 ---
 
@@ -154,7 +155,7 @@ Before marking this task complete and creating a PR, verify:
 12. [ ] Lighthouse Performance score ≥80 on gallery pages (⏸️ DEFERRED - Manual task)
 13. [x] All images have proper `alt` attributes
 14. [x] Cross-browser compatibility verified (Chromium, Firefox, WebKit)
-15. [ ] Mobile device testing complete (iOS/Android) - Manual verification needed
+15. [ ] Mobile device testing complete (iOS/Android) *(Deferred to PRD 0004 - Environment & Release Hardening)*
 
 ---
 

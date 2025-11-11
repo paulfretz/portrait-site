@@ -286,8 +286,7 @@ describe('Image URL Utilities', () => {
 
     it('getLightboxImageUrlJpeg returns original JPEG fallback (universal browser support)', () => {
       const result = getLightboxImageUrlJpeg(mockOriginalUrl);
-      // Changed to original.jpeg as safe fallback (always exists, browser will use srcset if available)
-      expect(result).toBe('https://example.com/galleries/gallery1/1234567890-photo-original.jpeg');
+      expect(result).toBe('https://example.com/galleries/gallery1/1234567890-photo-xlarge.jpeg');
     });
 
     it('getLightboxImageUrlJpeg returns original JPEG when image width is less than 4000px', () => {

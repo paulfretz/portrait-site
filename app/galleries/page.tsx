@@ -20,7 +20,7 @@ export default function GalleriesPage() {
     <div className="min-h-screen bg-white">
       {/* Page Header */}
       <div className="bg-neutral-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl font-light text-neutral-900 mb-4">
               Photography Galleries
@@ -35,7 +35,7 @@ export default function GalleriesPage() {
 
       {/* Categories Grid */}
       <div className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <Suspense fallback={<CategoryGridSkeleton />}>
             <CategoryGrid />
           </Suspense>

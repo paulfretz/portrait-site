@@ -103,6 +103,103 @@ export async function PUT(
 }
 
 /**
+ * PATCH /api/images/[id]
+ * Partially update image metadata (supports hero image toggles)
+ * Admin only - requires authentication
+ */
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Unauthorized - admin access required',
+        },
+        { status: 401 }
+      );
+    }
+
+    const { id } = await params;
+
+    if (!id || typeof id !== 'string') {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid image ID',
+        },
+        { status: 400 }
+      );
+    }
+
+    const existingImage = await getImageById(id);
+    if (!existingImage) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Image not found',
+        },
+        { status: 404 }
+      );
+    }
+
+    const body = await request.json();
+    const {
+      alt_text,
+      display_order,
+      width,
+      height,
+      blur_data_url,
+      is_hero_image,
+      hero_display_order,
+    } = body;
+
+    const updates: ImageUpdate = {};
+
+    if (alt_text !== undefined) updates.alt_text = alt_text;
+    if (display_order !== undefined) updates.display_order = display_order;
+    if (width !== undefined) updates.width = width;
+    if (height !== undefined) updates.height = height;
+    if (blur_data_url !== undefined) updates.blur_data_url = blur_data_url;
+    if (is_hero_image !== undefined) updates.is_hero_image = is_hero_image;
+    if (hero_display_order !== undefined) updates.hero_display_order = hero_display_order;
+
+    if (Object.keys(updates).length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'No valid fields to update',
+        },
+        { status: 400 }
+      );
+    }
+
+    const updatedImage = await updateImage(id, updates);
+
+    return NextResponse.json({
+      success: true,
+      image: updatedImage,
+    });
+  } catch (error) {
+    console.error('Error patching image:', error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to update image',
+      },
+      { status: 500 }
+    );
+  }
+}
+
+/**
  * DELETE /api/images/[id]
  * Delete an image from Vercel Blob and database
  * Admin only - requires authentication
