@@ -25,6 +25,8 @@
   - ✅ Separated authenticated and unauthenticated test suites in Playwright config
   - ✅ Fixed auth state conflicts (created separate projects for auth/unauth tests)
   - ✅ Improved test stability with better selectors, timing, and WebKit handling
+- ✅ Playwright guardrail added: `e2e/global-setup.ts` now aborts if TEST_SUPABASE_URL matches production or the test service role key is missing
+- ✅ Created PRD 0004 – Environment & Release Hardening (consolidates remaining launch-readiness tasks from PRDs 0001–0003)
 - ✅ Gallery detail layout refinements:
   - ✅ Expanded gallery detail containers and `PhotoGrid` to `max-w-7xl` for consistent centering under page titles
   - ✅ Updated masonry CSS to use flex gaps with `width: fit-content` for perfectly centered grids on all breakpoints
@@ -298,7 +300,7 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
 - **0002.45** ✅ Added fetchPriority="high" to first hero image (LCP optimization)
 - **0002.46** ⏸️ DEFERRED - Lighthouse audit (manual task, run later)
 
-#### Phase 7: Testing & Polish 🚧 IN PROGRESS (3.5/4)
+#### Phase 7: Testing & Polish 🚧 IN PROGRESS (3.5/5)
 - **0002.47** ✅ Wrote unit tests for xlarge variant, quality settings, blur placeholders (7 new tests)
 - **0002.48** ✅ Wrote component tests for PhotoGrid (15 tests: masonry, justified, responsive)
 - **0002.49** ✅ Wrote E2E tests for gallery layouts and hero (17 tests × 3 browsers = 51 tests)
@@ -312,8 +314,9 @@ Build a professional, mobile-responsive portrait photography website for DJ Cove
   - ✅ Separated authenticated and unauthenticated test suites in Playwright config
   - ✅ Fixed auth state conflicts (created separate projects for auth/unauth tests)
   - ✅ Improved test stability with better selectors, timing, WebKit handling
-  - ✅ Fixed image quality issues: removed addRandomSuffix, fixed original.jpeg URL storage
-  - 🔄 IN PROGRESS: 515/544 E2E tests passing (94.7%), 29 failures remain (mostly timing/selector issues)
+- ✅ Fixed image quality issues: removed addRandomSuffix, fixed original.jpeg URL storage
+- 🔄 IN PROGRESS: 515/544 E2E tests passing (94.7%), 29 failures remain (mostly timing/selector issues)
+- 🔄 NEW: 0002.51 Add nightly GitHub workflow to detect and clean orphaned storage blobs (production safeguard)
 
 ---
 

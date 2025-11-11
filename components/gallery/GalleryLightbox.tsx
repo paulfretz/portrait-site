@@ -342,7 +342,7 @@ export function GalleryLightbox({
         {/* Remove caption overlay */}
       </div>
 
-      {images.length > 1 && (
+      {images.length > 1 && images.length <= 20 && (
         <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-full pointer-events-none">
           {/* Thumbnail strip */}
           <div className="mx-auto flex justify-center px-4">
@@ -359,9 +359,9 @@ export function GalleryLightbox({
                     setCurrentIndex(index);
                     setIsLoading(true);
                   }}
-                  className={`relative flex-shrink-0 w-16 h-16 rounded overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-sage-300 focus:ring-offset-2 focus:ring-offset-black ${
+                className={`relative flex-shrink-0 w-16 h-16 rounded overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-sage-300 focus:ring-offset-2 focus:ring-offset-black ${
                     index === currentIndex
-                      ? 'ring-2 ring-sage-200 opacity-100'
+                      ? 'ring-2 ring-sage-300 opacity-100'
                       : 'opacity-70 hover:opacity-100'
                   }`}
                   aria-label={`View image ${index + 1}${index === currentIndex ? ' (current)' : ''}`}

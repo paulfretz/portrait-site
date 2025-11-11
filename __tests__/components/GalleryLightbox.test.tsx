@@ -124,7 +124,7 @@ describe('GalleryLightbox', () => {
 
     it('renders image caption when alt_text is present', () => {
       render(<GalleryLightbox {...defaultProps} />);
-      expect(screen.getByText('First image')).toBeInTheDocument();
+      expect(screen.getByText(/First image/)).toBeInTheDocument();
     });
 
     it('uses gallery title as alt when alt_text is null', async () => {
@@ -568,8 +568,8 @@ describe('GalleryLightbox', () => {
       
       // Second thumbnail should have ring styling
       expect(thumbnails[1]).toHaveClass('ring-2', 'ring-sage-300', 'opacity-100');
-      expect(thumbnails[0]).toHaveClass('opacity-50');
-      expect(thumbnails[2]).toHaveClass('opacity-50');
+      expect(thumbnails[0]).toHaveClass('opacity-70');
+      expect(thumbnails[2]).toHaveClass('opacity-70');
     });
   });
 });

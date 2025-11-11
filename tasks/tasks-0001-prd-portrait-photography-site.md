@@ -285,7 +285,7 @@
   - [x] 9.15 Add location information to gallery pages for local SEO boost
   - [x] 9.16 Implement semantic HTML with proper heading hierarchy (h1, h2, h3)
   - [x] 9.17 Optimize Core Web Vitals: lazy loading, code splitting, image optimization
-  - [ ] 9.18 Run Lighthouse audit and address performance, SEO, and accessibility issues
+- [ ] 9.18 Run Lighthouse audit and address performance, SEO, and accessibility issues *(Deferred to PRD 0004 - Environment & Release Hardening)*
   - [x] 9.19 Create `public/manifest.json` for PWA support
   - [x] 9.20 Set up Google Search Console integration documentation
 
@@ -323,27 +323,27 @@
   - [x] 10.23c Set up staging environment for testing migrations before production (documented)
   - [x] 10.23d Add Supabase credentials to GitHub Secrets (documented)
 
-- [ ] 11.0 Deployment & Production Configuration
-  - [ ] 11.1 Create production environment variables in Vercel dashboard
-  - [ ] 11.2 Configure Supabase production project (separate from development)
-  - [ ] 11.3 Set up image storage for production (Vercel Blob or Cloudflare R2)
-  - [ ] 11.4 Configure email service for production (SendGrid or Resend with production API key)
-  - [ ] 11.5 Deploy to Vercel: connect GitHub repository and configure build settings
-  - [ ] 11.6 Set up custom domain in Vercel: djcovenoportraits.com
-  - [ ] 11.7 Configure DNS records for custom domain (A/CNAME records)
-  - [ ] 11.8 Enable SSL/HTTPS for custom domain
-  - [ ] 11.9 Set up database backups (Supabase automated daily backups)
-  - [ ] 11.10 Configure error monitoring (Vercel Analytics or Sentry)
-  - [ ] 11.11 Set up Google Analytics 4 tracking
-  - [ ] 11.12 Test production deployment: verify all features work correctly
-  - [ ] 11.13 Run Lighthouse audit on production site
-  - [ ] 11.14 Submit sitemap to Google Search Console
-  - [ ] 11.15 Submit sitemap to Bing Webmaster Tools
-  - [ ] 11.16 Create deployment documentation: environment setup, DNS configuration, etc.
-  - [ ] 11.17 Create user guide for owner: how to add galleries, edit content, manage inquiries
-  - [ ] 11.18 Verify Core Web Vitals pass on production
-  - [ ] 11.19 Test mobile responsiveness on real devices
-  - [ ] 11.20 Perform final accessibility audit with screen reader
+- [ ] 11.0 Deployment & Production Configuration *(Deferred to PRD 0004 - Environment & Release Hardening)*
+  - [ ] 11.1 Create production environment variables in Vercel dashboard *(Deferred to PRD 0004)*
+  - [ ] 11.2 Configure Supabase production project (separate from development) *(Deferred to PRD 0004)*
+  - [ ] 11.3 Set up image storage for production (Vercel Blob or Cloudflare R2) *(Deferred to PRD 0004)*
+  - [ ] 11.4 Configure email service for production (SendGrid or Resend with production API key) *(Deferred to PRD 0004)*
+  - [ ] 11.5 Deploy to Vercel: connect GitHub repository and configure build settings *(Deferred to PRD 0004)*
+  - [ ] 11.6 Set up custom domain in Vercel: djcovenoportraits.com *(Deferred to PRD 0004)*
+  - [ ] 11.7 Configure DNS records for custom domain (A/CNAME records) *(Deferred to PRD 0004)*
+  - [ ] 11.8 Enable SSL/HTTPS for custom domain *(Deferred to PRD 0004)*
+  - [ ] 11.9 Set up database backups (Supabase automated daily backups) *(Deferred to PRD 0004)*
+  - [ ] 11.10 Configure error monitoring (Vercel Analytics or Sentry) *(Deferred to PRD 0004)*
+  - [ ] 11.11 Set up Google Analytics 4 tracking *(Deferred to PRD 0004)*
+  - [ ] 11.12 Test production deployment: verify all features work correctly *(Deferred to PRD 0004)*
+  - [ ] 11.13 Run Lighthouse audit on production site *(Deferred to PRD 0004)*
+  - [ ] 11.14 Submit sitemap to Google Search Console *(Deferred to PRD 0004)*
+  - [ ] 11.15 Submit sitemap to Bing Webmaster Tools *(Deferred to PRD 0004)*
+  - [ ] 11.16 Create deployment documentation: environment setup, DNS configuration, etc. *(Deferred to PRD 0004)*
+  - [ ] 11.17 Create user guide for owner: how to add galleries, edit content, manage inquiries *(Deferred to PRD 0004)*
+  - [ ] 11.18 Verify Core Web Vitals pass on production *(Deferred to PRD 0004)*
+  - [ ] 11.19 Test mobile responsiveness on real devices *(Deferred to PRD 0004)*
+  - [ ] 11.20 Perform final accessibility audit with screen reader *(Deferred to PRD 0004)*
 
 ---
 

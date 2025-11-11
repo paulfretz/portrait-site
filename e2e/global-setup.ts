@@ -10,42 +10,62 @@ dotenv.config({ path: '.env.local' });
 async function globalSetup(config: FullConfig) {
   console.log('\n🌱 Setting up test database...\n');
 
-  // Get test database credentials
-  const supabaseUrl = process.env.TEST_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.TEST_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
-  // Try to get service role key for admin operations
-  // First check for TEST-specific service role, then fall back to main service role
-  const supabaseServiceKey = process.env.TEST_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+// Get test database credentials (must be explicitly provided)
+const supabaseUrl = process.env.TEST_SUPABASE_URL;
+const supabaseAnonKey = process.env.TEST_SUPABASE_ANON_KEY;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('❌ ERROR: Test database credentials not found');
-    console.error('   Please set TEST_SUPABASE_URL and TEST_SUPABASE_ANON_KEY in .env.local');
-    process.exit(1);
+// Try to get service role key for admin operations (required for seeding)
+const supabaseServiceKey = process.env.TEST_SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ ERROR: Test database credentials not found');
+  console.error('   Please set TEST_SUPABASE_URL and TEST_SUPABASE_ANON_KEY in .env.local');
+  process.exit(1);
+}
+
+// Guardrail: prevent accidental use of production database
+const productionUrls = [
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_URL,
+  'https://nmgptiywaefuvvatlcah.supabase.co',
+].filter(Boolean) as string[];
+
+if (productionUrls.includes(supabaseUrl)) {
+  console.error('🚫 ABORTING: TEST_SUPABASE_URL matches the production Supabase URL.');
+  console.error('   Update TEST_SUPABASE_URL to point at the dedicated test project before running Playwright.');
+  process.exit(1);
+}
+
+const urlProjectMatch = supabaseUrl.match(/^https:\/\/([a-z0-9-]+)\.supabase\.co/);
+const projectId = urlProjectMatch ? urlProjectMatch[1] : null;
+if (projectId && projectId === 'nmgptiywaefuvvatlcah') {
+  console.error('🚫 ABORTING: TEST_SUPABASE_URL resolves to the production project ID (nmgptiywaefuvvatlcah).');
+  console.error('   Point TEST_SUPABASE_URL at the test project (viqvpxipqmkswpflpqfx).');
+  process.exit(1);
+}
+
+if (!supabaseServiceKey) {
+  console.error('❌ ERROR: TEST_SUPABASE_SERVICE_ROLE_KEY is required to seed the test database.');
+  console.error('   Obtain the service role key for the test project and add it to .env.local / CI secrets.');
+  process.exit(1);
+}
+
+console.log(`📊 Test Database: ${supabaseUrl}`);
+
+// Create Supabase client with service role for admin operations (if available)
+// Service role key automatically bypasses RLS, allowing us to seed data
+const supabase = createClient(
+  supabaseUrl,
+  supabaseServiceKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
   }
+);
 
-  console.log(`📊 Test Database: ${supabaseUrl}`);
-
-  // Create Supabase client with service role for admin operations (if available)
-  // Service role key automatically bypasses RLS, allowing us to seed data
-  const supabase = createClient(
-    supabaseUrl, 
-    supabaseServiceKey || supabaseAnonKey,
-    {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false
-      }
-    }
-  );
-
-  if (supabaseServiceKey) {
-    console.log('🔓 Using service role key (bypasses RLS automatically)');
-  } else {
-    console.log('⚠️  No service role key found - using anon key');
-    console.log('   💡 If seeding fails, add TEST_SUPABASE_SERVICE_ROLE_KEY to .env.local');
-    console.log('   📖 See SEED-TEST-DATABASE.md for instructions');
-  }
+console.log('🔓 Using test service role key (bypasses RLS automatically)');
 
   try {
     // Clear existing data (in reverse dependency order)

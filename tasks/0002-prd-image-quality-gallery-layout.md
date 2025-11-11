@@ -15,6 +15,8 @@ This PRD defines a comprehensive overhaul of the image quality, upload capabilit
 **Problem Statement:**  
 The current site displays images at lower resolutions with generic grid layouts that don't do justice to professional photography work. Images appear pixelated on high-resolution displays, upload size limits prevent uploading full-resolution photos, and the gallery layouts don't adapt intelligently to different screen sizes.
 
+> **Status Update (Nov 2025):** Core gallery and lightbox improvements have shipped. Remaining follow-up items (Lighthouse audits, device QA, storage maintenance automation) are deferred to **PRD 0004 – Environment & Release Hardening**.
+
 **Goal:**  
 Transform the site into a true photography portfolio with crisp, high-resolution images and intelligent, content-aware gallery layouts that prioritize visual impact while maintaining excellent SEO and performance.
 
@@ -384,6 +386,7 @@ This PRD will generate a detailed task list, but high-level phases include:
 - Add E2E tests for gallery layouts
 - Cross-browser testing
 - Mobile device testing
+- Automate nightly GitHub workflow to detect and clean up orphaned storage blobs
 
 ---
 
