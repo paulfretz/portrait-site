@@ -16,7 +16,7 @@ This file should be created as `PROJECT_CONTEXT.md` in the root of each reposito
 - **Type**: Web app (SSR/ISR with API routes) + Admin UI
 - **Architecture Pattern**: Modular monolith with App Router; RESTful route handlers; SSR data-fetch on server components, client components for editing
 - **Database**: Supabase PostgreSQL (production project `nmgptiywaefuvvatlcah`, test project `viqvpxipqmkswpflpqfx`)
-- **Infrastructure**: Vercel (hosting/CDN), Supabase (DB/Auth), Vercel Blob (image storage)
+- **Infrastructure**: Vercel (hosting/CDN), Supabase (DB/Auth), Amazon S3 + CDN for image storage
 - **Key Services**: Authentication (Supabase Auth + Google OAuth), Galleries/Categories CRUD, Image upload/optimization, Inline editing, Contact/Inquiries, SEO/Structured data
 
 ## Development Environment
@@ -26,8 +26,8 @@ This file should be created as `PROJECT_CONTEXT.md` in the root of each reposito
 - **Package Manager**: npm
 - **Required Tools**: Git, Supabase CLI (optional/local), Docker Desktop (optional for local Supabase), OpenSSL (system), Playwright browsers (auto-installed)
 - **Environment Variables**: Key env vars (see below and `.env.example`)
-  - Production: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL`, `RESEND_API_KEY`, `NOTIFICATION_EMAIL`, `BLOB_READ_WRITE_TOKEN`, `NEXT_PUBLIC_ADMIN_EMAIL`
-  - Test/E2E: `TEST_SUPABASE_URL`, `TEST_SUPABASE_ANON_KEY`, `TEST_SUPABASE_SERVICE_ROLE_KEY`, `TEST_ADMIN_EMAIL`, `TEST_ADMIN_PASSWORD`
+  - Production: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL`, `RESEND_API_KEY`, `NOTIFICATION_EMAIL`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `PROD_S3_BUCKET`, `PROD_S3_PREFIX`, `NEXT_PUBLIC_ADMIN_EMAIL`
+  - Test/E2E: `TEST_SUPABASE_URL`, `TEST_SUPABASE_ANON_KEY`, `TEST_SUPABASE_SERVICE_ROLE_KEY`, `TEST_ADMIN_EMAIL`, `TEST_ADMIN_PASSWORD`, `TEST_S3_BUCKET`, `TEST_S3_PREFIX`
 
 ### Setup Commands
 ```bash
@@ -95,7 +95,7 @@ portrait-site/
 
 ### Key Features
 - Galleries & Categories: CRUD, drag-and-drop ordering, cover images, mobile masonry + desktop justified layouts centered within a `max-w-7xl` gallery wrapper
-- Image Upload & Optimization: Vercel Blob storage, sharp-based variants (thumbnail/medium/large/xlarge/original), WebP/AVIF, blur placeholders
+- Image Upload & Optimization: Amazon S3 storage + CDN, sharp-based variants (thumbnail/medium/large/xlarge/original), WebP/AVIF, blur placeholders
 - Authentication & Admin: Google OAuth via Supabase, protected routes via middleware, admin toolbar, inline editing
 
 ### Critical Paths
@@ -118,7 +118,7 @@ portrait-site/
 - **Audit Requirements**: Request logs via Vercel/Supabase dashboards; CI logs in GitHub Actions
 
 ### Integration Points
-- **External APIs**: Supabase (DB/Auth/REST), Vercel Blob (images), Resend (email)
+- **External APIs**: Supabase (DB/Auth/REST), Amazon S3/CloudFront (images), Resend (email)
 - **Internal Services**: Next.js route handlers for CRUD
 - **Webhooks**: None currently
 - **Message Queues**: None
@@ -128,7 +128,7 @@ portrait-site/
 ### Deployment
 - **Environments**: Dev (local), CI (GitHub Actions), Prod (Vercel)
 - **CI/CD Pipeline**: Lint/test/build in CI; Playwright on PR; migration workflow documented; deploy to Vercel on push to main
-- **Infrastructure**: Vercel serverless + CDN; Supabase Postgres; Vercel Blob storage
+- **Infrastructure**: Vercel serverless + CDN; Supabase Postgres; Amazon S3 (image storage) fronted by CDN
 - **Monitoring**: Vercel analytics/logs; Lighthouse manual runs (docs/lighthouse-audit.md); Search Console docs
 
 ### Team Structure
@@ -141,7 +141,7 @@ portrait-site/
 - **Technical Debt**: Supabase types generation pending; some `@ts-ignore` in queries; manual migrations historically (now documented automation)
 - **Performance Bottlenecks**: Large image processing may need tuning for serverless limits
 - **Browser/Platform Limitations**: WebKit E2E edge cases (timing/navigation); robust selectors and waits added
-- **External Dependencies**: Reliance on Supabase availability and Vercel Blob
+- **External Dependencies**: Reliance on Supabase availability, Amazon S3, and CDN provider
 - **Test Status**: 515/544 E2E tests passing (94.7%), 29 failures remain (mostly timing/selector issues)
 
 ## Agent-Specific Guidance

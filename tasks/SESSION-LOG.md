@@ -1,3 +1,117 @@
+# Development Session Log — DJ Coveno Portraits
+
+**Project:** Montana Portrait Photography Site  
+**Process Guide:** `.cursor/rules/process-task-list.md` + `CLAUDE.md`  
+**Primary PRDs:**  
+- `tasks/0001-prd-portrait-photography-site.md` (core site ✅)  
+- `tasks/0002-prd-image-quality-gallery-layout.md` (gallery/UI ✅ except deferred items)  
+- `tasks/0003-prd-image-crispness-and-lightbox.md` (complete ✅)  
+- `tasks/0004-prd-environment-release-hardening.md` (⚙️ in progress)
+
+---
+
+## 1. Current Status
+- **Branch:** `task-1.0-environment-setup`  
+- **Active Task:** PRD 0004 – Task 1.0 (stand up prod/test/dev environments with S3 + documentation)  
+- **Progress Snapshot:** PRDs 0001–0003 complete; PRD 0004 newly defined (0/5 parent tasks complete)  
+- **Uncommitted Work:** README, environment guide, PRD/task list, session log, and project context updated to reflect S3 migration plan. No code changes yet.  
+- **Next Action:** Gather AWS credentials + bucket plan (manual) then implement Task 1.0 subtasks.
+
+---
+
+## 2. PRD Context & Overall Goal
+- Launch-ready photography site with admin-friendly workflows, crisp imagery, and strong SEO.  
+- PRD 0004 focuses on environment hygiene, automated testing against an isolated test stack, reliable 1 TB-scale image storage (AWS S3 + CDN), nightly maintenance jobs, and closing the remaining launch checklist (audits, docs, monitoring).
+
+---
+
+## 3. Completed Work Summary (high level)
+- ✅ Site architecture, admin tooling, SEO, contact flows, and testing suites shipped (PRDs 0001–0003).  
+- ✅ Gallery layout refinements and lightbox polish delivered.  
+- ✅ E2E infrastructure stabilized (separate auth states, automated seeding, guardrails).  
+- ✅ Created PRD 0004 + task list consolidating deferred launch tasks, and rewrote docs to reflect S3/CDN strategy.
+
+---
+
+## 4. Technical Decisions & Architecture
+- **Frontend:** Next.js 14 App Router + Tailwind.  
+- **Backend:** Supabase (Postgres + Auth) — production + hosted test project; local dev via Supabase CLI.  
+- **Image Storage:** Transitioning from Vercel Blob to **Amazon S3 (per-env buckets/prefixes) fronted by CDN**. Uploads will use presigned URLs. Target capacity ≥1 TB.  
+- **CI/CD:** GitHub Actions (lint/test/e2e + future migration/orphan jobs).  
+- **Testing:** Jest/RTL for units, Playwright (Chromium/Firefox/WebKit) for E2E.  
+- **Docs:** `docs/environment-setup.md` now source of truth for env + storage configuration.
+
+---
+
+## 5. Manual Actions Required
+- Create AWS S3 buckets or prefixes for `prod`, `test`, and `dev` (or confirm naming if using single bucket).  
+- Provision IAM users/roles with least-privilege access and capture credentials for each environment.  
+- Choose CDN (AWS CloudFront recommended) and note distribution IDs/domains.  
+- Supply the above details so environment variables can be populated and code updated accordingly.
+
+---
+
+## 6. Future Cleanup / Technical Debt
+- Legacy references to Vercel Blob in API routes (`app/api/images/...`) will be removed when S3 upload code lands.  
+- Once S3 migration is complete, delete any residual Blob-related utility code/tests.  
+- Track E2E flakes (29 known timing/selector issues) for future stabilization if needed.
+
+---
+
+## 7. Files Created/Modified (this session)
+- `docs/environment-setup.md` – new consolidated environment + credential guide.  
+- `README.md` – updated to reference S3/CDN workflow.  
+- `tasks/0004-prd-environment-release-hardening.md` & `tasks/tasks-0004-...` – rewritten for S3 migration + nightly jobs.  
+- `PROJECT_CONTEXT.md` – architecture summary now references S3/CDN.  
+- `tasks/SESSION-LOG.md` – refreshed to current state.
+
+---
+
+## 8. Testing Status
+- No code changes yet ⇒ tests not run in this session.  
+- Last full suite (Dec 2025): `npm run lint`, `npm test`, `npx tsc --noEmit` all passing; Playwright pass rate 94.7%.
+
+---
+
+## 9. Quick Start / Environment Notes
+- Local dev: `supabase start` (CLI) + `npm run dev`.  
+- Hosted Supabase projects:  
+  - Prod `nmgptiywaefuvvatlcah`  
+  - Test `viqvpxipqmkswpflpqfx`  
+- Storage: prepare AWS credentials + bucket details; CDN choice pending (default to CloudFront).  
+- Env references: see `docs/environment-setup.md` for required variables.
+
+---
+
+## 10. Commit History (recent highlights)
+- `55a169c` – Task 10.0 testing suite merged (Nov 2025).  
+- `7383037` – Latest merged branch (`improvements-to-gid`) aligning gallery layout + guardrails.  
+- Current branch has uncommitted documentation updates (S3 migration planning).
+
+---
+
+## 11. Remaining Tasks
+- Follow `tasks/tasks-0004-prd-environment-release-hardening.md` exactly (process-task-list rules apply).  
+- Parent tasks pending:  
+  1. Supabase + S3 environment provisioning & documentation.  
+  2. S3 migration + nightly orphan audits.  
+  3. CI/CD updates (test-only resources + migrations).  
+  4. Launch readiness checklist (audits, QA, docs).  
+  5. Monitoring & alerting.
+
+---
+
+## 12. Known Issues / Risks
+- Playwright suite still has ~29 flaky tests (mostly timing/WebKit).  
+- Large file uploads may stress serverless timeouts until S3 presigned uploads are in place.  
+- AWS usage introduces new costs (storage + CDN); monitor billing once configured.
+
+---
+
+## 13. Context for Next Session
+- Await user-provided AWS S3/IAM/CDN details.  
+- Implement Task 1.0 subtasks: env files, guardrails, documentation updates, and any setup scripts once credentials are ready.  
+- Continue adhering to `process-task-list.md` and `CLAUDE.md` (one subtask at a time, update this log + PROJECT_CONTEXT + STATUS before each commit).
 # Development Session Log - DJ Coveno Portraits
 
 **Project:** Montana Portrait Photography Site  
@@ -27,6 +141,7 @@
   - ✅ Improved test stability with better selectors, timing, and WebKit handling
 - ✅ Playwright guardrail added: `e2e/global-setup.ts` now aborts if TEST_SUPABASE_URL matches production or the test service role key is missing
 - ✅ Created PRD 0004 – Environment & Release Hardening (consolidates remaining launch-readiness tasks from PRDs 0001–0003)
+- ✅ Updated PRD 0004 to migrate media storage from Vercel Blob to Amazon S3 + CDN for ~1 TB footprint, including new task list and docs
 - ✅ Gallery detail layout refinements:
   - ✅ Expanded gallery detail containers and `PhotoGrid` to `max-w-7xl` for consistent centering under page titles
   - ✅ Updated masonry CSS to use flex gaps with `width: fit-content` for perfectly centered grids on all breakpoints
